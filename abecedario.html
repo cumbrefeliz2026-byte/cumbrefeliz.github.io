@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#15251B">
+<meta name="description" content="Fotografía algo que empiece con cada letra.">
+<meta property="og:title" content="Bingo Flow Abecedario · Cumbre Feliz">
+<meta property="og:description" content="Fotografía algo que empiece con cada letra.">
+<meta property="og:type" content="website">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Bingo Flow Abecedario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: columna de teléfono, hermana del Bingo Flow. Banda con curvas de nivel; tres modos (Abecedario, B-I-N-G-O, Letras escondidas); nombre; cartón de letras grandes que se llenan con fotos; progreso; collage armado en el teléfono. Verde del Ávila + amarillo de guacamaya. */
+:root{
+  --paper:#EEF2EA;
+  --band:#E2E9DB;
+  --panel:#F9FBF6;
+  --ink:#15251B;
+  --muted:#556659;
+  --line:#C4CFBF;
+  --contour:#BCCAB5;
+  --stamp:#A3C29A;
+  --stamp-soft:#E6EEDF;
+  --stamp-ink:#15251B;
+  --logo:#2F5B41;
+  --accent:#2A66A4;
+  --danger:#B23946;
+  --scrim:rgba(8,14,10,.78);
+  --on-photo:#FFFFFF;
+  --font-display:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+  --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1712; --band:#142019; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E;
+    --line:#2C3B31; --contour:#26382D; --stamp:#E6DCC3; --stamp-soft:#243429; --stamp-ink:#15251B; --logo:#E9DFC7;
+    --accent:#78ACE3; --danger:#EE8792; --scrim:rgba(0,0,0,.78); --on-photo:#FFFFFF;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1712; --band:#142019; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E;
+  --line:#2C3B31; --contour:#26382D; --stamp:#E6DCC3; --stamp-soft:#243429; --stamp-ink:#15251B; --logo:#E9DFC7;
+  --accent:#78ACE3; --danger:#EE8792; --scrim:rgba(0,0,0,.78); --on-photo:#FFFFFF;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+body{ background:var(--paper); color:var(--ink); font:400 15px/1.5 var(--font-body); }
+.wrap{
+  position:relative; z-index:1; max-width:560px; margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+
+.band{ position:relative; background:var(--band); border-bottom:1px solid var(--line); overflow:hidden; }
+.band::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0; background:var(--contour);
+  -webkit-mask-image:var(--contours); mask-image:var(--contours);
+  -webkit-mask-size:cover; mask-size:cover; -webkit-mask-position:right center; mask-position:right center;
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+}
+.band.has-contours::before{ opacity:1; }
+.band .wrap{ padding-block:24px 20px; }
+.back{ display:inline-flex; align-items:center; gap:6px; margin:0 0 12px; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-decoration:none; }
+.back:hover{ color:var(--ink); }
+.eyebrow{ margin:0; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.brand{ display:flex; align-items:center; gap:10px; }
+.logo{ flex:none; width:58px; height:auto; color:var(--logo); overflow:visible; }
+.brand .eyebrow{ display:grid; gap:3px; }
+.brand .eyebrow b{ font:800 19px/1 var(--font-display); letter-spacing:.05em; color:var(--ink); }
+h1{ margin:6px 0 8px; font:800 clamp(42px, 12.5vw, 62px)/.86 var(--font-display); text-transform:uppercase; letter-spacing:.01em; text-wrap:balance; }
+h1 .tag{ display:inline-block; vertical-align:.18em; margin-left:.12em; padding:.1em .28em .04em; font-size:.42em; letter-spacing:.08em; background:var(--stamp); color:var(--stamp-ink); border-radius:4px; transform:rotate(-3deg); }
+.lede{ margin:0; color:var(--muted); max-width:44ch; }
+
+main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14px; }
+.nojs{ margin:0; padding:14px 16px; border-radius:10px; background:var(--stamp-soft); border:1.5px solid var(--stamp); color:var(--ink); font-size:15px; line-height:1.45; }
+.nojs strong{ display:block; margin-bottom:4px; font:800 22px/1.1 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
+.aviso{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; margin:0; padding:10px 12px; border-radius:8px; background:var(--ink); color:var(--paper); font-size:13.5px; line-height:1.4; }
+
+.modes{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px; }
+.mode{ appearance:none; font:inherit; color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:9px 9px 8px; display:flex; flex-direction:column; gap:3px; text-align:left; cursor:pointer; min-width:0; }
+.mode .mname{ font:800 clamp(15px, 4.2vw, 21px)/1 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
+.mode .msub{ font:500 10.5px/1.3 var(--font-mono); color:var(--muted); }
+.mode[aria-selected="true"]{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.mode[aria-selected="true"] .msub{ color:var(--paper); opacity:.78; }
+
+.field{ display:flex; flex-direction:column; gap:5px; }
+.field label, .lbl{ font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.field input{ font:600 16px/1.2 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:11px 12px 9px; width:100%; }
+.field input::placeholder{ color:var(--muted); opacity:.8; }
+
+.desc{ margin:0; padding:12px 14px; background:var(--band); border-radius:10px; display:grid; gap:8px; font-size:14px; line-height:1.45; }
+.desc p{ margin:0; }
+.hints{ margin:0; padding:0; list-style:none; display:grid; gap:4px; font-size:13px; }
+.hints b{ display:inline-block; min-width:1.4em; font:800 17px/1 var(--font-display); }
+
+.word{ display:grid; gap:8px; }
+.wordrow{ display:flex; gap:8px; }
+.wordrow input{ flex:1; min-width:0; font:800 22px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:10px 12px 8px; }
+.chips{ display:flex; flex-wrap:wrap; gap:6px; }
+.chip{ appearance:none; cursor:pointer; font:800 15px/1 var(--font-display); letter-spacing:.06em; text-transform:uppercase; padding:8px 11px 6px; border-radius:999px; border:1.5px solid var(--line); background:var(--panel); color:var(--ink); }
+.chip[aria-pressed="true"]{ background:var(--stamp); border-color:var(--stamp); color:var(--stamp-ink); }
+
+.card{ background:var(--panel); border:1.5px solid var(--ink); border-radius:12px; padding:8px; }
+.heads{ display:grid; gap:5px; margin-bottom:5px; }
+.heads span{ text-align:center; font:800 30px/1 var(--font-display); }
+.grid{ display:grid; gap:5px; }
+.tile{ position:relative; min-width:0; display:flex; }
+.tlabel{
+  position:relative; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  aspect-ratio:1; min-height:60px; padding:6px 5px; cursor:pointer; text-align:center;
+  background:var(--paper); border:1.5px dashed var(--line); border-radius:9px; overflow:hidden;
+}
+.big{ font:800 clamp(30px, 10vw, 54px)/.9 var(--font-display); color:var(--ink); }
+.m-bingo .big{ font-size:clamp(24px, 7vw, 38px); }
+.hint{ font-size:clamp(9.5px, 2.5vw, 11.5px); line-height:1.25; color:var(--muted); text-wrap:balance; overflow-wrap:anywhere; }
+.add{ font:600 9.5px/1.2 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink); }
+.add::before{ content:"+ "; }
+.m-bingo .hint{ display:none; }
+.tile.center .tlabel{ border:1.5px solid var(--stamp); background:var(--stamp-soft); }
+.tile.filled .tlabel{ border-style:solid; border-color:transparent; padding:0; background:var(--band); }
+.tile.center.filled .tlabel{ border-color:var(--stamp); }
+.tile img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:8px; }
+.badge{ position:absolute; top:5px; left:5px; z-index:2; min-width:1.5em; padding:3px 5px 1px; border-radius:5px; background:var(--stamp); color:var(--stamp-ink); font:800 clamp(14px, 4vw, 20px)/1 var(--font-display); text-align:center; }
+.loading{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font:600 10px/1 var(--font-mono); color:var(--muted); }
+.tile.win::after{ content:""; position:absolute; inset:-2px; border:2px solid var(--stamp); border-radius:10px; z-index:3; pointer-events:none; }
+.x{ position:absolute; top:5px; right:5px; z-index:4; appearance:none; cursor:pointer; font:600 9px/1 var(--font-mono); text-transform:uppercase; letter-spacing:.04em; padding:5px 5px 4px; border-radius:4px; border:0; background:var(--panel); color:var(--ink); }
+.x.armed{ background:var(--danger); color:var(--paper); }
+
+.progress{ display:flex; align-items:center; gap:12px; }
+.count{ font:800 30px/1 var(--font-display); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.count small{ font:600 12px/1 var(--font-mono); color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-left:4px; }
+.bar{ flex:1; height:10px; border-radius:5px; background:var(--band); border:1px solid var(--line); overflow:hidden; }
+.bar i{ display:block; height:100%; width:0; background:var(--stamp); transition:width .3s ease; }
+
+.bingo{ display:flex; align-items:baseline; justify-content:center; flex-wrap:wrap; gap:4px 12px; background:var(--stamp); color:var(--stamp-ink); border-radius:6px; padding:9px 14px 6px; transform:rotate(-1.2deg); }
+.bingo .bw{ font:800 32px/1 var(--font-display); text-transform:uppercase; letter-spacing:.04em; }
+.bingo .bs{ font:700 13.5px/1.2 var(--font-body); }
+.bingo.pop{ animation:pop .45s cubic-bezier(.3,1.6,.5,1); }
+@keyframes pop{ from{ transform:rotate(-6deg) scale(1.25); } to{ transform:rotate(-1.2deg) scale(1); } }
+.falta{ margin:0; padding:10px 12px; border-radius:8px; border:1.5px dashed var(--stamp); background:var(--panel); font-size:13.5px; line-height:1.4; }
+
+.actions{ display:flex; flex-wrap:wrap; gap:8px; }
+.btn{ appearance:none; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font:700 14px/1 var(--font-body); padding:12px 16px 10px; border-radius:6px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); text-decoration:none; }
+.btn.primary{ background:var(--ink); color:var(--paper); }
+.btn.armed{ background:var(--danger); border-color:var(--danger); color:var(--paper); }
+.btn[disabled]{ opacity:.45; cursor:not-allowed; }
+.vh{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; opacity:0; }
+.tlabel:focus-within{ outline:2.5px solid var(--accent); outline-offset:2px; }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+.result{ display:grid; gap:12px; padding:14px; background:var(--band); border-radius:10px; }
+.result h2{ margin:0; font:800 24px/1.05 var(--font-display); text-transform:uppercase; letter-spacing:.03em; }
+.formats{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:6px; }
+.fmt{ appearance:none; font:inherit; color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:9px 11px 8px; display:flex; flex-direction:column; gap:2px; text-align:left; cursor:pointer; min-width:0; }
+.fmt .fname{ font:800 22px/1 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
+.fmt .fsub{ font:500 10.5px/1.3 var(--font-mono); color:var(--muted); }
+.fmt[aria-pressed="true"]{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.fmt[aria-pressed="true"] .fsub{ color:var(--paper); opacity:.78; }
+.result img{ display:block; max-height:70vh; width:auto; max-width:100%; margin:0 auto; border-radius:6px; background:var(--panel); }
+.hint2{ margin:0; font-size:12.5px; color:var(--muted); }
+.msg{ width:100%; font:500 14px/1.4 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:10px 12px; resize:none; }
+.steps{ margin:0; padding-left:20px; display:grid; gap:6px; font-size:13.5px; line-height:1.45; }
+
+.retobox{ margin:0; padding:12px 14px; border-radius:10px; background:var(--stamp); color:var(--stamp-ink); font:700 15px/1.35 var(--font-body); }
+.retobox b{ display:block; margin-bottom:4px; font:800 20px/1 var(--font-display); text-transform:uppercase; letter-spacing:.03em; }
+.organiza{ display:grid; gap:10px; padding:14px; border:1.5px dashed var(--ink); border-radius:10px; background:var(--panel); }
+.organiza h2{ margin:0; font:800 24px/1.05 var(--font-display); text-transform:uppercase; letter-spacing:.03em; }
+.letters{ display:grid; grid-template-columns:repeat(auto-fill, minmax(42px, 1fr)); gap:6px; }
+.letters .chip{ padding:9px 0 7px; text-align:center; }
+.btn.small{ font-size:12.5px; padding:9px 11px 7px; }
+.notes{ display:grid; gap:22px; margin-top:8px; }
+.notes h2{ margin:0 0 8px; font:800 23px/1.1 var(--font-display); text-transform:uppercase; letter-spacing:.03em; text-wrap:balance; }
+.notes ul{ margin:0; padding-left:20px; display:grid; gap:7px; max-width:62ch; }
+.notes strong{ font-weight:700; }
+.foot{ margin:6px 0 0; padding-top:12px; border-top:1px solid var(--line); font:500 11.5px/1.45 var(--font-mono); color:var(--muted); }
+
+@media (prefers-reduced-motion: reduce){ .bar i{ transition:none; } .bingo.pop{ animation:none; } }
+</style>
+
+<header class="band" lang="es">
+  <div class="wrap">
+    <a class="back" href="./">← Todos los juegos</a>
+    <div class="brand"><svg class="logo" viewBox="0 -12 120 70" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6,54 L34,26 L50,42 L66,20 L96,54" stroke-width="3.4"/><path d="M76,54 L90,34 L114,54" stroke-width="2.6"/><circle cx="66" cy="9" r="8" stroke-width="3"/><path d="M66,-3 L66,-8 M55,2 L50,-2 M77,2 L82,-2 M50,13 L44,13 M82,13 L88,13" stroke-width="2.6"/></svg><p class="eyebrow"><b>Cumbre Feliz</b> <span>corre donde estés</span></p></div>
+    <h1>Bingo Flow <span class="tag">Abecedario</span></h1>
+    <p class="lede">Fotografía algo que empiece con cada letra. Tu selfie del centro canta el bingo. Arma tu collage y compártelo con Cumbre Feliz.</p>
+  </div>
+</header>
+
+<main class="wrap" lang="es">
+  <p class="aviso" id="aviso" role="status" hidden></p>
+  <noscript>
+    <style>main.wrap > :not(noscript):not(.notes){ display:none !important; }</style>
+    <div class="nojs">
+      <strong>Para jugar, abre el enlace</strong>
+      Estás viendo el archivo en vista previa y así no aparecen las casillas para tus fotos. Pide el enlace del juego y ábrelo en Safari o Chrome.
+    </div>
+  </noscript>
+
+  <section class="organiza" id="organiza" aria-labelledby="o-title" hidden>
+    <h2 id="o-title">Reto del día</h2>
+    <p class="hint2">Solo tú ves esta sección. Elige el juego, copia el enlace y mándalo al grupo: todos abren el mismo cartón.</p>
+    <div class="chips" id="o-modes" aria-label="Juego del reto">
+      <button type="button" class="chip" data-om="abc" aria-pressed="true">Abecedario</button>
+      <button type="button" class="chip" data-om="bingo" aria-pressed="false">B-I-N-G-O</button>
+      <button type="button" class="chip" data-om="letras" aria-pressed="false">Letras escondidas</button>
+    </div>
+    <div id="o-abc" style="display:grid; gap:8px;">
+      <span class="lbl">Elige 8 letras · <span id="o-n">0</span>/8</span>
+      <div class="letters" id="o-letters"></div>
+      <div><button type="button" class="btn small" id="o-azar">Al azar</button></div>
+    </div>
+    <div class="wordrow" id="o-letras" hidden>
+      <label class="vh" for="o-word">Palabra del día</label>
+      <input type="text" id="o-word" maxlength="10" autocomplete="off" autocapitalize="characters" placeholder="Palabra del día">
+    </div>
+    <label class="lbl" for="o-link">Enlace del reto</label>
+    <input class="msg" id="o-link" readonly>
+    <div class="actions">
+      <button type="button" class="btn primary" id="o-copiar">Copiar enlace</button>
+      <button type="button" class="btn" id="o-probar">Probarlo aquí</button>
+      <button type="button" class="btn" id="o-libre" hidden>Volver a juego libre</button>
+    </div>
+  </section>
+
+  <div class="retobox" id="retobox" hidden></div>
+
+  <div class="modes" role="tablist" aria-label="Juego">
+    <button type="button" class="mode" role="tab" data-mode="abc" aria-controls="carton" aria-selected="true"><span class="mname">Abecedario</span><span class="msub">9 fotos</span></button>
+    <button type="button" class="mode" role="tab" data-mode="bingo" aria-controls="carton" aria-selected="false" tabindex="-1"><span class="mname">B-I-N-G-O</span><span class="msub">15 fotos</span></button>
+    <button type="button" class="mode" role="tab" data-mode="letras" aria-controls="carton" aria-selected="false" tabindex="-1"><span class="mname">Letras escondidas</span><span class="msub">Una palabra</span></button>
+  </div>
+
+  <div class="field">
+    <label for="nombre">Tu nombre, para el collage</label>
+    <input type="text" id="nombre" maxlength="40" autocomplete="given-name" placeholder="Escribe tu nombre">
+  </div>
+
+  <div class="field">
+    <label for="lugar">¿Dónde corres hoy?</label>
+    <input type="text" id="lugar" maxlength="40" autocomplete="off" placeholder="Ej.: Parque del Este, Caracas">
+  </div>
+
+  <div class="desc" id="desc"></div>
+
+  <div class="word" id="word" hidden>
+    <span class="lbl" id="word-lbl">Tu palabra</span>
+    <div class="chips" id="chips" aria-labelledby="word-lbl"></div>
+    <div class="wordrow">
+      <label class="vh" for="palabra">Otra palabra</label>
+      <input type="text" id="palabra" maxlength="10" autocomplete="off" autocapitalize="characters" placeholder="Otra palabra">
+      <button type="button" class="btn" id="usar">Usar</button>
+    </div>
+  </div>
+
+  <section class="card" id="carton" role="tabpanel" aria-label="Tu cartón">
+    <div class="heads" id="heads" aria-hidden="true" hidden></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <div class="progress" aria-live="polite">
+    <span class="count" id="count">0/9<small>fotos</small></span>
+    <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  </div>
+
+  <div class="bingo" id="bingo" role="status" hidden><span class="bw" id="bw">¡Bingo!</span><span class="bs" id="bs"></span></div>
+  <p class="falta" id="falta" hidden>Ya tienes línea. Te falta la selfie del centro para cantar bingo.</p>
+
+  <div class="actions">
+    <button type="button" class="btn primary" id="armar" disabled>Armar mi collage</button>
+    <button type="button" class="btn" id="nuevo">Cartón nuevo</button>
+  </div>
+
+  <section class="result" id="result" hidden>
+    <h2>Comparte tu cartón</h2>
+    <div class="formats" aria-label="Formato de la imagen">
+      <button type="button" class="fmt" data-fmt="story" aria-pressed="true"><span class="fname">Stories IG</span><span class="fsub">1080 × 1920 · también estados de WhatsApp</span></button>
+      <button type="button" class="fmt" data-fmt="post" aria-pressed="false"><span class="fname">Feed IG</span><span class="fsub">1080 × 1350 (4:5) · también para el grupo</span></button>
+    </div>
+    <img id="collage-img" alt="Tu collage de Cumbre Feliz">
+    <div class="actions">
+      <button type="button" class="btn primary" id="compartir" hidden>Compartir imagen</button>
+      <button type="button" class="btn" id="guardar" hidden>Guardar imagen</button>
+      <a class="btn" id="wa" href="https://wa.me/" target="_blank" rel="noopener">Abrir WhatsApp</a>
+      <button type="button" class="btn" id="copiar">Copiar texto</button>
+    </div>
+    <p class="hint2">Si no puedes guardarla con el botón, mantén presionada la imagen y elige guardar.</p>
+    <label class="lbl" for="msg">Texto para tu publicación</label>
+    <textarea class="msg" id="msg" rows="4" readonly></textarea>
+    <ol class="steps">
+      <li><strong>Toca Compartir imagen</strong> y elige Instagram, WhatsApp o Guardar imagen. Si tu teléfono no muestra ese botón, toca Guardar imagen: queda en tu galería o en Descargas.</li>
+      <li><strong>Instagram:</strong> abre la app y toca +. Si bajaste Stories IG elige Historia; si bajaste Feed IG elige Publicación. Escoge la imagen y pega el texto.</li>
+      <li><strong>WhatsApp:</strong> toca Abrir WhatsApp, elige el grupo de Cumbre Feliz y adjunta la imagen desde tu galería.</li>
+    </ol>
+  </section>
+
+  <div class="notes">
+    <section>
+      <h2>Cómo jugar</h2>
+      <ul>
+        <li>Cada casilla es una letra: fotografía algo que empiece con ella. Vale cualquier cosa que encuentres en el camino.</li>
+        <li>El centro es <strong>Y de Yo</strong>: tu selfie, como te sientas. Una línea de tres más tu selfie es bingo; con las 9 fotos, ¡meta lograda!</li>
+        <li>Con tu meta lograda, toca <strong>Compartir mi cartón</strong>, elige Stories IG o Feed IG y súbelo a Instagram o al grupo de WhatsApp.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Reglas de Cumbre Feliz</h2>
+      <ul>
+        <li><strong>A tu ritmo.</strong> Aquí no hay ritmo mínimo. Si puedes conversar mientras corres, vas bien.</li>
+        <li>Para cada foto, detente. Nunca saques el teléfono cruzando la calle.</li>
+        <li>Gente en la foto, solo con su permiso.</li>
+        <li>Puedes tomar las fotos con tu cámara durante el rodaje y llenar el cartón al terminar.</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="foot">Tus fotos se quedan en tu teléfono, en este navegador. Nadie más las ve hasta que compartas tu collage.</p>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var LS = "bingo-flow-letras-v1";
+  var ABC = ["A","B","C","D","E","F","G","H","I","J","L","M","N","O","P","R","S","T","V"];
+  var HINT = {
+    A:"árbol, agua, arepa", B:"banco, bici, botella", C:"carro, cielo, cancha", D:"dulce, dibujo en una pared, dátiles",
+    E:"escultura, escalera, edificio", F:"flor, fuente, fruta", G:"grafiti, gorra, grama", H:"hoja, helado, huella",
+    I:"iglesia, insecto, tu inicial en un letrero", J:"jugo, jardín, juegos de parque", L:"lago, letrero, luna",
+    M:"mango, mural, moto", N:"nube, naranja, número", O:"orquídea, ojos de un mural, algo redondo",
+    P:"palma, puente, perro", R:"rama, rueda, roca", S:"sol, sombra, semáforo", T:"techo, tienda, tobogán",
+    V:"ventana, vereda, vaso"
+  };
+  var SHAPE = {
+    A:"un techo o una escalera de tijera", C:"una curva de reja o una luna", E:"una reja o una ventana con barras",
+    F:"una reja o una señal", H:"una baranda o una portería", I:"un poste o un tronco",
+    K:"ramas o una cerca", L:"la esquina de una acera o un poste con brazo", M:"un techo o un puente",
+    N:"una baranda o una reja", O:"una rueda, una tapa o un aro", S:"un camino curvo o una manguera",
+    T:"un poste de luz o un cruce", U:"una curva de tubo o una herradura", V:"dos ramas o una grieta",
+    W:"un techo en zigzag o una reja", X:"dos ramas cruzadas o una cerca", Y:"una rama que se abre en dos",
+    Z:"una escalera o una grieta"
+  };
+  var PRESETS = ["FLOW", "FELIZ", "CUMBRE", "42K"];
+  var BASE = location.href.split("#")[0];
+  var FIXED = "abc";
+  function parseReto(h) {
+    var m = /^#?reto-(abc|bingo|letras)(?:-([A-Z0-9]{2,10}))?$/.exec(h || "");
+    if (!m) return null;
+    var mode = m[1], p = m[2] || "";
+    if (mode === "abc") {
+      var ls = p.split("");
+      if (ls.length !== 8 || ls.some(function (l) { return ABC.indexOf(l) < 0; }) || new Set(ls).size !== 8) return null;
+      p = ls.sort().join("");
+    } else if (mode === "letras") {
+      if (p.length < 2) return null;
+    } else p = "";
+    if (FIXED && mode !== FIXED) return null;
+    return { mode:mode, p:p, key:mode + ":" + p };
+  }
+  function retoToken(r) { return "reto-" + r.mode + (r.p ? "-" + r.p : ""); }
+  function describeReto(r) {
+    if (r.mode === "abc") return "Abecedario con las letras " + r.p.split("").join(", ") + ".";
+    if (r.mode === "bingo") return "B-I-N-G-O: cada columna, una letra.";
+    return "Letras escondidas: escribe " + r.p + " con fotos.";
+  }
+  var MODE_LABEL = { abc:"Abecedario", bingo:"B-I-N-G-O", letras:"Letras" };
+  var L3 = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  var LB = [[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[0,5,10],[1,6,11],[2,7,12],[3,8,13],[4,9,14]];
+
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function rid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]; }); }
+  function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function fmtLong(d) { try { return d.toLocaleDateString("es", { day:"numeric", month:"long", year:"numeric" }); } catch (e) { return ymd(d); } }
+  function cleanWord(w) { return String(w || "").toUpperCase().normalize("NFD").replace(/Ñ/g, "Ñ").replace(/[̀-ͯ]/g, "").replace(/[^A-ZÑ0-9]/g, "").slice(0, 10); }
+
+  function newCard(mode, word, letters) {
+    var slots = [];
+    if (mode === "abc") {
+      var ls = letters && letters.length === 8 ? letters.slice().sort() : shuffle(ABC.slice()).slice(0, 8).sort();
+      ls.forEach(function (l) { slots.push({ l:l }); });
+      slots.splice(4, 0, { l:"Y", c:1 });
+    } else if (mode === "bingo") {
+      for (var r = 0; r < 3; r++) for (var c = 0; c < 5; c++) slots.push({ l:"BINGO".charAt(c) });
+      slots[7].c = 1;
+    } else {
+      var w = cleanWord(word) || "FLOW";
+      if (w.length < 2) w = "FLOW";
+      w.split("").forEach(function (l) { slots.push({ l:l }); });
+    }
+    return { id:rid(), mode:mode, reto:"", word:mode === "letras" ? slots.map(function (s) { return s.l; }).join("") : "", slots:slots, filled:slots.map(function () { return false; }) };
+  }
+  function cleanCard(mode, c) {
+    if (!c || c.mode !== mode || typeof c.id !== "string" || !/^[a-z0-9]{6,40}$/.test(c.id) || !Array.isArray(c.slots) || !Array.isArray(c.filled)) return null;
+    var n = c.slots.length;
+    if ((mode === "abc" && n !== 9) || (mode === "bingo" && n !== 15) || (mode === "letras" && (n < 2 || n > 10)) || c.filled.length !== n) return null;
+    for (var i = 0; i < n; i++) { var s = c.slots[i]; if (!s || typeof s.l !== "string" || !/^[A-ZÑ0-9]$/.test(s.l)) return null; }
+    return {
+      id:c.id, mode:mode, reto:typeof c.reto === "string" && c.reto.length <= 20 ? c.reto : "", word:mode === "letras" ? c.slots.map(function (s) { return s.l; }).join("") : "",
+      slots:c.slots.map(function (s) { return s.c ? { l:s.l, c:1 } : { l:s.l }; }),
+      filled:c.filled.map(function (f) { return !!f; })
+    };
+  }
+
+  function linesOf(card) { return card.mode === "abc" ? L3 : card.mode === "bingo" ? LB : [card.slots.map(function (_, i) { return i; })]; }
+  function doneLines(card, filled) { return linesOf(card).filter(function (L) { return L.every(function (i) { return filled[i]; }); }); }
+  function centerIdx(card) { return card.mode === "abc" ? 4 : card.mode === "bingo" ? 7 : -1; }
+  function isWin(card, filled) {
+    var d = doneLines(card, filled);
+    if (card.mode === "abc") return !!filled[4] && d.length > 0;
+    return d.length > 0;
+  }
+  function countOf(filled) { return filled.filter(Boolean).length; }
+  function stampOf(card, filled) {
+    var n = countOf(filled), total = filled.length;
+    if (card.mode === "letras") return n === total ? "PALABRA COMPLETA" : "";
+    if (n === total) return "¡META LOGRADA!";
+    return isWin(card, filled) ? "¡BINGO!" : "";
+  }
+  function colsOf(card) {
+    if (card.mode === "abc") return 3;
+    if (card.mode === "bingo") return 5;
+    var n = card.slots.length;
+    return n <= 5 ? n : Math.ceil(n / 2);
+  }
+  function hintOf(card, i) {
+    var s = card.slots[i];
+    if (card.mode === "abc") return s.c ? "Y de Yo: tu selfie" : "Ej.: " + (HINT[s.l] || "");
+    if (card.mode === "bingo") return s.c ? "N de Nosotros" : "";
+    return SHAPE[s.l] ? "Busca " + SHAPE[s.l] : "Búscala en rejas, ramas, sombras o tu cuerpo";
+  }
+  function nameOf(card, i) {
+    var s = card.slots[i];
+    if (s.c) return card.mode === "abc" ? "Y de Yo" : "N de Nosotros";
+    return card.mode === "letras" ? "Letra " + s.l : "Letra " + s.l;
+  }
+
+  /* ---------- estado ---------- */
+  var state = { mode:"abc", nombre:"", lugar:"", fmt:"story", cards:{} };
+  var urls = {}, idbOk = true, downloads = null, lastCollage = null, lastStamp = null;
+  var reto = null;
+  function freshCard(mode, prev) {
+    if (reto && reto.mode === mode) {
+      var nc = newCard(mode, mode === "letras" ? reto.p : "", mode === "abc" ? reto.p.split("") : null);
+      nc.reto = reto.key; return nc;
+    }
+    return newCard(mode, prev ? prev.word : "FLOW");
+  }
+  function applyReto() {
+    reto = parseReto(location.hash);
+    if (!reto) return;
+    state.mode = reto.mode;
+    var c = state.cards[reto.mode];
+    if (c.reto !== reto.key) { dropPhotos(c); state.cards[reto.mode] = freshCard(reto.mode); }
+  }
+
+  function loadLocal() {
+    var s = null;
+    try { var raw = localStorage.getItem(LS); if (raw) s = JSON.parse(raw); } catch (e) { s = null; }
+    ["abc", "bingo", "letras"].forEach(function (m) { state.cards[m] = (s && s.cards && cleanCard(m, s.cards[m])) || newCard(m, "FLOW"); });
+    if (s && (s.mode === "abc" || s.mode === "bingo" || s.mode === "letras")) state.mode = s.mode;
+    if (s && typeof s.nombre === "string") state.nombre = s.nombre.slice(0, 40);
+    else { try { var o = JSON.parse(localStorage.getItem("bingo-sendero-caracas-9") || "null"); if (o && typeof o.nombre === "string") state.nombre = o.nombre.slice(0, 40); } catch (e) {} }
+    if (s && (s.fmt === "story" || s.fmt === "post")) state.fmt = s.fmt;
+    if (s && typeof s.lugar === "string") state.lugar = s.lugar.slice(0, 40);
+    if (FIXED) state.mode = FIXED;
+  }
+  function saveLocal() { try { localStorage.setItem(LS, JSON.stringify({ mode:state.mode, nombre:state.nombre, lugar:state.lugar, fmt:state.fmt, cards:state.cards })); } catch (e) {} }
+
+  /* ---------- fotos en el teléfono ---------- */
+  function openIdb() {
+    return new Promise(function (res) {
+      try {
+        var rq = indexedDB.open("bingo-flow-letras", 1);
+        rq.onupgradeneeded = function () { rq.result.createObjectStore("fotos"); };
+        rq.onsuccess = function () { res(rq.result); };
+        rq.onerror = function () { res(null); };
+        rq.onblocked = function () { res(null); };
+      } catch (e) { res(null); }
+    });
+  }
+  var idbReady = openIdb();
+  function idbOp(mode, fn) {
+    return idbReady.then(function (db) {
+      if (!db) return null;
+      return new Promise(function (res) {
+        try {
+          var tx = db.transaction("fotos", mode), st = tx.objectStore("fotos"), out = { v:null };
+          fn(st, out);
+          tx.oncomplete = function () { res(out.v === null ? true : out.v); };
+          tx.onerror = tx.onabort = function () { res(null); };
+        } catch (e) { res(null); }
+      });
+    });
+  }
+  function idbPut(k, b) { return idbOp("readwrite", function (st) { st.put(b, k); }); }
+  function idbDel(k) { return idbOp("readwrite", function (st) { st.delete(k); }); }
+  function idbGet(k) { return idbOp("readonly", function (st, out) { var rq = st.get(k); rq.onsuccess = function () { out.v = rq.result || false; }; }).then(function (v) { return v instanceof Blob ? v : null; }); }
+
+  /* ---------- DOM ---------- */
+  function $(id) { return document.getElementById(id); }
+  var grid = $("grid"), heads = $("heads"), banner = $("bingo");
+  var modes = Array.prototype.slice.call(document.querySelectorAll(".mode"));
+  var avisoEl = $("aviso"), avisoTimer = null;
+  function aviso(m) { avisoEl.textContent = m; avisoEl.hidden = false; clearTimeout(avisoTimer); avisoTimer = setTimeout(function () { avisoEl.hidden = true; }, 6500); }
+  function card() { return state.cards[state.mode]; }
+
+  function renderDesc() {
+    var m = state.mode, d = $("desc");
+    if (m === "abc") {
+      d.innerHTML = "<p>Cada casilla es una letra: fotografía algo que empiece con ella. El centro es <b>Y de Yo</b>, tu selfie, y canta el bingo junto con cualquier línea de tres.</p>";
+    } else if (m === "bingo") {
+      d.innerHTML = "<p>Cada columna es una letra de BINGO. En cada casilla va algo distinto que empiece con la letra de su columna. El centro es <b>N de Nosotros</b>: selfie o foto de grupo. Una fila o una columna completa es bingo.</p>" +
+        '<ul class="hints"><li><b>B</b> banco, bici, botella, bandera</li><li><b>I</b> iglesia, insecto, tu inicial en un letrero</li><li><b>N</b> nube, naranja, número, nido</li><li><b>G</b> grafiti, gorra, grama, gato</li><li><b>O</b> orquídea, ojos de un mural, algo redondo</li></ul>';
+    } else {
+      d.innerHTML = "<p>Elige una palabra y búscala letra por letra en formas de la calle o la naturaleza: una rama en Y, una rueda en O, un poste en I. También vale hacer la letra con tu cuerpo o con el grupo.</p>";
+    }
+    $("word").hidden = m !== "letras" || !!reto;
+    document.querySelector(".modes").hidden = !!reto || !!FIXED;
+    $("retobox").hidden = !reto;
+    if (reto) $("retobox").innerHTML = "<b>Reto del día de Cumbre Feliz</b>" + esc(describeReto(reto));
+    if (m === "letras" && !reto) {
+      var w = card().word, own = cleanWord(state.nombre);
+      var list = PRESETS.slice(); if (own.length >= 2 && list.indexOf(own) < 0) list.push(own);
+      $("chips").innerHTML = list.map(function (p) { return '<button type="button" class="chip" data-w="' + esc(p) + '" aria-pressed="' + (p === w ? "true" : "false") + '">' + esc(p) + "</button>"; }).join("");
+    }
+  }
+
+  function render() {
+    var c = card(), n = c.slots.length, cols = colsOf(c), win = isWin(c, c.filled), cidx = centerIdx(c);
+    modes.forEach(function (b) { var on = b.getAttribute("data-mode") === state.mode; b.setAttribute("aria-selected", on ? "true" : "false"); b.tabIndex = on ? 0 : -1; });
+    $("carton").className = "card m-" + c.mode;
+    grid.style.gridTemplateColumns = "repeat(" + cols + ", minmax(0,1fr))";
+    heads.hidden = c.mode !== "bingo";
+    heads.style.gridTemplateColumns = "repeat(5, minmax(0,1fr))";
+    heads.innerHTML = c.mode === "bingo" ? "BINGO".split("").map(function (l) { return "<span>" + l + "</span>"; }).join("") : "";
+
+    var winCells = {};
+    if (win) doneLines(c, c.filled).forEach(function (L) { L.forEach(function (i) { winCells[i] = 1; }); });
+    var html = "";
+    for (var i = 0; i < n; i++) {
+      var s = c.slots[i], key = c.id + ":" + i, url = urls[key], f = c.filled[i];
+      html += '<div class="tile' + (f ? " filled" : "") + (s.c ? " center" : "") + (winCells[i] ? " win" : "") + '">' +
+        '<label class="tlabel" for="foto-' + i + '"><input type="file" class="vh" id="foto-' + i + '" accept="image/*" data-s="' + i + '">';
+      if (url) html += '<img src="' + esc(url) + '" alt="">';
+      if (f) {
+        html += '<span class="badge">' + esc(s.c ? (c.mode === "abc" ? "YO" : "N") : s.l) + '</span><span class="vh">' + esc(nameOf(c, i)) + ". Toca para cambiar la foto.</span>";
+        if (!url) html += '<span class="loading">Cargando…</span>';
+      } else {
+        html += '<span class="big">' + esc(s.l) + '</span>';
+        var h = hintOf(c, i); if (h) html += '<span class="hint">' + esc(h) + "</span>";
+        if (c.mode !== "bingo") html += '<span class="add">foto</span>';
+        html += '<span class="vh">' + esc(nameOf(c, i)) + ". Agregar foto.</span>";
+      }
+      html += "</label>";
+      if (f) html += '<button type="button" class="x" data-s="' + i + '" aria-label="Quitar la foto de ' + esc(nameOf(c, i)) + '">Quitar</button>';
+      html += "</div>";
+    }
+    grid.innerHTML = html;
+
+    var k = countOf(c.filled);
+    $("count").innerHTML = k + "/" + n + "<small>fotos</small>";
+    $("barfill").style.width = Math.round(k / n * 100) + "%";
+    var armar = $("armar");
+    armar.disabled = k === 0;
+    if (armar.textContent !== "Armando…") armar.textContent = k === n ? "Compartir mi cartón" : "Armar mi collage";
+    var nuevo = $("nuevo"); if (nuevo !== armedBtn) nuevo.textContent = "Cartón nuevo";
+    nuevo.hidden = (c.mode === "letras" || !!reto) && k === 0;
+
+    var st = stampOf(c, c.filled), key2 = c.id + ":" + st;
+    if (st) {
+      banner.hidden = false;
+      $("bw").textContent = st === "¡BINGO!" ? "¡Bingo!" : st === "¡META LOGRADA!" ? "¡Meta lograda!" : "¡Palabra completa!";
+      $("bs").textContent = st === "¡BINGO!" ? (c.mode === "abc" ? "Línea con tu selfie" : "Fila o columna completa") : "Toca Compartir mi cartón para subirlo a Instagram o WhatsApp.";
+      if (lastStamp !== null && key2 !== lastStamp) { banner.classList.remove("pop"); void banner.offsetWidth; banner.classList.add("pop"); }
+    } else banner.hidden = true;
+    lastStamp = st ? key2 : "";
+    $("falta").hidden = !(c.mode === "abc" && !c.filled[cidx] && doneLines(c, c.filled).length > 0);
+  }
+
+  /* ---------- fotos ---------- */
+  function loadImg(src) { return new Promise(function (res) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { res(null); }; im.src = src; }); }
+  function shrink(file) {
+    var u = URL.createObjectURL(file);
+    return loadImg(u).then(function (im) {
+      URL.revokeObjectURL(u);
+      if (!im || !im.naturalWidth) throw new Error("decode");
+      var max = 1000, w = im.naturalWidth, h = im.naturalHeight, sc = Math.min(1, max / Math.max(w, h));
+      var cw = Math.round(w * sc), ch = Math.round(h * sc), cv = document.createElement("canvas");
+      cv.width = cw; cv.height = ch; cv.getContext("2d").drawImage(im, 0, 0, cw, ch);
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("encode")); }, "image/jpeg", 0.82); });
+    });
+  }
+  grid.addEventListener("change", function (e) {
+    var input = e.target; if (!input || input.type !== "file") return;
+    var i = Number(input.getAttribute("data-s")), file = input.files && input.files[0];
+    input.value = "";
+    if (!file) return;
+    var c = card(), key = c.id + ":" + i;
+    shrink(file).then(function (blob) {
+      if (state.cards[c.mode] !== c) return;
+      if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} }
+      urls[key] = URL.createObjectURL(blob);
+      c.filled[i] = true; saveLocal(); render();
+      idbPut(key, blob).then(function (ok) { if (!ok && idbOk) { idbOk = false; aviso("Este navegador no deja guardar las fotos: arma tu collage antes de cerrar la página."); } });
+    }).catch(function () { aviso("No pude leer esa foto. Prueba con otra o con una captura de pantalla."); });
+  });
+
+  var armedBtn = null, armTimer = null, armedLabel = "";
+  function disarm() { if (armedBtn) { armedBtn.classList.remove("armed"); armedBtn.textContent = armedLabel; armedBtn = null; } clearTimeout(armTimer); }
+  function confirmTap(btn, needed, label) {
+    if (!needed) { disarm(); return true; }
+    if (armedBtn === btn) { disarm(); return true; }
+    disarm(); armedBtn = btn; armedLabel = btn.textContent; btn.classList.add("armed"); btn.textContent = label || "Toca otra vez para confirmar";
+    armTimer = setTimeout(disarm, 3500); return false;
+  }
+  function dropPhotos(c) {
+    c.slots.forEach(function (_, i) { var key = c.id + ":" + i; if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (e) {} delete urls[key]; } if (c.filled[i]) idbDel(key); });
+  }
+
+  grid.addEventListener("click", function (e) {
+    var b = e.target.closest(".x"); if (!b) return;
+    if (!confirmTap(b, true, "¿Quitar?")) return;
+    var i = Number(b.getAttribute("data-s")), c = card(), key = c.id + ":" + i;
+    if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} delete urls[key]; }
+    c.filled[i] = false; idbDel(key); saveLocal(); render();
+  });
+
+  $("nuevo").addEventListener("click", function () {
+    var c = card();
+    if (!confirmTap(this, countOf(c.filled) > 0, "Se borran tus fotos. Toca otra vez")) return;
+    dropPhotos(c);
+    state.cards[state.mode] = freshCard(state.mode, c);
+    lastStamp = null; $("result").hidden = true; saveLocal(); renderDesc(); render();
+  });
+
+  function setWord(w, btn) {
+    w = cleanWord(w);
+    if (w.length < 2) { aviso("Escribe una palabra de 2 a 10 letras o números."); return; }
+    var c = state.cards.letras;
+    if (w === c.word) return;
+    if (btn && !confirmTap(btn, countOf(c.filled) > 0, "Cambia la palabra y borra fotos")) return;
+    dropPhotos(c);
+    state.cards.letras = newCard("letras", w);
+    lastStamp = null; $("result").hidden = true; saveLocal(); renderDesc(); render();
+  }
+  $("chips").addEventListener("click", function (e) { var b = e.target.closest(".chip"); if (b) setWord(b.getAttribute("data-w"), b); });
+  $("usar").addEventListener("click", function () { setWord($("palabra").value, this); });
+  $("palabra").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); setWord(this.value, $("usar")); } });
+
+  function selectMode(m) {
+    if (!state.cards[m]) return;
+    state.mode = m; disarm(); lastStamp = null; $("result").hidden = true; saveLocal(); renderDesc(); render();
+  }
+  modes.forEach(function (b, idx) {
+    b.addEventListener("click", function () { selectMode(b.getAttribute("data-mode")); });
+    b.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!d) return;
+      e.preventDefault(); var nb = modes[(idx + d + modes.length) % modes.length]; selectMode(nb.getAttribute("data-mode")); nb.focus();
+    });
+  });
+  var nombre = $("nombre");
+  var lugarIn = $("lugar");
+  lugarIn.addEventListener("input", function () { state.lugar = lugarIn.value.slice(0, 40); saveLocal(); });
+  nombre.addEventListener("input", function () { state.nombre = nombre.value.slice(0, 40); saveLocal(); if (state.mode === "letras") renderDesc(); });
+
+  /* ---------- collage ---------- */
+  function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+  function fitFont(g, text, weight, family, start, min, maxW) { var size = start; do { g.font = weight + " " + size + "px " + family; size -= 4; } while (g.measureText(text).width > maxW && size >= min); }
+  function wrapText(g, text, maxW) { var words = String(text).split(" "), lines = [], cur = ""; words.forEach(function (w) { var t = cur ? cur + " " + w : w; if (g.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }); if (cur) lines.push(cur); return lines; }
+
+  /* Logo de Cumbre Feliz: cordillera con el sol en la cumbre más alta (caja útil x 4–116, y −10–54 del dibujo). */
+  function drawLogo(g, x, base, h, color) {
+    var s = h / 64, wt = 1.25;
+    g.save(); g.translate(x - 4 * s, base - 54 * s); g.scale(s, s);
+    g.strokeStyle = color; g.lineCap = "round"; g.lineJoin = "round";
+    function seg(p, w) { g.lineWidth = w * wt; g.beginPath(); g.moveTo(p[0], p[1]); for (var i = 2; i < p.length; i += 2) g.lineTo(p[i], p[i + 1]); g.stroke(); }
+    seg([6, 54, 34, 26, 50, 42, 66, 20, 96, 54], 3.4);
+    seg([76, 54, 90, 34, 114, 54], 2.6);
+    g.lineWidth = 3 * wt; g.beginPath(); g.arc(66, 9, 8, 0, Math.PI * 2); g.stroke();
+    [[66, -3, 66, -8], [55, 2, 50, -2], [77, 2, 82, -2], [50, 13, 44, 13], [82, 13, 88, 13]].forEach(function (r) { seg(r, 2.6); });
+    g.restore();
+    return 112 * s;
+  }
+  /* Logo + CUMBRE FELIZ en una sola línea; el logo mide un poco más que las mayúsculas. */
+  function drawLockup(g, x, base, maxW, start, min, color, center, family) {
+    var f = start, tw, lw, gap;
+    for (;;) {
+      g.font = "800 " + f + "px " + family; tw = g.measureText("CUMBRE FELIZ").width;
+      lw = 112 * (f * 0.8) / 64; gap = f * 0.14;
+      if (lw + gap + tw <= maxW || f <= min) break;
+      f -= 4;
+    }
+    var total = lw + gap + tw, x0 = center ? x - total / 2 : x;
+    drawLogo(g, x0, base, f * 0.8, color);
+    g.fillStyle = color; g.textAlign = "left"; g.fillText("CUMBRE FELIZ", x0 + lw + gap, base);
+    return total;
+  }
+
+  function buildCollage(fmt) {
+    var c = card(), story = fmt === "story", n = c.slots.length, cols = colsOf(c), rows = Math.ceil(n / cols);
+    var W = 1080, H = story ? 1920 : 1350, G = 12, REG = 984, REGH = story ? 960 : 984;
+    var BG = "#15251B", PAPER = "#EEF2EA", LIGHT = "#B9C7B6", STAMP = "#EFE6D2", SAGE = "#A9C6A1", INK = "#15251B", TILE = "#22352A", TILE_LINE = "#3D5546", SOFT = "#2B3D31";
+    var DISPLAY = '"Barlow Condensed", "Arial Narrow", sans-serif', BODY = '"Overpass", system-ui, sans-serif', MONO = '"Overpass Mono", ui-monospace, monospace';
+    var headH = c.mode === "bingo" ? 84 : 0;
+    var C = Math.min(480, (REG - (cols - 1) * G) / cols, (REGH - headH - (rows - 1) * G) / rows);
+    var gridW = cols * C + (cols - 1) * G, gridH = rows * C + (rows - 1) * G;
+    var regTop = story ? 420 : 272;
+    var gx = (W - gridW) / 2, gy = regTop + (REGH - gridH - headH) / 2 + headH;
+    var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load("800 120px " + DISPLAY), document.fonts.load("600 28px " + MONO), document.fonts.load("700 28px " + BODY)]).catch(function () {}) : Promise.resolve();
+    return fontsReady.then(function () {
+      return Promise.all(c.slots.map(function (_, i) { var u = urls[c.id + ":" + i]; return c.filled[i] && u ? loadImg(u) : null; }));
+    }).then(function (imgs) {
+      var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      var g = cv.getContext("2d");
+      g.fillStyle = BG; g.fillRect(0, 0, W, H);
+      g.save(); g.strokeStyle = "rgba(238,242,234,0.07)"; g.lineWidth = 2;
+      for (var r = 1; r <= 9; r++) { g.beginPath(); g.ellipse(W - 120, story ? 230 : 120, 70 * r, 46 * r, -0.25 + r * 0.04, 0, Math.PI * 2); g.stroke(); }
+      g.restore();
+
+      var got = imgs.map(function (x) { return !!x; }), k = countOf(got), today = new Date();
+      var stamp = stampOf(c, got), lines = isWin(c, got) ? doneLines(c, got) : [];
+      var who = ((state.nombre || "").trim() || "Mi rodaje").toUpperCase();
+      var place = (state.lugar || "").trim();
+      var sub = "BINGO FLOW · " + (reto ? "RETO DEL DÍA · " : "") + (c.mode === "letras" ? c.word : MODE_LABEL[c.mode].toUpperCase());
+      g.textBaseline = "alphabetic";
+      var stampFs = story ? 42 : 38;
+      if (stamp && !story) {
+        g.font = "800 90px " + DISPLAY;
+        var maxSW = REG - g.measureText("CUMBRE FELIZ").width - 90 * 1.54 - 32;
+        g.font = "800 " + stampFs + "px " + DISPLAY;
+        while (g.measureText(stamp).width + stampFs > maxSW && stampFs > 28) { stampFs -= 2; g.font = "800 " + stampFs + "px " + DISPLAY; }
+      }
+      g.font = "800 " + stampFs + "px " + DISPLAY;
+      var stampW = stamp ? Math.max(stampFs * 4, g.measureText(stamp).width + stampFs) : 0;
+
+      if (story) {
+        g.textAlign = "center";
+        drawLockup(g, W / 2, 330, REG, 96, 64, STAMP, true, DISPLAY); g.textAlign = "center";
+        g.fillStyle = SAGE; fitFont(g, sub, "600", MONO, 30, 18, REG); g.fillText(sub, W / 2, 382);
+      } else {
+        g.textAlign = "left";
+        drawLockup(g, 48, 150, REG - (stampW ? stampW + 32 : 0), 80, 52, STAMP, false, DISPLAY);
+        g.fillStyle = SAGE; fitFont(g, sub, "600", MONO, 26, 18, REG - (stampW ? stampW + 32 : 0)); g.fillText(sub, 48, 196);
+        g.fillStyle = PAPER; var whoLine = who + " • " + (place ? place + " • " : "") + fmtLong(today); fitFont(g, whoLine, "700", BODY, 28, 18, REG); g.fillText(whoLine, 48, 240);
+      }
+
+      if (c.mode === "bingo") {
+        g.textAlign = "center"; g.fillStyle = STAMP; g.font = "800 " + Math.round(Math.min(76, C * 0.42)) + "px " + DISPLAY;
+        for (var hc = 0; hc < 5; hc++) g.fillText("BINGO".charAt(hc), gx + hc * (C + G) + C / 2, gy - 18);
+      }
+
+      var badgeSize = Math.max(28, Math.round(C * 0.2));
+      for (var i = 0; i < n; i++) {
+        var s = c.slots[i], im = imgs[i], x = gx + (i % cols) * (C + G), y = gy + Math.floor(i / cols) * (C + G);
+        var badge = s.c ? (c.mode === "abc" ? "YO" : "N") : s.l;
+        g.save(); roundRect(g, x, y, C, C, 16); g.clip();
+        if (im) {
+          var iw = im.naturalWidth, ih = im.naturalHeight, kk = Math.max(C / iw, C / ih), dw = C / kk, dh = C / kk;
+          g.drawImage(im, (iw - dw) / 2, (ih - dh) / 2, dw, dh, x, y, C, C);
+        } else {
+          g.fillStyle = s.c ? SOFT : TILE; g.fillRect(x, y, C, C);
+          g.fillStyle = s.c ? STAMP : LIGHT; g.textAlign = "center"; g.font = "800 " + Math.round(C * 0.5) + "px " + DISPLAY;
+          g.fillText(s.l, x + C / 2, y + C / 2 + C * 0.17);
+        }
+        g.restore();
+        if (im) {
+          g.save(); g.font = "800 " + badgeSize + "px " + DISPLAY;
+          var bw = Math.max(badgeSize * 1.25, g.measureText(badge).width + badgeSize * 0.6), bh = badgeSize * 1.2, bx = x + 10, by = y + 10;
+          roundRect(g, bx, by, bw, bh, 8); g.fillStyle = STAMP; g.fill();
+          g.fillStyle = INK; g.textAlign = "center"; g.fillText(badge, bx + bw / 2, by + bh * 0.82);
+          g.restore();
+        }
+        if (s.c) { g.save(); g.strokeStyle = "rgba(239,230,210,.75)"; g.lineWidth = Math.max(3, C * 0.012); roundRect(g, x + 2, y + 2, C - 4, C - 4, 14); g.stroke(); g.restore(); }
+        else if (!im) { g.save(); g.setLineDash([10, 8]); g.strokeStyle = TILE_LINE; g.lineWidth = 2.5; roundRect(g, x + 1.5, y + 1.5, C - 3, C - 3, 15); g.stroke(); g.restore(); }
+      }
+
+      if (k < n && lines.length) {
+        var win = {}; lines.forEach(function (L) { L.forEach(function (j) { win[j] = 1; }); });
+        g.save(); g.strokeStyle = SAGE; g.lineWidth = 5;
+        Object.keys(win).forEach(function (kk2) { var j = Number(kk2); if (c.slots[j].c) return; var x2 = gx + (j % cols) * (C + G), y2 = gy + Math.floor(j / cols) * (C + G); roundRect(g, x2 + 4, y2 + 4, C - 8, C - 8, 12); g.stroke(); });
+        g.restore();
+      }
+
+      if (stamp) {
+        g.save(); g.font = "800 " + stampFs + "px " + DISPLAY;
+        var sh = Math.round(stampFs * 1.55), cx = story ? W / 2 : W - 48 - stampW / 2 - 6, cy = story ? regTop + REGH + 58 : 118;
+        g.translate(cx, cy); g.rotate(-0.06);
+        g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 18; g.shadowOffsetY = 6;
+        roundRect(g, -stampW / 2, -sh / 2, stampW, sh, 10); g.fillStyle = STAMP; g.fill();
+        g.shadowColor = "transparent"; g.fillStyle = INK; g.textAlign = "center"; g.fillText(stamp, 0, Math.round(stampFs * 0.35));
+        g.restore();
+      }
+
+      if (story) {
+        g.textAlign = "center";
+        g.fillStyle = PAPER; fitFont(g, who, "800", DISPLAY, 84, 44, REG); g.fillText(who, W / 2, 1556);
+        g.fillStyle = LIGHT;
+        var info = fmtLong(today) + (place ? " • " + place : "") + " • " + k + "/" + n + " fotos";
+        fitFont(g, info, "700", BODY, 30, 20, REG); g.fillText(info, W / 2, 1610);
+        g.fillStyle = SAGE; g.font = "600 32px " + MONO; g.fillText("#CumbreFeliz  #BingoFlow", W / 2, 1664);
+      } else {
+        g.textAlign = "left"; g.fillStyle = SAGE; g.font = "600 28px " + MONO; g.fillText("#CumbreFeliz #BingoFlow", 48, H - 34);
+        g.textAlign = "right"; g.fillStyle = LIGHT; g.font = "700 28px " + BODY; g.fillText(k + "/" + n + " fotos • A mi ritmo", W - 48, H - 34);
+      }
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("canvas")); }, "image/jpeg", 0.9); });
+    });
+  }
+
+  function groupMessage() {
+    var m0 = baseMessage(), p0 = (state.lugar || "").trim();
+    return p0 ? m0.replace(" #CumbreFeliz", " Hoy en " + p0 + ". #CumbreFeliz") : m0;
+  }
+  function baseMessage() {
+    var c = card(), k = countOf(c.filled), n = c.filled.length, st = stampOf(c, c.filled);
+    if (c.mode === "letras") {
+      return st ? "¡Escribí " + c.word + " con fotos en el Bingo Flow de Cumbre Feliz! Cada letra la encontré en mi rodaje. #CumbreFeliz #BingoFlow"
+                : "Voy " + k + "/" + n + " letras de " + c.word + " en el Bingo Flow de Cumbre Feliz. #CumbreFeliz #BingoFlow";
+    }
+    var name = c.mode === "abc" ? "Bingo Flow Abecedario" : "Bingo Flow B-I-N-G-O";
+    if (st === "¡META LOGRADA!") return "¡Meta lograda en el " + name + " de Cumbre Feliz! " + n + " fotos de mi rodaje, a mi ritmo. Juega, corre y fluye. #CumbreFeliz #BingoFlow";
+    if (st) return "¡Bingo! Canté línea en el " + name + " de Cumbre Feliz. Llevo " + k + "/" + n + " fotos. #CumbreFeliz #BingoFlow";
+    return "Llevo " + k + "/" + n + " fotos del " + name + " de Cumbre Feliz. El próximo rodaje canto bingo. #CumbreFeliz #BingoFlow";
+  }
+  function renderFormats() { Array.prototype.forEach.call(document.querySelectorAll(".fmt"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-fmt") === state.fmt ? "true" : "false"); }); }
+  function makeCollage() {
+    return buildCollage(state.fmt).then(function (blob) {
+      if (lastCollage) { try { URL.revokeObjectURL(lastCollage.url); } catch (e) {} }
+      lastCollage = { blob:blob, url:URL.createObjectURL(blob), date:new Date(), fmt:state.fmt, mode:state.mode };
+      $("collage-img").src = lastCollage.url;
+      var text = groupMessage(); $("msg").value = text; $("wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
+      $("guardar").hidden = !downloads; $("compartir").hidden = !canShareFiles; renderFormats(); $("result").hidden = false;
+    });
+  }
+  $("armar").addEventListener("click", function () {
+    var btn = this; btn.disabled = true; btn.textContent = "Armando…";
+    makeCollage().then(function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      try { $("result").scrollIntoView({ block:"start", behavior:reduce ? "auto" : "smooth" }); } catch (e) {}
+    }).catch(function () { aviso("No se pudo armar el collage. Revisa que tus fotos hayan cargado y vuelve a intentar."); })
+      .then(function () { btn.textContent = "Armar mi collage"; render(); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".fmt"), function (b) {
+    b.addEventListener("click", function () {
+      var f = b.getAttribute("data-fmt"); if (f === state.fmt) return;
+      state.fmt = f; saveLocal(); renderFormats();
+      makeCollage().catch(function () { aviso("No se pudo armar el collage en ese formato. Vuelve a intentar."); });
+    });
+  });
+  $("guardar").addEventListener("click", function () {
+    if (!downloads || !lastCollage) return;
+    var btn = this; btn.disabled = true;
+    var name = "cumbre-feliz-bingo-flow-" + lastCollage.mode + "-" + (lastCollage.fmt === "story" ? "stories-ig" : "feed-ig") + "-" + ymd(lastCollage.date) + ".jpg";
+    downloads.save({ filename:name, data:lastCollage.blob }).then(function () { aviso("Imagen guardada. Ahora súbela a Instagram o mándala por WhatsApp."); })
+      .catch(function (e) {
+        if (e && e.code === "declined") return;
+        if (e && e.code === "rate_limited") { aviso("Ya hay una descarga abierta. Termina esa y vuelve a intentar."); return; }
+        aviso("No se pudo guardar con el botón. Mantén presionada la imagen y elige guardar.");
+      }).then(function () { btn.disabled = false; });
+  });
+  $("copiar").addEventListener("click", function () {
+    var ta = $("msg"), text = ta.value;
+    var fallback = function () { ta.focus(); ta.select(); aviso("Texto seleccionado: cópialo y pégalo en tu publicación."); };
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { aviso("Texto copiado. Pégalo en Instagram o en el grupo."); }, fallback); else fallback(); } catch (e) { fallback(); }
+  });
+
+  /* ---------- reto del día (solo la organizadora) ---------- */
+  var isOwner = false, oMode = "abc", oLetters = [];
+  function orgReto() {
+    if (oMode === "bingo") return parseReto("reto-bingo");
+    if (oMode === "abc") return oLetters.length === 8 ? parseReto("reto-abc-" + oLetters.slice().sort().join("")) : null;
+    var w = cleanWord($("o-word").value).replace(/Ñ/g, "N");
+    return w.length >= 2 ? parseReto("reto-letras-" + w) : null;
+  }
+  function linkFor(r) { return BASE + "#" + retoToken(r); }
+  function renderOrg() {
+    var box = $("organiza"); box.hidden = !isOwner || FIXED === "bingo"; if (box.hidden) return;
+    $("o-modes").hidden = !!FIXED;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-om]"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-om") === oMode ? "true" : "false"); });
+    $("o-abc").hidden = oMode !== "abc";
+    $("o-letras").hidden = oMode !== "letras";
+    $("o-letters").innerHTML = ABC.map(function (l) { return '<button type="button" class="chip" data-ol="' + l + '" aria-pressed="' + (oLetters.indexOf(l) >= 0 ? "true" : "false") + '">' + l + "</button>"; }).join("");
+    $("o-n").textContent = oLetters.length;
+    var r = orgReto();
+    $("o-link").value = r ? linkFor(r) : (oMode === "abc" ? "Elige 8 letras para crear el enlace" : "Escribe una palabra de 2 a 10 letras");
+    $("o-copiar").disabled = !r; $("o-probar").disabled = !r;
+    $("o-libre").hidden = !reto;
+  }
+  $("o-modes").addEventListener("click", function (e) { var b = e.target.closest("[data-om]"); if (!b) return; oMode = b.getAttribute("data-om"); renderOrg(); });
+  $("o-letters").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-ol]"); if (!b) return;
+    var l = b.getAttribute("data-ol"), at = oLetters.indexOf(l);
+    if (at >= 0) oLetters.splice(at, 1);
+    else if (oLetters.length < 8) oLetters.push(l);
+    else { aviso("Ya tienes 8 letras. Quita una para cambiarla."); return; }
+    renderOrg();
+  });
+  $("o-azar").addEventListener("click", function () { oLetters = shuffle(ABC.slice()).slice(0, 8); renderOrg(); });
+  $("o-word").addEventListener("input", renderOrg);
+  $("o-copiar").addEventListener("click", function () {
+    var r = orgReto(); if (!r) return;
+    var link = linkFor(r), inp = $("o-link");
+    var fallback = function () { inp.focus(); inp.select(); aviso("Enlace seleccionado: cópialo y mándalo al grupo."); };
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(function () { aviso("Enlace copiado. Pégalo en el grupo de Cumbre Feliz."); }, fallback); else fallback(); } catch (e) { fallback(); }
+  });
+  $("o-probar").addEventListener("click", function () { var r = orgReto(); if (r) location.hash = retoToken(r); });
+  $("o-libre").addEventListener("click", function () {
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { location.hash = ""; }
+    onHash();
+  });
+  function onHash() {
+    var before = reto ? reto.key : "";
+    applyReto();
+    if ((reto ? reto.key : "") !== before) { lastStamp = null; $("result").hidden = true; }
+    saveLocal(); renderDesc(); render(); renderOrg();
+  }
+  window.addEventListener("hashchange", onHash);
+
+  (function contours() {
+    var band = document.querySelector(".band"); if (!band) return;
+    var d = "M320 30C370 30 410 60 405 95C400 135 360 160 315 155C265 150 235 125 240 90C245 55 280 30 320 30Z";
+    var paths = [0.3, 0.55, 0.8, 1.08, 1.4, 1.78, 2.2, 2.7, 3.25].map(function (k, n) { return '<path d="' + d + '" transform="translate(322 92) rotate(' + (n * 3 - 8) + ') scale(' + k + ') translate(-322 -92)" vector-effect="non-scaling-stroke"/>'; }).join("");
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMaxYMid slice"><g fill="none" stroke="#000" stroke-width="1.2">' + paths + "</g></svg>";
+    band.style.setProperty("--contours", 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+    band.classList.add("has-contours");
+  })();
+
+  if (FIXED) oMode = FIXED;
+  loadLocal();
+  applyReto();
+  if (reto) { oMode = reto.mode; if (reto.mode === "abc") oLetters = reto.p.split(""); if (reto.mode === "letras") $("o-word").value = reto.p; }
+  saveLocal();
+  nombre.value = state.nombre;
+  lugarIn.value = state.lugar;
+  renderDesc(); render();
+  idbReady.then(function () {
+    var jobs = [];
+    Object.keys(state.cards).forEach(function (m) {
+      var c = state.cards[m];
+      c.filled.forEach(function (f, i) {
+        if (!f) return;
+        var key = c.id + ":" + i;
+        jobs.push(idbGet(key).then(function (b) { if (b) urls[key] = URL.createObjectURL(b); else c.filled[i] = false; }));
+      });
+    });
+    return Promise.all(jobs);
+  }).then(function () { saveLocal(); render(); });
+
+  /* Versión web (sin Claude): compartir con el menú del teléfono y guardar como descarga normal */
+  var canShareFiles = false;
+  try { canShareFiles = !!(navigator.share && navigator.canShare && navigator.canShare({ files: [new File([new Blob(["x"], { type: "image/jpeg" })], "x.jpg", { type: "image/jpeg" })] })); } catch (e) {}
+  downloads = { save: function (o) { return new Promise(function (res, rej) {
+    try {
+      var u = URL.createObjectURL(o.data), a = document.createElement("a");
+      a.href = u; a.download = o.filename; document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 4000); res();
+    } catch (e) { rej(e); }
+  }); } };
+  $("compartir").addEventListener("click", function () {
+    if (!lastCollage) return;
+    var file = new File([lastCollage.blob], "cumbre-feliz-" + (lastCollage.fmt === "story" ? "stories-ig" : "feed-ig") + "-" + ymd(lastCollage.date) + ".jpg", { type: "image/jpeg" });
+    navigator.share({ files: [file] }).catch(function (e) { if (e && e.name === "AbortError") return; aviso("No se pudo abrir el menú para compartir. Toca Guardar imagen."); });
+  });
+  /* Panel Reto del día: se activa en este teléfono abriendo el juego con #organiza al final del enlace */
+  try {
+    if (location.hash === "#organiza") { localStorage.setItem("cf-organiza", "1"); history.replaceState(null, "", location.pathname + location.search); }
+    isOwner = localStorage.getItem("cf-organiza") === "1";
+  } catch (e) { isOwner = false; }
+  renderOrg();
+})();
+</script>
+</html>

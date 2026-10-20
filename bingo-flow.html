@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#15251B">
+<meta name="description" content="Nueve fotos de tu rodaje; la selfie del centro canta el bingo.">
+<meta property="og:title" content="Bingo Flow · Cumbre Feliz">
+<meta property="og:description" content="Nueve fotos de tu rodaje; la selfie del centro canta el bingo.">
+<meta property="og:type" content="website">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Bingo Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: columna de teléfono para Cumbre Feliz. Banda con curvas de nivel; nombre; cartón 3×3 con la selfie fija en el centro (la que canta el bingo); progreso; collage armado en el teléfono; reglas para principiantes. Verde del Ávila + rojo, azul y amarillo de guacamaya. */
+:root{
+  --paper:#EEF2EA;
+  --band:#E2E9DB;
+  --panel:#F9FBF6;
+  --ink:#15251B;
+  --muted:#556659;
+  --line:#C4CFBF;
+  --contour:#BCCAB5;
+  --stamp:#A3C29A;
+  --stamp-soft:#E6EEDF;
+  --stamp-ink:#15251B;
+  --logo:#2F5B41;
+  --ver:#2E7A4B;
+  --cuerpo:#2A66A4;
+  --mente:#B23946;
+  --comer:#BF651B;
+  --scrim:rgba(8,14,10,.78);
+  --on-photo:#FFFFFF;
+  --font-display:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+  --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1712; --band:#142019; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E;
+    --line:#2C3B31; --contour:#26382D; --stamp:#E6DCC3; --stamp-soft:#243429; --stamp-ink:#15251B; --logo:#E9DFC7;
+    --ver:#66C089; --cuerpo:#78ACE3; --mente:#EE8792; --comer:#EFA460;
+    --scrim:rgba(0,0,0,.78); --on-photo:#FFFFFF;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1712; --band:#142019; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E;
+  --line:#2C3B31; --contour:#26382D; --stamp:#E6DCC3; --stamp-soft:#243429; --stamp-ink:#15251B; --logo:#E9DFC7;
+  --ver:#66C089; --cuerpo:#78ACE3; --mente:#EE8792; --comer:#EFA460;
+  --scrim:rgba(0,0,0,.78); --on-photo:#FFFFFF;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+body{ background:var(--paper); color:var(--ink); font:400 15px/1.5 var(--font-body); }
+
+.wrap{
+  position:relative; z-index:1; max-width:560px; margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+
+.band{ position:relative; background:var(--band); border-bottom:1px solid var(--line); overflow:hidden; }
+.band::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0;
+  background:var(--contour);
+  -webkit-mask-image:var(--contours); mask-image:var(--contours);
+  -webkit-mask-size:cover; mask-size:cover;
+  -webkit-mask-position:right center; mask-position:right center;
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+}
+.band.has-contours::before{ opacity:1; }
+.band .wrap{ padding-block:24px 20px; }
+.back{ display:inline-flex; align-items:center; gap:6px; margin:0 0 12px; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-decoration:none; }
+.back:hover{ color:var(--ink); }
+.eyebrow{ margin:0; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.brand{ display:flex; align-items:center; gap:10px; }
+.logo{ flex:none; width:58px; height:auto; color:var(--logo); overflow:visible; }
+.brand .eyebrow{ display:grid; gap:3px; }
+.brand .eyebrow b{ font:800 19px/1 var(--font-display); letter-spacing:.05em; color:var(--ink); }
+h1{ margin:6px 0 8px; font:800 clamp(42px, 12.5vw, 62px)/.86 var(--font-display); text-transform:uppercase; letter-spacing:.01em; text-wrap:balance; }
+h1 .tag{ display:inline-block; vertical-align:.18em; margin-left:.12em; padding:.1em .28em .04em; font-size:.42em; letter-spacing:.08em; background:var(--stamp); color:var(--stamp-ink); border-radius:4px; transform:rotate(-3deg); }
+.lede{ margin:0; color:var(--muted); max-width:44ch; }
+
+main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14px; }
+
+.nojs{ margin:0; padding:14px 16px; border-radius:10px; background:var(--stamp-soft); border:1.5px solid var(--stamp); color:var(--ink); font-size:15px; line-height:1.45; }
+.nojs strong{ display:block; margin-bottom:4px; font:800 22px/1.1 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
+.aviso{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; margin:0; padding:10px 12px; border-radius:8px; background:var(--ink); color:var(--paper); font-size:13.5px; line-height:1.4; }
+
+.field{ display:flex; flex-direction:column; gap:5px; }
+.field label{ font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.field input{ font:600 16px/1.2 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:11px 12px 9px; width:100%; }
+.field input::placeholder{ color:var(--muted); opacity:.8; }
+
+.legend{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12.5px; color:var(--muted); }
+.legend li{ display:flex; align-items:center; gap:6px; }
+.legend b{ color:var(--ink); font-weight:700; }
+
+.mk{ display:inline-block; flex:none; width:9px; height:9px; background:var(--cat, var(--muted)); }
+.mk.ver{ --cat:var(--ver); border-radius:50%; }
+.mk.cuerpo{ --cat:var(--cuerpo); border-radius:1px; }
+.mk.mente{ --cat:var(--mente); width:10px; clip-path:polygon(50% 0, 100% 100%, 0 100%); }
+.mk.comer{ --cat:var(--comer); border-radius:1px; transform:rotate(45deg) scale(.82); }
+
+.card{ background:var(--panel); border:1.5px solid var(--ink); border-radius:12px; padding:8px; }
+.grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px; }
+.tile{ position:relative; min-width:0; display:flex; }
+.tlabel{
+  position:relative; flex:1; display:flex; flex-direction:column; gap:4px;
+  min-height:128px; padding:9px 8px 8px; cursor:pointer;
+  background:var(--paper); border:1.5px dashed var(--line); border-radius:9px;
+  -webkit-hyphens:auto; hyphens:auto; overflow-wrap:break-word;
+}
+.tile .mk{ margin-bottom:2px; }
+.tt{ font:700 clamp(12px, 3.3vw, 15px)/1.18 var(--font-body); text-wrap:balance; }
+.td{ font-size:clamp(10.5px, 2.8vw, 12.5px); line-height:1.35; color:var(--muted); }
+.add{ margin-top:auto; padding-top:4px; font:600 10px/1.2 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink); }
+.add::before{ content:"+ "; }
+.tile.filled .tlabel{ border-style:solid; border-color:transparent; padding:0; background:var(--band); min-height:128px; }
+.tile img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:8px; }
+.tile.filled .mk{ position:absolute; top:7px; left:7px; margin:0; outline:2px solid var(--on-photo); z-index:1; }
+.tile.filled .mk.mente{ outline:none; }
+.cap{
+  position:absolute; left:0; right:0; bottom:0; z-index:1; padding:18px 7px 6px;
+  background:linear-gradient(to bottom, transparent, var(--scrim)); border-radius:0 0 8px 8px;
+  color:var(--on-photo); font:700 clamp(10px, 2.7vw, 12.5px)/1.2 var(--font-body);
+}
+.loading{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font:600 11px/1 var(--font-mono); color:var(--muted); }
+
+/* Centro: la selfie que canta el bingo */
+.tile.center .tlabel{ border:1.5px solid var(--stamp); background:var(--stamp-soft); }
+.tile.center.filled .tlabel{ border-color:var(--stamp); }
+.canta{ align-self:flex-start; margin-top:auto; padding:3px 5px 2px; border-radius:3px; background:var(--stamp); color:var(--stamp-ink); font:600 9.5px/1.15 var(--font-mono); letter-spacing:.05em; text-transform:uppercase; }
+.tile.center.filled .canta{ position:absolute; left:6px; bottom:6px; z-index:2; margin:0; }
+.tile.center.filled .cap{ padding-bottom:28px; }
+.tile.win::after{ content:""; position:absolute; inset:-2px; border:2px solid var(--stamp); border-radius:10px; z-index:3; pointer-events:none; }
+
+.x{
+  position:absolute; top:6px; right:6px; z-index:4; appearance:none; cursor:pointer;
+  font:600 9.5px/1 var(--font-mono); letter-spacing:.04em; text-transform:uppercase;
+  padding:5px 6px 4px; border-radius:4px; border:0; background:var(--panel); color:var(--ink);
+}
+.x.armed{ background:var(--mente); color:var(--paper); }
+
+.progress{ display:flex; align-items:center; gap:12px; }
+.count{ font:800 30px/1 var(--font-display); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.count small{ font:600 12px/1 var(--font-mono); color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-left:4px; }
+.bar{ flex:1; height:10px; border-radius:5px; background:var(--band); border:1px solid var(--line); overflow:hidden; }
+.bar i{ display:block; height:100%; width:0; background:var(--stamp); transition:width .3s ease; }
+
+.bingo{ display:flex; align-items:baseline; justify-content:center; flex-wrap:wrap; gap:4px 12px; background:var(--stamp); color:var(--stamp-ink); border-radius:6px; padding:9px 14px 6px; transform:rotate(-1.2deg); }
+.bingo .bw{ font:800 32px/1 var(--font-display); text-transform:uppercase; letter-spacing:.04em; }
+.bingo .bs{ font:700 13.5px/1.2 var(--font-body); }
+.bingo.pop{ animation:pop .45s cubic-bezier(.3,1.6,.5,1); }
+@keyframes pop{ from{ transform:rotate(-6deg) scale(1.25); } to{ transform:rotate(-1.2deg) scale(1); } }
+.falta{ margin:0; padding:10px 12px; border-radius:8px; border:1.5px dashed var(--stamp); background:var(--panel); font-size:13.5px; line-height:1.4; }
+
+.actions{ display:flex; flex-wrap:wrap; gap:8px; }
+.btn{ appearance:none; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font:700 14px/1 var(--font-body); padding:12px 16px 10px; border-radius:6px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); }
+.btn.primary{ background:var(--ink); color:var(--paper); }
+.btn.armed{ background:var(--mente); border-color:var(--mente); color:var(--paper); }
+.btn[disabled]{ opacity:.45; cursor:not-allowed; }
+.vh{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; opacity:0; }
+.tlabel:focus-within{ outline:2.5px solid var(--cuerpo); outline-offset:2px; }
+:focus-visible{ outline:2px solid var(--cuerpo); outline-offset:2px; }
+
+.result{ display:grid; gap:12px; padding:14px; background:var(--band); border-radius:10px; }
+.result h2{ margin:0; font:800 24px/1.05 var(--font-display); text-transform:uppercase; letter-spacing:.03em; }
+.result img{ display:block; width:100%; height:auto; border-radius:6px; background:var(--panel); }
+.hint{ margin:0; font-size:12.5px; color:var(--muted); }
+.msg{ width:100%; font:500 14px/1.4 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:10px 12px; resize:none; }
+a.btn{ text-decoration:none; }
+.formats{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:6px; }
+.fmt{ appearance:none; font:inherit; color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:9px 11px 8px; display:flex; flex-direction:column; gap:2px; text-align:left; cursor:pointer; min-width:0; }
+.fmt .fname{ font:800 22px/1 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
+.fmt .fsub{ font:500 10.5px/1.3 var(--font-mono); color:var(--muted); }
+.fmt[aria-pressed="true"]{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.fmt[aria-pressed="true"] .fsub{ color:var(--paper); opacity:.78; }
+.result img{ max-height:70vh; width:auto; max-width:100%; margin:0 auto; }
+.caplabel{ font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.steps{ margin:0; padding-left:20px; display:grid; gap:6px; font-size:13.5px; line-height:1.45; }
+
+.notes{ display:grid; gap:22px; margin-top:8px; }
+.notes h2{ margin:0 0 8px; font:800 23px/1.1 var(--font-display); text-transform:uppercase; letter-spacing:.03em; text-wrap:balance; }
+.notes ol,.notes ul{ margin:0; padding-left:20px; display:grid; gap:7px; max-width:62ch; }
+.notes strong{ font-weight:700; }
+.foot{ margin:6px 0 0; padding-top:12px; border-top:1px solid var(--line); font:500 11.5px/1.45 var(--font-mono); color:var(--muted); }
+
+@media (prefers-reduced-motion: reduce){ .bar i{ transition:none; } .bingo.pop{ animation:none; } }
+</style>
+
+<header class="band" lang="es">
+  <div class="wrap">
+    <a class="back" href="./">← Todos los juegos</a>
+    <div class="brand"><svg class="logo" viewBox="0 -12 120 70" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6,54 L34,26 L50,42 L66,20 L96,54" stroke-width="3.4"/><path d="M76,54 L90,34 L114,54" stroke-width="2.6"/><circle cx="66" cy="9" r="8" stroke-width="3"/><path d="M66,-3 L66,-8 M55,2 L50,-2 M77,2 L82,-2 M50,13 L44,13 M82,13 L88,13" stroke-width="2.6"/></svg><p class="eyebrow"><b>Cumbre Feliz</b> <span>corre donde estés</span></p></div>
+    <h1>Bingo Flow</h1>
+    <p class="lede">Juega, corre y fluye a tu ritmo. Nueve fotos de tu rodaje; la selfie del centro canta el bingo. Arma tu collage y compártelo con Cumbre Feliz.</p>
+  </div>
+</header>
+
+<main class="wrap" lang="es">
+  <p class="aviso" id="aviso" role="status" hidden></p>
+  <noscript>
+    <style>main.wrap > :not(noscript):not(.notes){ display:none !important; }</style>
+    <div class="nojs">
+      <strong>Para jugar, abre el enlace</strong>
+      Estás viendo el archivo en vista previa y así no aparecen las casillas para tus fotos. Pide el enlace del juego y ábrelo en Safari o Chrome.
+    </div>
+  </noscript>
+
+  <div class="field">
+    <label for="nombre">Tu nombre, para el collage</label>
+    <input type="text" id="nombre" maxlength="40" autocomplete="given-name" placeholder="Escribe tu nombre">
+  </div>
+
+  <div class="field">
+    <label for="lugar">¿Dónde corres hoy?</label>
+    <input type="text" id="lugar" maxlength="40" autocomplete="off" placeholder="Ej.: Parque del Este, Caracas">
+  </div>
+
+  <ul class="legend" aria-label="Tipos de foto">
+    <li><i class="mk ver" aria-hidden="true"></i><span><b>Mira</b> la ciudad</span></li>
+    <li><i class="mk cuerpo" aria-hidden="true"></i><span><b>Siente</b> tu cuerpo</span></li>
+    <li><i class="mk mente" aria-hidden="true"></i><span><b>Piensa</b> ánimo y grupo</span></li>
+    <li><i class="mk comer" aria-hidden="true"></i><span><b>Come</b> agua y comida</span></li>
+  </ul>
+
+  <section class="card" id="carton" aria-label="Tu cartón de fotos">
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <div class="progress" aria-live="polite">
+    <span class="count" id="count">0/9<small>fotos</small></span>
+    <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  </div>
+
+  <div class="bingo" id="bingo" role="status" hidden><span class="bw" id="bw">¡Bingo!</span><span class="bs" id="bs"></span></div>
+  <p class="falta" id="falta" hidden>Ya tienes línea. Te falta la selfie del centro para cantar bingo.</p>
+
+  <div class="actions">
+    <button type="button" class="btn primary" id="armar" disabled>Armar mi collage</button>
+    <button type="button" class="btn" id="nuevo">Cartón nuevo</button>
+  </div>
+
+  <section class="result" id="result" hidden>
+    <h2>Comparte tu cartón</h2>
+    <div class="formats" aria-label="Formato de la imagen">
+      <button type="button" class="fmt" id="fmt-story" data-fmt="story" aria-pressed="true"><span class="fname">Stories IG</span><span class="fsub">1080 × 1920 · también estados de WhatsApp</span></button>
+      <button type="button" class="fmt" id="fmt-post" data-fmt="post" aria-pressed="false"><span class="fname">Feed IG</span><span class="fsub">1080 × 1350 (4:5) · también para el grupo</span></button>
+    </div>
+    <img id="collage-img" alt="Tu collage de Cumbre Feliz">
+    <div class="actions">
+      <button type="button" class="btn primary" id="compartir" hidden>Compartir imagen</button>
+      <button type="button" class="btn" id="guardar" hidden>Guardar imagen</button>
+      <a class="btn" id="wa" href="https://wa.me/" target="_blank" rel="noopener">Abrir WhatsApp</a>
+      <button type="button" class="btn" id="copiar">Copiar texto</button>
+    </div>
+    <p class="hint">Si no puedes guardarla con el botón, mantén presionada la imagen y elige guardar.</p>
+    <label class="caplabel" for="msg">Texto para tu publicación</label>
+    <textarea class="msg" id="msg" rows="4" readonly></textarea>
+    <ol class="steps">
+      <li><strong>Toca Compartir imagen</strong> y elige Instagram, WhatsApp o Guardar imagen. Si tu teléfono no muestra ese botón, toca Guardar imagen: queda en tu galería o en Descargas.</li>
+      <li><strong>Instagram:</strong> abre la app y toca +. Si bajaste Stories IG elige Historia; si bajaste Feed IG elige Publicación. Escoge la imagen y pega el texto.</li>
+      <li><strong>WhatsApp:</strong> toca Abrir WhatsApp, elige el grupo de Cumbre Feliz y adjunta la imagen desde tu galería.</li>
+    </ol>
+  </section>
+
+  <div class="notes">
+    <section>
+      <h2>Cómo jugar</h2>
+      <ol>
+        <li>Escribe tu nombre: sale en tu collage.</li>
+        <li>Toca una casilla para tomar la foto o elegirla de tu galería. Puedes tomarlas con tu cámara durante el rodaje y llenar el cartón al terminar.</li>
+        <li>Una línea de tres fotos, en horizontal, vertical o diagonal, más tu selfie del centro, es bingo. Con las nueve fotos, ¡meta lograda!</li>
+        <li>Con tu meta lograda, toca <strong>Compartir mi cartón</strong>, elige Stories IG o Feed IG y súbelo a Instagram o al grupo de WhatsApp.</li>
+      </ol>
+    </section>
+    <section>
+      <h2>Reglas de Cumbre Feliz</h2>
+      <ul>
+        <li><strong>A tu ritmo.</strong> Aquí no hay ritmo mínimo. Si puedes conversar mientras corres, vas bien.</li>
+        <li><strong>La selfie del centro es como te sientas:</strong> sonriendo, sudado, cansado o feliz. También vale la foto con tu grupo.</li>
+        <li>Para cada foto, detente. Nunca saques el teléfono cruzando la calle.</li>
+        <li>Gente en la foto, solo con su permiso. Los perros, los árboles y los murales no se quejan.</li>
+        <li>La foto de tu botella no es de adorno: hidrátate antes, durante y después.</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="foot">Tus fotos se quedan en tu teléfono, en este navegador. Nadie más las ve hasta que compartas tu collage.</p>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var LS = "bingo-sendero-caracas-9";
+  var CATS = { ver:"Mira", cuerpo:"Siente", mente:"Piensa", comer:"Come" };
+  var PICK = { ver:5, cuerpo:1, mente:1, comer:1 };
+  var CENTER = ["mente","Tu selfie","Sonriendo, como te sientas o con tu grupo. Esta canta el bingo."];
+  var POOL = [
+    ["ver","Montaña de fondo","Una montaña o un cerro visto desde la ciudad, como el Ávila en Caracas."],
+    ["ver","Guacamayas","Una o varias guacamayas en vuelo o en un árbol. Vale aunque salgan lejos.","fuera"],
+    ["ver","Aves","Cualquier pájaro: posado, volando, en un árbol o en el suelo.","animal"],
+    ["ver","Árbol en flor","Un araguaney, un apamate o un bucare en flor.","flor"],
+    ["ver","Flores en la acera","Una alfombra de flores caídas en la acera.","flor"],
+    ["ver","Flor amarilla","Una flor amarilla. La de un araguaney cuenta.","flor"],
+    ["ver","Flor roja","Una flor roja en un jardín, una mata o un árbol.","flor"],
+    ["ver","Flor morada","Una flor morada o lila.","flor"],
+    ["ver","Flor rosada","Una flor rosada. La de un apamate cuenta.","flor"],
+    ["ver","Flor blanca","Una flor blanca.","flor"],
+    ["ver","Flor naranja","Una flor naranja. La de un bucare cuenta.","flor"],
+    ["ver","Animal","Cualquier animal que te encuentres en el camino. Vale todo.","animal"],
+    ["ver","Un árbol","Un árbol que te guste: grande, raro o con forma divertida.","planta"],
+    ["ver","Lago o laguna","Un lago o una laguna.","agua"],
+    ["ver","Cielo azul","Un pedazo de cielo bien azul.","cielo"],
+    ["ver","Árbol frutal","Una mata de mango, de aguacate o cualquier árbol con frutas.","planta"],
+    ["ver","Carrito de calle","Un carrito de agua de coco, jugos, helados o café."],
+    ["ver","Mural","Un mural o un grafiti con mucho color."],
+    ["ver","Un perro","Un perro paseando. Si sale el dueño, pide permiso.","fuera"],
+    ["ver","Amanecer","El cielo cambiando de color al amanecer.","cielo"],
+    ["ver","Cielo en un charco","El cielo reflejado en un charco.","agua"],
+    ["ver","Carro rojo","Un carro rojo.","calle"],
+    ["ver","Semáforo en verde","Un semáforo en verde justo cuando llegas.","calle"],
+    ["ver","Pájaros en el cable","Pájaros parados en un cable.","fuera"],
+    ["ver","Banco de parque","Un banco de parque para descansar al final."],
+    ["ver","Una bici","Una bicicleta, pasando o estacionada."],
+    ["ver","Una cancha","Una cancha de básquet, de fútbol o de lo que sea."],
+    ["ver","Número de tu km","Un número en la calle igual al kilómetro que vas corriendo."],
+    ["ver","Otro grupo","Otros corredores, de lejos o de espaldas."],
+    ["cuerpo","Zapatos listos","Tus zapatos de correr antes de salir."],
+    ["cuerpo","Tu sombra","Tu sombra corriendo con el sol de la mañana."],
+    ["cuerpo","Tu tiempo","Tu tiempo o tu distancia en el reloj o en la app al terminar."],
+    ["cuerpo","Estiramiento","Tu estiramiento al final: gemelos, muslos y planta del pie."],
+    ["mente","Algo que agradeces","Algo del camino que te haga dar gracias hoy."],
+    ["mente","Tu meta escrita","Tu meta escrita en un papel o en tu mano."],
+    ["comer","Tu botella","Tu botella de agua o de hidratación."],
+    ["comer","Fruta de después","Tu cambur, mandarina u otra fruta para después de correr."],
+    ["comer","Comida de después","Lo que comiste después de correr."],
+    ["ver","Nubes con forma","Una nube que parezca algo: un animal, una cara o un corazón.","cielo"],
+    ["ver","Rayos de sol","Rayos de sol entre las ramas, las nubes o los edificios.","cielo"],
+    ["ver","Arcoíris","Un arcoíris, aunque sea pequeñito en el chorro de una fuente.","cielo"],
+    ["ver","Nube en la montaña","Una nube tocando o tapando una montaña o un cerro.","cielo"],
+    ["ver","Fuente de agua","Una fuente, un bebedero o un chorro de agua.","agua"],
+    ["ver","Reflejo en el agua","Árboles, edificios o cielo reflejados en el agua.","agua"],
+    ["ver","Gotas o rocío","Gotas de lluvia o rocío sobre una hoja.","agua"],
+    ["ver","Una iguana","Una iguana tomando sol.","fuera"],
+    ["ver","Una mariposa","Una mariposa, posada o volando.","fuera"],
+    ["ver","Una ardilla","Una ardilla en un árbol o en el suelo.","fuera"],
+    ["ver","Un gato","Un gato en una ventana, un muro o una acera.","fuera"],
+    ["ver","Zamuros volando","Zamuros dando vueltas en el cielo.","fuera"],
+    ["ver","Patos o peces","Patos, peces o tortugas en una laguna.","fuera"],
+    ["ver","Contraluz","Una silueta, una persona o un árbol con el sol detrás.","foto"],
+    ["ver","Detalle de color","Un detalle de cerca con un color fuerte: una puerta, una reja o un objeto.","foto"],
+    ["ver","Una textura","Una textura de cerca: corteza, pared, piedra o asfalto.","foto"],
+    ["ver","Hojas","Hojas de formas o colores distintos, o una hoja más grande que tu mano.","planta"],
+    ["ver","Una palma","Una palma o una palmera.","planta"],
+    ["ver","Raíces","Raíces gruesas que salen de la tierra o levantan la acera.","planta"],
+    ["ver","Rocas","Rocas o piedras grandes con alguna forma curiosa."],
+    ["ver","Carro clásico","Un carro viejo o clásico, de esos que ya casi no se ven.","calle"],
+    ["ver","Carros de colores","Tres carros de colores distintos en una sola foto.","calle"],
+    ["ver","Escultura","Una escultura, una estatua o un monumento."],
+    ["ver","Señal o flecha","Una señal de tránsito o una flecha pintada en el piso.","calle"],
+    ["ver","Kiosco","Un kiosco de periódicos, chucherías o jugos.","calle"],
+    ["ver","Frutas a la vista","Un puesto de frutas o una mata cargada de frutas."],
+    ["cuerpo","Medias de colores","Tus medias de colores, o las más divertidas del grupo."],
+    ["cuerpo","Zapatos con historia","Tus zapatos después del rodaje, con polvo, tierra o agua."],
+    ["comer","Comida en carrera","Lo que comes mientras corres: cambur, gel, dátiles o caramelos."],
+    ["comer","Jugo de después","Un jugo natural, una merengada o un agua de coco al terminar."]
+  ];
+  var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function rid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+  function newCard() {
+    var by = { ver:[], cuerpo:[], mente:[], comer:[] };
+    POOL.forEach(function (x, i) { if (x[3] !== "fuera") by[x[0]].push(i); });
+    var picked = [];
+    Object.keys(PICK).forEach(function (k) {
+      var used = {}, got = [];
+      shuffle(by[k].slice()).forEach(function (i) {
+        if (got.length >= PICK[k]) return;
+        var grp = POOL[i][3] || "";
+        if (grp && (used[grp] || 0) >= 2) return;
+        if (grp) used[grp] = (used[grp] || 0) + 1;
+        got.push(i);
+      });
+      picked = picked.concat(got);
+    });
+    shuffle(picked);
+    return { id:rid(), order:picked, filled:[false,false,false,false,false,false,false,false,false] };
+  }
+  function cleanCard(c) {
+    if (!c || typeof c.id !== "string" || !/^[a-z0-9]{6,40}$/.test(c.id) || !Array.isArray(c.order) || c.order.length !== 8 || !Array.isArray(c.filled) || c.filled.length !== 9) return null;
+    var seen = {};
+    for (var i = 0; i < 8; i++) {
+      var v = c.order[i];
+      if (typeof v !== "number" || v < 0 || v >= POOL.length || v % 1 !== 0 || seen[v]) return null;
+      seen[v] = 1;
+    }
+    return { id:c.id, order:c.order.slice(), filled:c.filled.map(function (f) { return !!f; }) };
+  }
+  function itemAt(card, s) { return s === 4 ? CENTER : POOL[card.order[s < 4 ? s : s - 1]]; }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (ch) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[ch]; });
+  }
+  function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function fmtLong(d) { try { return d.toLocaleDateString("es", { day:"numeric", month:"long", year:"numeric" }); } catch (e) { return ymd(d); } }
+
+  function linesOf(filled) { return LINES.filter(function (L) { return L.every(function (s) { return filled[s]; }); }); }
+  function isBingo(filled) { return filled[4] && linesOf(filled).length > 0; }
+  function filledCount(card) { return card.filled.filter(Boolean).length; }
+
+  /* ---------- estado ---------- */
+  var state = { nombre:"", lugar:"", card:null, fmt:"story" };
+  var urls = {};
+  var idbOk = true, downloads = null, lastCollage = null, lastBingo = null;
+
+  function loadLocal() {
+    var s = null;
+    try { var raw = localStorage.getItem(LS); if (raw) s = JSON.parse(raw); } catch (e) { s = null; }
+    state.card = (s && cleanCard(s.card)) || newCard();
+    if (!s) {
+      try { var old = JSON.parse(localStorage.getItem("bingo-sendero-caracas-v1") || "null"); if (old && typeof old.nombre === "string") state.nombre = old.nombre.slice(0, 40); } catch (e) {}
+    } else if (typeof s.nombre === "string") state.nombre = s.nombre.slice(0, 40);
+    if (s && (s.fmt === "story" || s.fmt === "post")) state.fmt = s.fmt;
+    if (s && typeof s.lugar === "string") state.lugar = s.lugar.slice(0, 40);
+  }
+  function saveLocal() {
+    try { localStorage.setItem(LS, JSON.stringify({ nombre:state.nombre, lugar:state.lugar, card:state.card, fmt:state.fmt })); } catch (e) {}
+  }
+
+  /* ---------- fotos en el teléfono (IndexedDB) ---------- */
+  function openIdb() {
+    return new Promise(function (res) {
+      try {
+        var rq = indexedDB.open("bingo-sendero-caracas", 1);
+        rq.onupgradeneeded = function () { rq.result.createObjectStore("fotos"); };
+        rq.onsuccess = function () { res(rq.result); };
+        rq.onerror = function () { res(null); };
+        rq.onblocked = function () { res(null); };
+      } catch (e) { res(null); }
+    });
+  }
+  var idbReady = openIdb();
+  function idbOp(mode, fn) {
+    return idbReady.then(function (db) {
+      if (!db) return null;
+      return new Promise(function (res) {
+        try {
+          var tx = db.transaction("fotos", mode), st = tx.objectStore("fotos"), out = { v:null };
+          fn(st, out);
+          tx.oncomplete = function () { res(out.v === null ? true : out.v); };
+          tx.onerror = tx.onabort = function () { res(null); };
+        } catch (e) { res(null); }
+      });
+    });
+  }
+  function idbPut(k, blob) { return idbOp("readwrite", function (st) { st.put(blob, k); }); }
+  function idbDel(k) { return idbOp("readwrite", function (st) { st.delete(k); }); }
+  function idbGet(k) {
+    return idbOp("readonly", function (st, out) {
+      var rq = st.get(k); rq.onsuccess = function () { out.v = rq.result || false; };
+    }).then(function (v) { return v instanceof Blob ? v : null; });
+  }
+
+  /* ---------- DOM ---------- */
+  function $(id) { return document.getElementById(id); }
+  var grid = $("grid"), banner = $("bingo");
+  var avisoEl = $("aviso"), avisoTimer = null;
+  function aviso(msg) {
+    avisoEl.textContent = msg; avisoEl.hidden = false;
+    clearTimeout(avisoTimer); avisoTimer = setTimeout(function () { avisoEl.hidden = true; }, 6500);
+  }
+
+  function render() {
+    var card = state.card, bingo = isBingo(card.filled), win = {};
+    if (bingo) linesOf(card.filled).forEach(function (L) { L.forEach(function (s) { win[s] = 1; }); });
+    var html = "";
+    for (var s = 0; s < 9; s++) {
+      var it = itemAt(card, s), key = card.id + ":" + s, url = urls[key], filled = card.filled[s], center = s === 4;
+      html += '<div class="tile' + (filled ? " filled" : "") + (center ? " center" : "") + (win[s] ? " win" : "") + '">' +
+        '<label class="tlabel" for="foto-' + s + '">' +
+        '<input type="file" class="vh" id="foto-' + s + '" accept="image/*" data-s="' + s + '">';
+      if (url) html += '<img src="' + esc(url) + '" alt="">';
+      if (!center) html += '<i class="mk ' + it[0] + '" aria-hidden="true"></i>';
+      if (filled) {
+        html += '<span class="cap">' + esc(it[1]) + '<span class="vh">. Toca para cambiar la foto.</span></span>';
+        if (!url) html += '<span class="loading">Cargando foto…</span>';
+      } else {
+        html += '<span class="tt">' + esc(it[1]) + '</span><span class="td">' + esc(it[2]) + '</span>';
+        if (!center) html += '<span class="add">Agregar foto</span>';
+      }
+      if (center) html += '<span class="canta">Canta el bingo</span>';
+      html += "</label>";
+      if (filled) html += '<button type="button" class="x" data-s="' + s + '" aria-label="Quitar la foto de ' + esc(it[1]) + '">Quitar</button>';
+      html += "</div>";
+    }
+    grid.innerHTML = html;
+
+    var n = filledCount(card), lines = linesOf(card.filled);
+    $("count").innerHTML = n + "/9<small>fotos</small>";
+    $("barfill").style.width = Math.round(n / 9 * 100) + "%";
+    $("armar").disabled = n === 0;
+    if ($("armar").textContent !== "Armando…") $("armar").textContent = n === 9 ? "Compartir mi cartón" : "Armar mi collage";
+    var nuevo = $("nuevo"); if (nuevo !== armedBtn) nuevo.textContent = "Cartón nuevo";
+
+    var bkey = n === 9 ? "lleno" : bingo ? "b" + lines.length : "";
+    if (bkey) {
+      banner.hidden = false;
+      if (n === 9) { $("bw").textContent = "¡Meta lograda!"; $("bs").textContent = "Toca Compartir mi cartón para subirlo a Instagram o WhatsApp."; }
+      else { $("bw").textContent = "¡Bingo!"; $("bs").textContent = lines.length === 1 ? "Una línea con tu selfie" : lines.length + " líneas con tu selfie"; }
+      if (lastBingo !== null && bkey !== lastBingo) { banner.classList.remove("pop"); void banner.offsetWidth; banner.classList.add("pop"); }
+    } else banner.hidden = true;
+    lastBingo = bkey;
+    $("falta").hidden = !(lines.length > 0 && !card.filled[4]);
+  }
+
+  /* ---------- reducir foto ---------- */
+  function loadImg(src) {
+    return new Promise(function (res) {
+      var im = new Image();
+      im.onload = function () { res(im); };
+      im.onerror = function () { res(null); };
+      im.src = src;
+    });
+  }
+  function shrink(file) {
+    var u = URL.createObjectURL(file);
+    return loadImg(u).then(function (im) {
+      URL.revokeObjectURL(u);
+      if (!im || !im.naturalWidth) throw new Error("decode");
+      var max = 1000, w = im.naturalWidth, h = im.naturalHeight, sc = Math.min(1, max / Math.max(w, h));
+      var cw = Math.round(w * sc), ch = Math.round(h * sc), cv = document.createElement("canvas");
+      cv.width = cw; cv.height = ch;
+      cv.getContext("2d").drawImage(im, 0, 0, cw, ch);
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("encode")); }, "image/jpeg", 0.82); });
+    });
+  }
+
+  grid.addEventListener("change", function (e) {
+    var input = e.target; if (!input || input.type !== "file") return;
+    var s = Number(input.getAttribute("data-s")), file = input.files && input.files[0];
+    input.value = "";
+    if (!file) return;
+    var card = state.card, key = card.id + ":" + s;
+    shrink(file).then(function (blob) {
+      if (state.card !== card) return;
+      if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} }
+      urls[key] = URL.createObjectURL(blob);
+      card.filled[s] = true;
+      saveLocal(); render();
+      idbPut(key, blob).then(function (ok) {
+        if (!ok && idbOk) { idbOk = false; aviso("Este navegador no deja guardar las fotos: arma tu collage antes de cerrar la página."); }
+      });
+    }).catch(function () {
+      aviso("No pude leer esa foto. Prueba con otra o con una captura de pantalla.");
+    });
+  });
+
+  /* ---------- confirmación en dos toques ---------- */
+  var armedBtn = null, armTimer = null, armedLabel = "";
+  function disarm() {
+    if (armedBtn) { armedBtn.classList.remove("armed"); armedBtn.textContent = armedLabel; armedBtn = null; }
+    clearTimeout(armTimer);
+  }
+  function confirmTap(btn, needed, label) {
+    if (!needed) { disarm(); return true; }
+    if (armedBtn === btn) { disarm(); return true; }
+    disarm(); armedBtn = btn; armedLabel = btn.textContent;
+    btn.classList.add("armed"); btn.textContent = label || "Toca otra vez para confirmar";
+    armTimer = setTimeout(disarm, 3500);
+    return false;
+  }
+
+  grid.addEventListener("click", function (e) {
+    var b = e.target.closest(".x"); if (!b) return;
+    if (!confirmTap(b, true, "¿Quitar?")) return;
+    var s = Number(b.getAttribute("data-s")), card = state.card, key = card.id + ":" + s;
+    if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} delete urls[key]; }
+    card.filled[s] = false;
+    idbDel(key); saveLocal(); render();
+  });
+
+  $("nuevo").addEventListener("click", function () {
+    var card = state.card, n = filledCount(card);
+    if (!confirmTap(this, n > 0, "Se borran tus fotos. Toca otra vez")) return;
+    for (var s = 0; s < 9; s++) {
+      var key = card.id + ":" + s;
+      if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} delete urls[key]; }
+      if (card.filled[s]) idbDel(key);
+    }
+    state.card = newCard(); lastBingo = null;
+    $("result").hidden = true;
+    saveLocal(); render();
+  });
+
+  var nombre = $("nombre");
+  nombre.addEventListener("input", function () { state.nombre = nombre.value.slice(0, 40); saveLocal(); });
+  var lugarIn = $("lugar");
+  lugarIn.addEventListener("input", function () { state.lugar = lugarIn.value.slice(0, 40); saveLocal(); });
+
+  /* ---------- collage ---------- */
+  function roundRect(g, x, y, w, h, r) {
+    g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+  }
+  function wrapText(g, text, maxW) {
+    var words = String(text).split(" "), lines = [], cur = "";
+    words.forEach(function (w) {
+      var t = cur ? cur + " " + w : w;
+      if (g.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t;
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+  function drawMark(g, cat, x, y, color, outline) {
+    g.save(); g.fillStyle = color;
+    if (outline) { g.strokeStyle = "#FFFFFF"; g.lineWidth = 4; }
+    g.beginPath();
+    if (cat === "ver") g.arc(x + 11, y + 11, 11, 0, Math.PI * 2);
+    else if (cat === "cuerpo") g.rect(x, y, 22, 22);
+    else if (cat === "mente") { g.moveTo(x + 11, y); g.lineTo(x + 23, y + 22); g.lineTo(x - 1, y + 22); g.closePath(); }
+    else { g.moveTo(x + 11, y - 3); g.lineTo(x + 25, y + 11); g.lineTo(x + 11, y + 25); g.lineTo(x - 3, y + 11); g.closePath(); }
+    if (outline) g.stroke();
+    g.fill(); g.restore();
+  }
+  function fitFont(g, text, weight, family, start, min, maxW) {
+    var size = start;
+    do { g.font = weight + " " + size + "px " + family; size -= 4; } while (g.measureText(text).width > maxW && size >= min);
+  }
+
+  /* Logo de Cumbre Feliz: cordillera con el sol en la cumbre más alta (caja útil x 4–116, y −10–54 del dibujo). */
+  function drawLogo(g, x, base, h, color) {
+    var s = h / 64, wt = 1.25;
+    g.save(); g.translate(x - 4 * s, base - 54 * s); g.scale(s, s);
+    g.strokeStyle = color; g.lineCap = "round"; g.lineJoin = "round";
+    function seg(p, w) { g.lineWidth = w * wt; g.beginPath(); g.moveTo(p[0], p[1]); for (var i = 2; i < p.length; i += 2) g.lineTo(p[i], p[i + 1]); g.stroke(); }
+    seg([6, 54, 34, 26, 50, 42, 66, 20, 96, 54], 3.4);
+    seg([76, 54, 90, 34, 114, 54], 2.6);
+    g.lineWidth = 3 * wt; g.beginPath(); g.arc(66, 9, 8, 0, Math.PI * 2); g.stroke();
+    [[66, -3, 66, -8], [55, 2, 50, -2], [77, 2, 82, -2], [50, 13, 44, 13], [82, 13, 88, 13]].forEach(function (r) { seg(r, 2.6); });
+    g.restore();
+    return 112 * s;
+  }
+  /* Logo + CUMBRE FELIZ en una sola línea; el logo mide un poco más que las mayúsculas. */
+  function drawLockup(g, x, base, maxW, start, min, color, center, family) {
+    var f = start, tw, lw, gap;
+    for (;;) {
+      g.font = "800 " + f + "px " + family; tw = g.measureText("CUMBRE FELIZ").width;
+      lw = 112 * (f * 0.8) / 64; gap = f * 0.14;
+      if (lw + gap + tw <= maxW || f <= min) break;
+      f -= 4;
+    }
+    var total = lw + gap + tw, x0 = center ? x - total / 2 : x;
+    drawLogo(g, x0, base, f * 0.8, color);
+    g.fillStyle = color; g.textAlign = "left"; g.fillText("CUMBRE FELIZ", x0 + lw + gap, base);
+    return total;
+  }
+
+  function buildCollage(fmt) {
+    var card = state.card, story = fmt === "story";
+    var W = 1080, H = story ? 1920 : 1350, C = story ? 312 : 320, G = 12, M = 48, GW = 3 * C + 2 * G;
+    var gx = (W - GW) / 2, gy = story ? 420 : 272;
+    var BG = "#15251B", PAPER = "#EEF2EA", LIGHT = "#B9C7B6", STAMP = "#EFE6D2", SAGE = "#A9C6A1", TILE = "#22352A", TILE_LINE = "#3D5546", SOFT = "#2B3D31";
+    var CAT = { ver:"#2E7A4B", cuerpo:"#2A66A4", mente:"#B23946", comer:"#BF651B" };
+    var DISPLAY = '"Barlow Condensed", "Arial Narrow", sans-serif', BODY = '"Overpass", system-ui, sans-serif', MONO = '"Overpass Mono", ui-monospace, monospace';
+    var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
+      document.fonts.load("800 120px " + DISPLAY), document.fonts.load("600 28px " + MONO), document.fonts.load("700 28px " + BODY)
+    ]).catch(function () {}) : Promise.resolve();
+    return fontsReady.then(function () {
+      var jobs = []; for (var s = 0; s < 9; s++) { var u = urls[card.id + ":" + s]; jobs.push(card.filled[s] && u ? loadImg(u) : null); }
+      return Promise.all(jobs);
+    }).then(function (imgs) {
+      var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      var g = cv.getContext("2d");
+      g.fillStyle = BG; g.fillRect(0, 0, W, H);
+
+      // curvas de nivel de fondo
+      g.save(); g.strokeStyle = "rgba(238,242,234,0.07)"; g.lineWidth = 2;
+      for (var r = 1; r <= 9; r++) {
+        g.beginPath();
+        g.ellipse(W - 120, story ? 230 : 120, 70 * r, 46 * r, -0.25 + r * 0.04, 0, Math.PI * 2);
+        g.stroke();
+      }
+      g.restore();
+
+      var got = imgs.map(function (x) { return !!x; }), n = got.filter(Boolean).length, today = new Date();
+      var bingo = isBingo(got), lines = bingo ? linesOf(got) : [];
+      var who = ((state.nombre || "").trim() || "Mi rodaje").toUpperCase();
+      var place = (state.lugar || "").trim();
+      var subLine = "BINGO FLOW" + (place ? " · " + place.toUpperCase() : "");
+      g.textBaseline = "alphabetic";
+      var stampLabel = (bingo || n === 9) ? (n === 9 ? "¡META LOGRADA!" : "¡BINGO!") : "";
+      var SFS = story ? 42 : 38; g.font = "800 " + SFS + "px " + DISPLAY;
+      var stampW = stampLabel ? Math.max(SFS * 4, g.measureText(stampLabel).width + SFS) : 0;
+
+      if (story) {
+        g.textAlign = "center";
+        drawLockup(g, W / 2, 330, GW, 96, 64, STAMP, true, DISPLAY);
+        g.textAlign = "center";
+        g.fillStyle = SAGE; fitFont(g, subLine, "600", MONO, 30, 18, GW);
+        g.fillText(subLine, W / 2, 382);
+      } else {
+        g.textAlign = "left";
+        drawLockup(g, gx, 150, GW - (stampW ? stampW + 32 : 0), 80, 52, STAMP, false, DISPLAY);
+        g.fillStyle = SAGE; g.font = "600 26px " + MONO;
+        fitFont(g, subLine, "600", MONO, 26, 16, GW - (stampW ? stampW + 32 : 0));
+        g.fillText(subLine, gx, 196);
+        g.fillStyle = PAPER; fitFont(g, who + " • " + fmtLong(today), "700", BODY, 28, 18, GW);
+        g.fillText(who + " • " + fmtLong(today), gx, 240);
+      }
+
+      for (var s = 0; s < 9; s++) {
+        var it = itemAt(card, s), im = imgs[s], x = gx + (s % 3) * (C + G), y = gy + Math.floor(s / 3) * (C + G), center = s === 4;
+        g.save(); roundRect(g, x, y, C, C, 16); g.clip();
+        if (im) {
+          var iw = im.naturalWidth, ih = im.naturalHeight, k = Math.max(C / iw, C / ih), dw = C / k, dh = C / k;
+          g.drawImage(im, (iw - dw) / 2, (ih - dh) / 2, dw, dh, x, y, C, C);
+          var grd = g.createLinearGradient(0, y + C - 96, 0, y + C);
+          grd.addColorStop(0, "rgba(8,14,10,0)"); grd.addColorStop(1, "rgba(8,14,10,.82)");
+          g.fillStyle = grd; g.fillRect(x, y + C - 96, C, 96);
+          g.fillStyle = "#FFFFFF"; g.font = "700 24px " + BODY; g.textAlign = "left";
+          var tl = wrapText(g, it[1], C - 32).slice(-2);
+          tl.forEach(function (t, i) { g.fillText(t, x + 16, y + C - 18 - (tl.length - 1 - i) * 28); });
+        } else {
+          g.fillStyle = center ? SOFT : TILE; g.fillRect(x, y, C, C);
+          g.fillStyle = center ? STAMP : LIGHT; g.font = (center ? "800 42px " + DISPLAY : "600 26px " + BODY); g.textAlign = "center";
+          var el = wrapText(g, center ? "TU SELFIE" : it[1], C - 48), lh = center ? 44 : 32, y0 = y + C / 2 - (el.length - 1) * lh / 2 + 10;
+          el.forEach(function (t, i) { g.fillText(t, x + C / 2, y0 + i * lh); });
+          g.textAlign = "left";
+        }
+        g.restore();
+        if (center) { g.save(); g.strokeStyle = "rgba(239,230,210,.75)"; g.lineWidth = 4; roundRect(g, x + 2, y + 2, C - 4, C - 4, 14); g.stroke(); g.restore(); }
+        else if (!im) { g.save(); g.setLineDash([10, 8]); g.strokeStyle = TILE_LINE; g.lineWidth = 2.5; roundRect(g, x + 1.5, y + 1.5, C - 3, C - 3, 15); g.stroke(); g.restore(); }
+        if (!center) drawMark(g, it[0], x + 16, y + 16, CAT[it[0]], !!im);
+      }
+
+      if (n < 9 && lines.length) {
+        var win = {};
+        lines.forEach(function (L) { L.forEach(function (s) { win[s] = 1; }); });
+        g.save(); g.strokeStyle = SAGE; g.lineWidth = 5;
+        Object.keys(win).forEach(function (k) {
+          var s = Number(k); if (s === 4) return;
+          var x = gx + (s % 3) * (C + G), y = gy + Math.floor(s / 3) * (C + G);
+          roundRect(g, x + 4, y + 4, C - 8, C - 8, 12); g.stroke();
+        });
+        g.restore();
+      }
+
+      if (stampLabel) {
+        var label = stampLabel;
+        g.save();
+        g.font = "800 " + SFS + "px " + DISPLAY;
+        var sw = stampW, sh = Math.round(SFS * 1.55);
+        var cx = story ? W / 2 : W - gx - sw / 2 - 6, cy = story ? gy + GW + 58 : 118;
+        g.translate(cx, cy); g.rotate(-0.06);
+        g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 18; g.shadowOffsetY = 6;
+        roundRect(g, -sw / 2, -sh / 2, sw, sh, 10); g.fillStyle = STAMP; g.fill();
+        g.shadowColor = "transparent";
+        g.fillStyle = BG; g.textAlign = "center"; g.fillText(label, 0, Math.round(SFS * 0.35));
+        g.restore();
+      }
+
+      if (story) {
+        g.textAlign = "center";
+        g.fillStyle = PAPER; fitFont(g, who, "800", DISPLAY, 84, 44, GW);
+        g.fillText(who, W / 2, 1556);
+        g.fillStyle = LIGHT;
+        var info = fmtLong(today) + " • " + n + "/9 fotos • A mi ritmo";
+        fitFont(g, info, "700", BODY, 30, 20, GW); g.fillText(info, W / 2, 1610);
+        g.fillStyle = SAGE; g.font = "600 32px " + MONO;
+        g.fillText("#CumbreFeliz  #BingoFlow", W / 2, 1664);
+      } else {
+        g.textAlign = "left"; g.fillStyle = SAGE; g.font = "600 28px " + MONO;
+        g.fillText("#CumbreFeliz #BingoFlow", gx, H - 34);
+        g.textAlign = "right"; g.fillStyle = LIGHT; g.font = "700 28px " + BODY;
+        g.fillText(n + "/9 fotos • A mi ritmo", W - gx, H - 34);
+        g.textAlign = "left";
+      }
+
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("canvas")); }, "image/jpeg", 0.9); });
+    });
+  }
+
+  function groupMessage() {
+    var m0 = baseMessage(), p0 = (state.lugar || "").trim();
+    return p0 ? m0.replace(" #CumbreFeliz", " Hoy en " + p0 + ". #CumbreFeliz") : m0;
+  }
+  function baseMessage() {
+    var card = state.card, n = filledCount(card);
+    if (n === 9) return "¡Meta lograda en el Bingo Flow de Cumbre Feliz! 9 fotos de mi rodaje, a mi ritmo. Juega, corre y fluye. ¿Quién se anota para el próximo? #CumbreFeliz #BingoFlow";
+    if (isBingo(card.filled)) return "¡Bingo! Canté línea con mi selfie en el Bingo Flow de Cumbre Feliz. Llevo " + n + "/9 fotos. #CumbreFeliz #BingoFlow";
+    return "Llevo " + n + "/9 fotos del Bingo Flow de Cumbre Feliz. El próximo rodaje canto bingo. #CumbreFeliz #BingoFlow";
+  }
+
+  function makeCollage() {
+    return buildCollage(state.fmt).then(function (blob) {
+      if (lastCollage) { try { URL.revokeObjectURL(lastCollage.url); } catch (e) {} }
+      lastCollage = { blob:blob, url:URL.createObjectURL(blob), date:new Date(), fmt:state.fmt };
+      $("collage-img").src = lastCollage.url;
+      var text = groupMessage();
+      $("msg").value = text;
+      $("wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
+      $("guardar").hidden = !downloads; $("compartir").hidden = !canShareFiles;
+      renderFormats();
+      $("result").hidden = false;
+    });
+  }
+  function renderFormats() {
+    Array.prototype.forEach.call(document.querySelectorAll(".fmt"), function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-fmt") === state.fmt ? "true" : "false");
+    });
+  }
+  function armarLabel() { return filledCount(state.card) === 9 ? "Compartir mi cartón" : "Armar mi collage"; }
+
+  $("armar").addEventListener("click", function () {
+    var btn = this;
+    btn.disabled = true; btn.textContent = "Armando…";
+    makeCollage().then(function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      try { $("result").scrollIntoView({ block:"start", behavior:reduce ? "auto" : "smooth" }); } catch (e) {}
+    }).catch(function () {
+      aviso("No se pudo armar el collage. Revisa que tus fotos hayan cargado y vuelve a intentar.");
+    }).then(function () { btn.textContent = armarLabel(); btn.disabled = filledCount(state.card) === 0; });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".fmt"), function (b) {
+    b.addEventListener("click", function () {
+      var f = b.getAttribute("data-fmt");
+      if (f === state.fmt) return;
+      state.fmt = f; saveLocal(); renderFormats();
+      makeCollage().catch(function () { aviso("No se pudo armar el collage en ese formato. Vuelve a intentar."); });
+    });
+  });
+
+  $("guardar").addEventListener("click", function () {
+    if (!downloads || !lastCollage) return;
+    var btn = this; btn.disabled = true;
+    var suffix = lastCollage.fmt === "story" ? "stories-ig" : "feed-ig";
+    downloads.save({ filename:"cumbre-feliz-bingo-flow-" + suffix + "-" + ymd(lastCollage.date) + ".jpg", data:lastCollage.blob }).then(function () {
+      aviso("Imagen guardada. Ahora súbela a Instagram o mándala por WhatsApp.");
+    }).catch(function (e) {
+      if (e && e.code === "declined") return;
+      if (e && e.code === "rate_limited") { aviso("Ya hay una descarga abierta. Termina esa y vuelve a intentar."); return; }
+      aviso("No se pudo guardar con el botón. Mantén presionada la imagen y elige guardar.");
+    }).then(function () { btn.disabled = false; });
+  });
+
+  $("copiar").addEventListener("click", function () {
+    var ta = $("msg"), text = ta.value;
+    var fallback = function () { ta.focus(); ta.select(); aviso("Texto seleccionado: cópialo y pégalo en tu publicación."); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { aviso("Texto copiado. Pégalo en Instagram o en el grupo."); }, fallback);
+      } else fallback();
+    } catch (e) { fallback(); }
+  });
+
+  /* ---------- curvas de nivel ---------- */
+  (function contours() {
+    var band = document.querySelector(".band"); if (!band) return;
+    var d = "M320 30C370 30 410 60 405 95C400 135 360 160 315 155C265 150 235 125 240 90C245 55 280 30 320 30Z";
+    var paths = [0.3, 0.55, 0.8, 1.08, 1.4, 1.78, 2.2, 2.7, 3.25].map(function (k, n) {
+      return '<path d="' + d + '" transform="translate(322 92) rotate(' + (n * 3 - 8) + ') scale(' + k + ') translate(-322 -92)" vector-effect="non-scaling-stroke"/>';
+    }).join("");
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMaxYMid slice"><g fill="none" stroke="#000" stroke-width="1.2">' + paths + "</g></svg>";
+    band.style.setProperty("--contours", 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+    band.classList.add("has-contours");
+  })();
+
+  /* ---------- arranque ---------- */
+  loadLocal();
+  nombre.value = state.nombre;
+  lugarIn.value = state.lugar;
+  render();
+
+  idbReady.then(function () {
+    var card = state.card, jobs = [];
+    card.filled.forEach(function (f, s) {
+      if (!f) return;
+      var key = card.id + ":" + s;
+      jobs.push(idbGet(key).then(function (blob) {
+        if (blob) urls[key] = URL.createObjectURL(blob);
+        else card.filled[s] = false;
+      }));
+    });
+    return Promise.all(jobs);
+  }).then(function () { saveLocal(); render(); });
+
+  /* Versión web (sin Claude): compartir con el menú del teléfono y guardar como descarga normal */
+  var canShareFiles = false;
+  try { canShareFiles = !!(navigator.share && navigator.canShare && navigator.canShare({ files: [new File([new Blob(["x"], { type: "image/jpeg" })], "x.jpg", { type: "image/jpeg" })] })); } catch (e) {}
+  downloads = { save: function (o) { return new Promise(function (res, rej) {
+    try {
+      var u = URL.createObjectURL(o.data), a = document.createElement("a");
+      a.href = u; a.download = o.filename; document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 4000); res();
+    } catch (e) { rej(e); }
+  }); } };
+  $("compartir").addEventListener("click", function () {
+    if (!lastCollage) return;
+    var file = new File([lastCollage.blob], "cumbre-feliz-" + (lastCollage.fmt === "story" ? "stories-ig" : "feed-ig") + "-" + ymd(lastCollage.date) + ".jpg", { type: "image/jpeg" });
+    navigator.share({ files: [file] }).catch(function (e) { if (e && e.name === "AbortError") return; aviso("No se pudo abrir el menú para compartir. Toca Guardar imagen."); });
+  });
+})();
+</script>
+</html>
