@@ -8,7 +8,9 @@
 <meta property="og:title" content="Bingo Flow Letras escondidas · Cumbre Feliz">
 <meta property="og:description" content="Escribe una palabra con fotos de formas que encuentres.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/icon-512.png">
+<meta property="og:image" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/og-letras.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:url" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/letras.html">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -109,6 +111,9 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
 .wordrow{ display:flex; gap:8px; }
 .wordrow input{ flex:1; min-width:0; font:800 22px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:10px 12px 8px; }
 .chips{ display:flex; flex-wrap:wrap; gap:6px; }
+.whint{ margin:0; font:600 11.5px/1.4 var(--font-mono); letter-spacing:.04em; color:var(--muted); }
+.whint.ok{ color:var(--ink); }
+.whint.no{ color:var(--mente); }
 .chip{ appearance:none; cursor:pointer; font:800 15px/1 var(--font-display); letter-spacing:.06em; text-transform:uppercase; padding:8px 11px 6px; border-radius:999px; border:1.5px solid var(--line); background:var(--panel); color:var(--ink); }
 .chip[aria-pressed="true"]{ background:var(--stamp); border-color:var(--stamp); color:var(--stamp-ink); }
 
@@ -223,7 +228,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     </div>
     <div class="wordrow" id="o-letras" hidden>
       <label class="vh" for="o-word">Palabra del día</label>
-      <input type="text" id="o-word" maxlength="10" autocomplete="off" autocapitalize="characters" placeholder="Palabra del día">
+      <input type="text" id="o-word" maxlength="12" autocomplete="off" autocapitalize="characters" placeholder="Palabra del día">
     </div>
     <label class="lbl" for="o-link">Enlace del reto</label>
     <input class="msg" id="o-link" readonly>
@@ -259,9 +264,10 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     <div class="chips" id="chips" aria-labelledby="word-lbl"></div>
     <div class="wordrow">
       <label class="vh" for="palabra">Otra palabra</label>
-      <input type="text" id="palabra" maxlength="10" autocomplete="off" autocapitalize="characters" placeholder="Otra palabra">
+      <input type="text" id="palabra" maxlength="12" autocomplete="off" autocapitalize="characters" placeholder="Otra palabra" aria-describedby="whint">
       <button type="button" class="btn" id="usar">Usar</button>
     </div>
+    <p class="whint" id="whint" aria-live="polite">4, 6, 9 o 12 letras: tu cartón queda en cuadro 2×2, 3×2, 3×3 o 4×3.</p>
   </div>
 
   <section class="card" id="carton" role="tabpanel" aria-label="Tu cartón">
@@ -309,7 +315,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     <section>
       <h2>Cómo jugar</h2>
       <ul>
-        <li>Elige una palabra y búscala letra por letra: una rama en Y, una rueda en O, un poste en I.</li>
+        <li>Elige una palabra de 4, 6, 9 o 12 letras: tu cartón queda en cuadro de 2×2, 3×2, 3×3 o 4×3. Búscala letra por letra: una rama en Y, una rueda en O, un poste en I.</li>
         <li>También vale hacer la letra con tu cuerpo o con el grupo. Con todas las letras tienes la palabra completa.</li>
         <li>Con tu meta lograda, toca <strong>Compartir mi cartón</strong>, elige Stories IG o Feed IG y súbelo a Instagram o al grupo de WhatsApp.</li>
       </ul>
@@ -350,11 +356,15 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     W:"un techo en zigzag o una reja", X:"dos ramas cruzadas o una cerca", Y:"una rama que se abre en dos",
     Z:"una escalera o una grieta"
   };
-  var PRESETS = ["FLOW", "FELIZ", "CUMBRE", "42K"];
+  var PRESETS = ["FLOW", "META", "CUMBRE", "CORREDORA", "MARATONISTAS"];
+  /* Medidas parejas del cartón de Letras: letras → [columnas, filas] */
+  var SHAPE_OF = { 4:[2,2], 6:[3,2], 9:[3,3], 12:[4,3] };
+  var SIZES = [4, 6, 9, 12];
+  function fits(w) { return SIZES.indexOf(w.length) >= 0; }
   var BASE = location.href.split("#")[0];
   var FIXED = "letras";
   function parseReto(h) {
-    var m = /^#?reto-(abc|bingo|letras)(?:-([A-Z0-9]{2,10}))?$/.exec(h || "");
+    var m = /^#?reto-(abc|bingo|letras)(?:-([A-Z0-9]{2,12}))?$/.exec(h || "");
     if (!m) return null;
     var mode = m[1], p = m[2] || "";
     if (mode === "abc") {
@@ -382,7 +392,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]; }); }
   function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   function fmtLong(d) { try { return d.toLocaleDateString("es", { day:"numeric", month:"long", year:"numeric" }); } catch (e) { return ymd(d); } }
-  function cleanWord(w) { return String(w || "").toUpperCase().normalize("NFD").replace(/Ñ/g, "Ñ").replace(/[̀-ͯ]/g, "").replace(/[^A-ZÑ0-9]/g, "").slice(0, 10); }
+  function cleanWord(w) { return String(w || "").toUpperCase().normalize("NFD").replace(/Ñ/g, "Ñ").replace(/[̀-ͯ]/g, "").replace(/[^A-ZÑ0-9]/g, "").slice(0, 12); }
 
   function newCard(mode, word, letters) {
     var slots = [];
@@ -431,6 +441,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     if (card.mode === "abc") return 3;
     if (card.mode === "bingo") return 5;
     var n = card.slots.length;
+    if (SHAPE_OF[n]) return SHAPE_OF[n][0];
     return n <= 5 ? n : Math.ceil(n / 2);
   }
   function hintOf(card, i) {
@@ -523,7 +534,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
       d.innerHTML = "<p>Cada columna es una letra de BINGO. En cada casilla va algo distinto que empiece con la letra de su columna. El centro es <b>N de Nosotros</b>: selfie o foto de grupo. Una fila o una columna completa es bingo.</p>" +
         '<ul class="hints"><li><b>B</b> banco, bici, botella, bandera</li><li><b>I</b> iglesia, insecto, tu inicial en un letrero</li><li><b>N</b> nube, naranja, número, nido</li><li><b>G</b> grafiti, gorra, grama, gato</li><li><b>O</b> orquídea, ojos de un mural, algo redondo</li></ul>';
     } else {
-      d.innerHTML = "<p>Elige una palabra y búscala letra por letra en formas de la calle o la naturaleza: una rama en Y, una rueda en O, un poste en I. También vale hacer la letra con tu cuerpo o con el grupo.</p>";
+      d.innerHTML = "<p>Elige una palabra de <b>4, 6, 9 o 12 letras</b> y búscala letra por letra en formas de la calle o la naturaleza: una rama en Y, una rueda en O, un poste en I. También vale hacer la letra con tu cuerpo o con el grupo.</p>";
     }
     $("word").hidden = m !== "letras" || !!reto;
     document.querySelector(".modes").hidden = !!reto || !!FIXED;
@@ -531,7 +542,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     if (reto) $("retobox").innerHTML = "<b>Reto del día de Cumbre Feliz</b>" + esc(describeReto(reto));
     if (m === "letras" && !reto) {
       var w = card().word, own = cleanWord(state.nombre);
-      var list = PRESETS.slice(); if (own.length >= 2 && list.indexOf(own) < 0) list.push(own);
+      var list = PRESETS.slice(); if (fits(own) && list.indexOf(own) < 0) list.push(own);
       $("chips").innerHTML = list.map(function (p) { return '<button type="button" class="chip" data-w="' + esc(p) + '" aria-pressed="' + (p === w ? "true" : "false") + '">' + esc(p) + "</button>"; }).join("");
     }
   }
@@ -646,7 +657,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
 
   function setWord(w, btn) {
     w = cleanWord(w);
-    if (w.length < 2) { aviso("Escribe una palabra de 2 a 10 letras o números."); return; }
+    if (!fits(w)) { aviso(w.length ? "Tu palabra tiene " + w.length + " letras. Usa una de 4, 6, 9 o 12 para que tu cartón quede parejo." : "Escribe una palabra de 4, 6, 9 o 12 letras."); return; }
     var c = state.cards.letras;
     if (w === c.word) return;
     if (btn && !confirmTap(btn, countOf(c.filled) > 0, "Cambia la palabra y borra fotos")) return;
@@ -657,6 +668,15 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   $("chips").addEventListener("click", function (e) { var b = e.target.closest(".chip"); if (b) setWord(b.getAttribute("data-w"), b); });
   $("usar").addEventListener("click", function () { setWord($("palabra").value, this); });
   $("palabra").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); setWord(this.value, $("usar")); } });
+  function wordHint() {
+    var w = cleanWord($("palabra").value), h = $("whint"), sh = SHAPE_OF[w.length];
+    h.className = "whint" + (w ? (sh ? " ok" : " no") : "");
+    if (!w) h.textContent = "4, 6, 9 o 12 letras: tu cartón queda en cuadro 2×2, 3×2, 3×3 o 4×3.";
+    else if (sh) h.textContent = w + ": " + w.length + " letras, cartón de " + sh[0] + "×" + sh[1] + ". Toca Usar.";
+    else { var up = SIZES.filter(function (k) { return k > w.length; })[0], dn = SIZES.filter(function (k) { return k < w.length; }).pop();
+      h.textContent = w.length + " letras. " + (dn ? "Quita " + (w.length - dn) : "") + (dn && up ? " o " : "") + (up ? (dn ? "a" : "A") + "grega " + (up - w.length) : "") + " para que cuadre."; }
+  }
+  $("palabra").addEventListener("input", wordHint);
 
   function selectMode(m) {
     if (!state.cards[m]) return;
@@ -880,7 +900,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     if (oMode === "bingo") return parseReto("reto-bingo");
     if (oMode === "abc") return oLetters.length === 8 ? parseReto("reto-abc-" + oLetters.slice().sort().join("")) : null;
     var w = cleanWord($("o-word").value).replace(/Ñ/g, "N");
-    return w.length >= 2 ? parseReto("reto-letras-" + w) : null;
+    return fits(w) ? parseReto("reto-letras-" + w) : null;
   }
   function linkFor(r) { return BASE + "#" + retoToken(r); }
   function renderOrg() {
@@ -892,7 +912,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     $("o-letters").innerHTML = ABC.map(function (l) { return '<button type="button" class="chip" data-ol="' + l + '" aria-pressed="' + (oLetters.indexOf(l) >= 0 ? "true" : "false") + '">' + l + "</button>"; }).join("");
     $("o-n").textContent = oLetters.length;
     var r = orgReto();
-    $("o-link").value = r ? linkFor(r) : (oMode === "abc" ? "Elige 8 letras para crear el enlace" : "Escribe una palabra de 2 a 10 letras");
+    $("o-link").value = r ? linkFor(r) : (oMode === "abc" ? "Elige 8 letras para crear el enlace" : "Escribe una palabra de 4, 6, 9 o 12 letras");
     $("o-copiar").disabled = !r; $("o-probar").disabled = !r;
     $("o-libre").hidden = !reto;
   }
@@ -937,6 +957,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
 
   if (FIXED) oMode = FIXED;
   loadLocal();
+  if (state.cards.letras && !fits(state.cards.letras.word || "") && countOf(state.cards.letras.filled) === 0) state.cards.letras = newCard("letras", "FLOW");
   applyReto();
   if (reto) { oMode = reto.mode; if (reto.mode === "abc") oLetters = reto.p.split(""); if (reto.mode === "letras") $("o-word").value = reto.p; }
   saveLocal();

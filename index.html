@@ -9,7 +9,9 @@
 <meta property="og:title" content="Cumbre Feliz · Bingo Flow">
 <meta property="og:description" content="Juegos de fotos para tu rodaje. Corre a tu ritmo, llena tu cartón y comparte tu collage.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/icon-512.png">
+<meta property="og:image" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/og-portada.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:url" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -55,16 +57,26 @@ body{ background:var(--paper); color:var(--ink); font:400 16px/1.5 var(--font-bo
 main.wrap{ padding-top:18px; padding-bottom:40px; display:grid; gap:12px; }
 .kicker{ margin:6px 0 0; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
 
-.game{ display:grid; grid-template-columns:52px minmax(0,1fr) auto; align-items:center; gap:14px; padding:14px 14px 14px 12px;
-  background:var(--panel); border:1.5px solid var(--line); border-radius:14px; color:inherit; text-decoration:none; min-height:84px; }
+.game{ display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:8px; padding-right:12px;
+  background:var(--panel); border:1.5px solid var(--line); border-radius:14px; min-height:84px; }
+.game.main{ border-color:var(--accent); }
 .game:hover{ border-color:var(--accent); }
-.game:focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; }
+.glink{ display:grid; grid-template-columns:52px minmax(0,1fr); align-items:center; gap:14px; padding:14px 0 14px 12px; color:inherit; text-decoration:none; border-radius:12px; }
+.glink:focus-visible, .gshare:focus-visible, .hshare:focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; }
 .game .ic{ width:52px; height:52px; border-radius:12px; background:var(--chip); display:grid; place-items:center; color:var(--accent); }
 .game .ic svg{ width:30px; height:30px; }
 .game h2{ margin:0; font:800 25px/1 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
 .game p{ margin:4px 0 0; font-size:14px; line-height:1.35; color:var(--muted); }
-.game .go{ font:800 26px/1 var(--font-display); color:var(--accent); }
-.game.main{ border-color:var(--accent); }
+.gshare{ appearance:none; cursor:pointer; flex:none; display:grid; place-items:center; gap:2px; width:58px; min-height:56px; padding:6px 4px 5px;
+  border:1.5px solid var(--line); border-radius:12px; background:transparent; color:var(--accent); font:600 9.5px/1 var(--font-mono); letter-spacing:.04em; text-transform:uppercase; }
+.gshare svg{ width:20px; height:20px; }
+.gshare:hover{ border-color:var(--accent); }
+.hshare{ appearance:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px; margin-top:16px; padding:10px 14px 8px; border-radius:8px;
+  border:1.5px solid var(--band-muted); background:transparent; color:var(--band-ink); font:700 14px/1 var(--font-body); }
+.hshare svg{ width:18px; height:18px; }
+.toast{ position:fixed; left:50%; bottom:max(18px, env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); z-index:30; margin:0; padding:10px 14px; border-radius:8px;
+  background:var(--ink); color:var(--paper); font-size:14px; max-width:calc(100% - 32px); }
+[hidden]{ display:none !important; }
 
 .tip{ margin-top:14px; padding:14px 16px; border-radius:12px; background:var(--chip); }
 .tip h3{ margin:0 0 6px; font:800 20px/1.1 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
@@ -85,41 +97,52 @@ main.wrap{ padding-top:18px; padding-bottom:40px; display:grid; gap:12px; }
     </div>
     <h1>Bingo Flow</h1>
     <p>Juega, corre y fluye a tu ritmo. Elige un juego, llena tu cartón con fotos de tu rodaje y comparte tu collage.</p>
+    <button type="button" class="hshare" data-url="./" data-title="Bingo Flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Enviar todos los juegos</button>
   </div>
 </header>
 
 <main class="wrap">
   <p class="kicker">Elige tu juego</p>
 
-  <a class="game main" href="bingo-flow.html">
-    <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="11.5" y="3" width="7" height="7" rx="1.5"/><rect x="20" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="11.5" width="7" height="7" rx="1.5"/><circle cx="15" cy="15" r="3.6" fill="currentColor" stroke="none"/><rect x="20" y="11.5" width="7" height="7" rx="1.5"/><rect x="3" y="20" width="7" height="7" rx="1.5"/><rect x="11.5" y="20" width="7" height="7" rx="1.5"/><rect x="20" y="20" width="7" height="7" rx="1.5"/></svg></span>
-    <span><h2>Bingo Flow</h2><p>Nueve fotos de tu rodaje. La selfie del centro canta el bingo.</p></span>
-    <span class="go" aria-hidden="true">→</span>
-  </a>
+  <div class="game main">
+    <a class="glink" href="bingo-flow.html">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="11.5" y="3" width="7" height="7" rx="1.5"/><rect x="20" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="11.5" width="7" height="7" rx="1.5"/><circle cx="15" cy="15" r="3.6" fill="currentColor" stroke="none"/><rect x="20" y="11.5" width="7" height="7" rx="1.5"/><rect x="3" y="20" width="7" height="7" rx="1.5"/><rect x="11.5" y="20" width="7" height="7" rx="1.5"/><rect x="20" y="20" width="7" height="7" rx="1.5"/></svg></span>
+      <span><h2>Bingo Flow</h2><p>Nueve fotos de tu rodaje. La selfie del centro canta el bingo.</p></span>
+    </a>
+    <button type="button" class="gshare" data-url="bingo-flow.html" data-title="Bingo Flow" aria-label="Compartir el enlace de Bingo Flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span>Enviar</span></button>
+  </div>
 
-  <a class="game" href="abecedario.html">
-    <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30" fill="currentColor"><text x="4" y="22" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="800" font-size="18" textLength="22" lengthAdjust="spacingAndGlyphs">ABC</text></svg></span>
-    <span><h2>Abecedario</h2><p>Fotografía algo que empiece con cada letra.</p></span>
-    <span class="go" aria-hidden="true">→</span>
-  </a>
+  <div class="game">
+    <a class="glink" href="abecedario.html">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30" fill="currentColor"><text x="4" y="22" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="800" font-size="18" textLength="22" lengthAdjust="spacingAndGlyphs">ABC</text></svg></span>
+      <span><h2>Abecedario</h2><p>Fotografía algo que empiece con cada letra.</p></span>
+    </a>
+    <button type="button" class="gshare" data-url="abecedario.html" data-title="Abecedario" aria-label="Compartir el enlace de Abecedario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span>Enviar</span></button>
+  </div>
 
-  <a class="game" href="bingo.html">
-    <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30" fill="currentColor"><text x="3" y="19.5" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="800" font-size="11" textLength="24" lengthAdjust="spacingAndGlyphs">BINGO</text></svg></span>
-    <span><h2>B-I-N-G-O</h2><p>El bingo de siempre, con fotos. Llena una fila o una columna.</p></span>
-    <span class="go" aria-hidden="true">→</span>
-  </a>
+  <div class="game">
+    <a class="glink" href="bingo.html">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30" fill="currentColor"><text x="3" y="19.5" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="800" font-size="11" textLength="24" lengthAdjust="spacingAndGlyphs">BINGO</text></svg></span>
+      <span><h2>B-I-N-G-O</h2><p>El bingo de siempre, con fotos. Llena una fila o una columna.</p></span>
+    </a>
+    <button type="button" class="gshare" data-url="bingo.html" data-title="B-I-N-G-O" aria-label="Compartir el enlace de B-I-N-G-O"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span>Enviar</span></button>
+  </div>
 
-  <a class="game" href="letras.html">
-    <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 25 L9 14 M9 14 L4 5 M9 14 L14 5"/><circle cx="21" cy="17" r="5.5"/></svg></span>
-    <span><h2>Letras escondidas</h2><p>Escribe una palabra con formas que encuentres en el camino.</p></span>
-    <span class="go" aria-hidden="true">→</span>
-  </a>
+  <div class="game">
+    <a class="glink" href="letras.html">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 25 L9 14 M9 14 L4 5 M9 14 L14 5"/><circle cx="21" cy="17" r="5.5"/></svg></span>
+      <span><h2>Letras escondidas</h2><p>Escribe una palabra con formas que encuentres en el camino.</p></span>
+    </a>
+    <button type="button" class="gshare" data-url="letras.html" data-title="Letras escondidas" aria-label="Compartir el enlace de Letras escondidas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span>Enviar</span></button>
+  </div>
 
-  <a class="game" href="color.html">
-    <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30"><g stroke="none"><circle cx="15" cy="6" r="3.2" fill="#1F4D33"/><circle cx="22.8" cy="10.5" r="3.2" fill="#2E6B45"/><circle cx="22.8" cy="19.5" r="3.2" fill="#3F8A57"/><circle cx="15" cy="24" r="3.2" fill="#5FA36F"/><circle cx="7.2" cy="19.5" r="3.2" fill="#86BE8F"/><circle cx="7.2" cy="10.5" r="3.2" fill="#B4D8B4"/></g></svg></span>
-    <span><h2>Color</h2><p>Arma un círculo cromático o un degradé con fotos.</p></span>
-    <span class="go" aria-hidden="true">→</span>
-  </a>
+  <div class="game">
+    <a class="glink" href="color.html">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 30 30"><g stroke="none"><circle cx="15" cy="6" r="3.2" fill="#1F4D33"/><circle cx="22.8" cy="10.5" r="3.2" fill="#2E6B45"/><circle cx="22.8" cy="19.5" r="3.2" fill="#3F8A57"/><circle cx="15" cy="24" r="3.2" fill="#5FA36F"/><circle cx="7.2" cy="19.5" r="3.2" fill="#86BE8F"/><circle cx="7.2" cy="10.5" r="3.2" fill="#B4D8B4"/></g></svg></span>
+      <span><h2>Color</h2><p>Arma un círculo cromático o un degradé con fotos.</p></span>
+    </a>
+    <button type="button" class="gshare" data-url="color.html" data-title="Color" aria-label="Compartir el enlace de Color"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span>Enviar</span></button>
+  </div>
 
   <section class="tip" aria-labelledby="tip-t">
     <h3 id="tip-t">Tenlo a un toque</h3>
@@ -131,5 +154,24 @@ main.wrap{ padding-top:18px; padding-bottom:40px; display:grid; gap:12px; }
 
   <p class="foot">No necesitas cuenta ni descargar nada. Tus fotos no se suben a internet: se quedan en tu teléfono hasta que tú compartes tu collage.</p>
 </main>
+<p class="toast" id="toast" role="status" hidden></p>
+<script>
+(function () {
+  var toast = document.getElementById("toast"), t = null;
+  function say(msg) { toast.textContent = msg; toast.hidden = false; clearTimeout(t); t = setTimeout(function () { toast.hidden = true; }, 2600); }
+  function copy(text, done) {
+    try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, function () { window.prompt("Copia este enlace:", text); }); return; } } catch (e) {}
+    window.prompt("Copia este enlace:", text);
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest(".gshare, .hshare"); if (!b) return;
+    var url = new URL(b.getAttribute("data-url"), location.href).href;
+    var title = b.getAttribute("data-title"), all = b.classList.contains("hshare");
+    var text = all ? "Juegos de fotos de Cumbre Feliz para tu rodaje. Elige uno y juega desde tu teléfono:" : title + " de Cumbre Feliz: juega con fotos de tu rodaje desde tu teléfono.";
+    if (navigator.share) { navigator.share({ title: title + " · Cumbre Feliz", text: text, url: url }).catch(function () {}); return; }
+    copy(url, function () { say("Enlace copiado. Pégalo en WhatsApp o Instagram."); });
+  });
+})();
+</script>
 </body>
 </html>
