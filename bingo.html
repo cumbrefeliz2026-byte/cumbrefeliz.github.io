@@ -1,7 +1,10 @@
 <!doctype html>
+<!-- Bingo Flow · Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Prohibida su copia, reproducción o modificación sin autorización. -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<meta name="author" content="Alita · Cumbre Feliz">
+<meta name="copyright" content="© 2026 Alita. Todos los derechos reservados.">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#15251B">
 <meta name="description" content="El bingo de siempre, con fotos de tu rodaje.">
@@ -189,6 +192,8 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
 .notes h2{ margin:0 0 8px; font:800 23px/1.1 var(--font-display); text-transform:uppercase; letter-spacing:.03em; text-wrap:balance; }
 .notes ul{ margin:0; padding-left:20px; display:grid; gap:7px; max-width:62ch; }
 .notes strong{ font-weight:700; }
+.autoria{ margin:6px 0 0; font:500 11.5px/1.5 var(--font-mono); color:var(--muted); }
+.autoria strong{ color:var(--ink); font-weight:600; }
 .foot{ margin:6px 0 0; padding-top:12px; border-top:1px solid var(--line); font:500 11.5px/1.45 var(--font-mono); color:var(--muted); }
 
 @media (prefers-reduced-motion: reduce){ .bar i{ transition:none; } .bingo.pop{ animation:none; } }
@@ -206,7 +211,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
 <main class="wrap" lang="es">
   <p class="aviso" id="aviso" role="status" hidden></p>
   <noscript>
-    <style>main.wrap > :not(noscript):not(.notes){ display:none !important; }</style>
+    <style>main.wrap > :not(noscript):not(.notes):not(.autoria){ display:none !important; }</style>
     <div class="nojs">
       <strong>Para jugar, abre el enlace</strong>
       Estás viendo el archivo en vista previa y así no aparecen las casillas para tus fotos. Pide el enlace del juego y ábrelo en Safari o Chrome.
@@ -332,6 +337,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   </div>
 
   <p class="foot">Tus fotos se quedan en tu teléfono, en este navegador. Nadie más las ve hasta que compartas tu collage.</p>
+  <p class="autoria">Bingo Flow es un juego creado por <strong>Alita</strong> para Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Prohibida su copia, reproducción o modificación sin autorización.</p>
 </main>
 
 <script>
