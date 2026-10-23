@@ -1,0 +1,421 @@
+<!doctype html>
+<!-- Mi story del día · 42 a los 42 · Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#15251B">
+<meta name="author" content="Alita · Cumbre Feliz">
+<title>Mi story del día · 42 a los 42</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: columna de teléfono. Banda con el logo y la cuenta regresiva del día; tarjeta del día (tema, entreno, qué contar, sticker); foto y textos; vista previa de la story 1080×1920 con botones para compartir; calendario completo plegable. */
+:root{
+  --paper:#EEF2EA; --band:#E2E9DB; --panel:#F9FBF6; --ink:#15251B; --muted:#556659; --line:#C4CFBF;
+  --accent:#2F5B41; --chip:#E6EEDF; --sage:#A3C29A; --cream:#EFE6D2; --done:#2E7A4B; --warn:#B23946;
+  --font-display:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+  --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1712; --band:#142019; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E; --line:#2C3B31;
+    --accent:#A9C6A1; --chip:#243429; --done:#66C089; --warn:#EE8792; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1712; --band:#142019; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E; --line:#2C3B31;
+  --accent:#A9C6A1; --chip:#243429; --done:#66C089; --warn:#EE8792; color-scheme:dark;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+html,body{ margin:0; }
+body{ background:var(--paper); color:var(--ink); font:400 15px/1.5 var(--font-body); }
+.wrap{ max-width:560px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+
+.band{ background:#15251B; color:#EFE6D2; }
+.band .wrap{ padding-top:max(22px, env(safe-area-inset-top, 0px)); padding-bottom:20px; }
+.brand{ display:flex; align-items:center; gap:10px; }
+.logo{ width:58px; height:auto; flex:none; overflow:visible; color:#EFE6D2; }
+.brand b{ display:block; font:800 19px/1 var(--font-display); letter-spacing:.05em; text-transform:uppercase; }
+.brand span{ display:block; margin-top:3px; font:600 11px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:#A9C6A1; }
+h1{ margin:16px 0 4px; font:800 clamp(38px, 11vw, 54px)/.9 var(--font-display); text-transform:uppercase; letter-spacing:.01em; }
+.lede{ margin:0; color:#C9D6C4; font-size:14.5px; }
+
+main.wrap{ padding-top:16px; padding-bottom:44px; display:grid; gap:14px; }
+.aviso{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; margin:0; padding:10px 12px; border-radius:8px; background:var(--ink); color:var(--paper); font-size:13.5px; }
+
+.daynav{ display:grid; grid-template-columns:48px minmax(0,1fr) 48px; gap:8px; align-items:center; }
+.navbtn{ appearance:none; height:48px; border-radius:10px; border:1.5px solid var(--line); background:var(--panel); color:var(--ink); font:800 22px/1 var(--font-display); cursor:pointer; }
+.navbtn:disabled{ opacity:.35; cursor:not-allowed; }
+.daylabel{ text-align:center; }
+.daylabel b{ display:block; font:800 22px/1.05 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
+.daylabel button{ appearance:none; border:0; background:none; padding:2px 6px; margin-top:2px; font:600 11px/1.2 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); cursor:pointer; text-decoration:underline; }
+
+.daycard{ display:grid; gap:10px; padding:14px; background:var(--panel); border:1.5px solid var(--line); border-radius:14px; }
+.count{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+.count .n{ font:800 64px/.85 var(--font-display); font-variant-numeric:tabular-nums; }
+.count .t{ font:800 20px/1.05 var(--font-display); text-transform:uppercase; letter-spacing:.03em; }
+.chip{ display:inline-block; padding:3px 8px 2px; border-radius:999px; background:var(--chip); font:600 10.5px/1.4 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--accent); }
+.chip.done{ background:var(--done); color:var(--paper); }
+.daycard h2{ margin:0; font:800 26px/1.05 var(--font-display); text-transform:uppercase; letter-spacing:.02em; text-wrap:balance; }
+.row{ display:grid; gap:2px; }
+.row .k{ font:600 10.5px/1.3 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.row .v{ font-size:14.5px; line-height:1.4; }
+.sticker{ display:flex; gap:8px; align-items:flex-start; }
+.sticker .v{ flex:1; }
+.mini{ appearance:none; flex:none; padding:7px 10px 5px; border-radius:7px; border:1.5px solid var(--line); background:transparent; color:var(--ink); font:700 12px/1 var(--font-body); cursor:pointer; }
+
+.field{ display:grid; gap:5px; }
+.field label, .lbl{ font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.field input[type=text], .field input[type=number], .field textarea{ font:600 16px/1.3 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:11px 12px 9px; width:100%; }
+.field textarea{ resize:vertical; min-height:70px; font-weight:500; }
+.two{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; }
+.check{ display:flex; align-items:center; gap:8px; font-size:14px; }
+.check input{ width:20px; height:20px; accent-color:var(--accent); }
+
+.photo{ display:flex; align-items:center; gap:12px; }
+.thumb{ width:64px; height:64px; border-radius:10px; background:var(--chip); background-size:cover; background-position:center; flex:none; border:1.5px dashed var(--line); }
+.thumb.has{ border-style:solid; }
+.vh{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; opacity:0; }
+
+.btn{ appearance:none; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font:700 14px/1 var(--font-body); padding:12px 16px 10px; border-radius:6px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); text-decoration:none; }
+.btn.primary{ background:var(--ink); color:var(--paper); }
+.btn[disabled]{ opacity:.45; cursor:not-allowed; }
+.actions{ display:flex; flex-wrap:wrap; gap:8px; }
+:focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; }
+
+.result{ display:grid; gap:12px; padding:14px; background:var(--band); border-radius:12px; }
+.result h3{ margin:0; font:800 22px/1 var(--font-display); text-transform:uppercase; letter-spacing:.03em; }
+.result img{ display:block; width:auto; max-width:100%; max-height:72vh; margin:0 auto; border-radius:8px; background:#15251B; }
+.hint{ margin:0; font-size:12.5px; color:var(--muted); }
+
+details.cal{ background:var(--panel); border:1.5px solid var(--line); border-radius:12px; }
+details.cal summary{ cursor:pointer; padding:12px 14px; font:800 20px/1 var(--font-display); text-transform:uppercase; letter-spacing:.02em; }
+.calist{ list-style:none; margin:0; padding:0 8px 10px; display:grid; gap:2px; max-height:60vh; overflow:auto; }
+.calist button{ appearance:none; width:100%; display:grid; grid-template-columns:44px 72px minmax(0,1fr) 22px; gap:8px; align-items:center; text-align:left; padding:8px 6px; border:0; border-radius:8px; background:transparent; color:var(--ink); font:500 13px/1.25 var(--font-body); cursor:pointer; }
+.calist button:hover{ background:var(--chip); }
+.calist button[aria-current="date"]{ background:var(--chip); font-weight:700; }
+.calist .cn{ font:800 20px/1 var(--font-display); font-variant-numeric:tabular-nums; text-align:right; }
+.calist .cd{ font:600 11px/1.2 var(--font-mono); color:var(--muted); text-transform:uppercase; }
+.calist .ck{ color:var(--done); font-weight:800; text-align:center; }
+.foot{ margin:6px 0 0; padding-top:12px; border-top:1px solid var(--line); font:500 11.5px/1.45 var(--font-mono); color:var(--muted); }
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="logo" viewBox="0 -12 120 70" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6,54 L34,26 L50,42 L66,20 L96,54" stroke-width="3.4"/><path d="M76,54 L90,34 L114,54" stroke-width="2.6"/><circle cx="66" cy="9" r="8" stroke-width="3"/><path d="M66,-3 L66,-8 M55,2 L50,-2 M77,2 L82,-2 M50,13 L44,13 M82,13 L88,13" stroke-width="2.6"/></svg>
+      <div><b>Cumbre Feliz</b><span>42 a los 42 · Maratón CAF</span></div>
+    </div>
+    <h1>Mi story del día</h1>
+    <p class="lede">Después de entrenar: sube tu foto, revisa el texto y comparte. La idea y el sticker del día ya están listos.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="aviso" id="aviso" role="status" hidden></p>
+  <noscript><p class="daycard">Esta página necesita abrirse en Safari o Chrome para funcionar.</p></noscript>
+
+  <div class="daynav">
+    <button type="button" class="navbtn" id="prev" aria-label="Día anterior">‹</button>
+    <div class="daylabel"><b id="fecha">–</b><button type="button" id="hoy" hidden>Volver a hoy</button></div>
+    <button type="button" class="navbtn" id="next" aria-label="Día siguiente">›</button>
+  </div>
+
+  <section class="daycard" aria-labelledby="tema">
+    <div class="count"><span class="n" id="n">–</span><span class="t" id="nt">días para mis 42K</span></div>
+    <div><span class="chip" id="etapa">–</span> <span class="chip done" id="hecha" hidden>Publicada</span></div>
+    <h2 id="tema">–</h2>
+    <div class="row"><span class="k">Entreno de hoy</span><span class="v" id="entreno">–</span></div>
+    <div class="row"><span class="k">Qué contar</span><span class="v" id="idea">–</span></div>
+    <div class="row"><span class="k">Sticker</span><div class="sticker"><span class="v" id="sticker">–</span><button type="button" class="mini" id="copiar-st">Copiar</button></div></div>
+  </section>
+
+  <div class="photo">
+    <div class="thumb" id="thumb" aria-hidden="true"></div>
+    <div style="display:grid; gap:6px;">
+      <label class="btn primary" for="foto">Elegir mi foto</label>
+      <input type="file" class="vh" id="foto" accept="image/*">
+      <span class="hint" id="foto-hint">Tu foto se queda en tu teléfono.</span>
+    </div>
+  </div>
+
+  <div class="field" id="km-quien-f" hidden>
+    <label for="km-quien" id="km-quien-l">¿De quién es el km?</label>
+    <input type="text" id="km-quien" maxlength="40" autocomplete="off" placeholder="Nombre de quien lo adoptó">
+  </div>
+
+  <div class="field">
+    <label for="frase">Frase</label>
+    <textarea id="frase" maxlength="140" placeholder="Opcional: cómo te sentiste hoy, o una frase"></textarea>
+  </div>
+
+  <div class="two">
+    <div class="field"><label for="km">Km de hoy</label><input type="number" id="km" min="0" max="60" step="0.1" inputmode="decimal"></div>
+    <div class="field"><span class="lbl">En la imagen</span><label class="check" for="ver-entreno"><input type="checkbox" id="ver-entreno" checked> Mostrar entreno</label></div>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn primary" id="armar">Armar mi story</button>
+  </div>
+
+  <section class="result" id="result" hidden>
+    <h3>Tu story</h3>
+    <img id="story-img" alt="Tu story del día">
+    <div class="actions">
+      <button type="button" class="btn primary" id="compartir" hidden>Compartir en Instagram</button>
+      <button type="button" class="btn" id="guardar">Guardar imagen</button>
+      <button type="button" class="btn" id="publicada">Ya la publiqué</button>
+    </div>
+    <p class="hint">En Instagram, pon el sticker del día en el espacio libre del centro de la foto. Si no puedes guardarla con el botón, mantén presionada la imagen.</p>
+  </section>
+
+  <details class="cal">
+    <summary>Calendario completo</summary>
+    <ul class="calist" id="calist"></ul>
+  </details>
+
+  <p class="foot">Mi story del día · Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Esta página no aparece en la portada: es solo para ti.</p>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var DAYS = [{"fecha":"2026-10-23","dia":"Viernes","etapa":"Arranque","entreno":"Trote suave","km":4.0,"tema":"Arranca la cuenta regresiva","idea":"Anuncia el reto: el 21 de febrero corres el Maratón CAF el año en que cumples 42. Desde hoy, una story cada día después de entrenar.","sticker":"Cuenta regresiva: crea el sticker \"Mis 42 a los 42\" para el 21 feb 2027 (lo reutilizas cada día)","frase":"Cada paso que das ya es una victoria.","km_dedicado":null},{"fecha":"2026-10-24","dia":"Sábado","etapa":"Arranque","entreno":"Bici","km":0.0,"tema":"Por qué 42 a los 42","idea":"Cuenta en 10 segundos por qué este maratón es especial: 42 años, 42 kilómetros y 42 personas que lo corren contigo.","sticker":"Encuesta: ¿Alguna vez pensaste que no podías? · Sí / Todavía lo pienso","frase":"","km_dedicado":null},{"fecha":"2026-10-25","dia":"Domingo","etapa":"Arranque","entreno":"Fondo largo en el Ávila","km":11.0,"tema":"Adopta un kilómetro","idea":"Presenta 42 a los 42: cada persona adopta un kilómetro de tu maratón y hace su propio reto de 4,2 km, a su ritmo. Muestra tu tablero vacío.","sticker":"Pregunta: \"Comenta 42 y adopta tu kilómetro\" + captura de la vista Para historias de tu tablero","frase":"","km_dedicado":null},{"fecha":"2026-10-26","dia":"Lunes","etapa":"Arranque","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 33,5 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-10-27","dia":"Martes","etapa":"Arranque","entreno":"Fartlek (cambios de ritmo)","km":6.5,"tema":"Martes de calidad: fartlek","idea":"Hoy tocó fartlek: cambios de ritmo de un minuto, como un juego. Explícalo en una frase y muestra un pedacito en video.","sticker":"Quiz: ¿Qué es un fartlek? · Un juego de cambios de ritmo / Una marca de zapatos / Un estiramiento","frase":"","km_dedicado":null},{"fecha":"2026-10-28","dia":"Miércoles","etapa":"Arranque","entreno":"Fondo suave","km":8.0,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"Aquí no se llega primero. Se llega.","km_dedicado":null},{"fecha":"2026-10-29","dia":"Jueves","etapa":"Arranque","entreno":"Fondo suave","km":5.5,"tema":"Jueves de preguntas","idea":"Lanza la pregunta y responde las mejores en la story del lunes.","sticker":"Caja de preguntas: ¿Qué te da miedo de correr o caminar sola?","frase":"","km_dedicado":null},{"fecha":"2026-10-30","dia":"Viernes","etapa":"Arranque","entreno":"Trote suave","km":4.0,"tema":"Viernes de juego: Bingo Flow","idea":"Juega Bingo Flow en tu fondito, publica tu collage y reta a tus seguidoras a jugarlo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/bingo-flow.html","frase":"","km_dedicado":null},{"fecha":"2026-10-31","dia":"Sábado","etapa":"Arranque","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2026-11-01","dia":"Domingo","etapa":"Arranque","entreno":"Fondo largo en el Ávila","km":12.0,"tema":"Domingo de cumbre","idea":"La vista desde el Ávila y tus 12 km de hoy. Invita a caminar con Cumbre Feliz.","sticker":"Actualización 42 a los 42: captura de tu tablero (vista Para historias) + \"Comenta 42 y adopta tu km\"","frase":"","km_dedicado":null},{"fecha":"2026-11-02","dia":"Lunes","etapa":"Construyendo","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 36 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-11-03","dia":"Martes","etapa":"Construyendo","entreno":"Fartlek (cambios de ritmo)","km":7.0,"tema":"Martes de calidad: fartlek","idea":"Hoy tocó fartlek: cambios de ritmo de un minuto, como un juego. Explícalo en una frase y muestra un pedacito en video.","sticker":"Quiz: ¿Qué es un fartlek? · Un juego de cambios de ritmo / Una marca de zapatos / Un estiramiento","frase":"","km_dedicado":null},{"fecha":"2026-11-04","dia":"Miércoles","etapa":"Construyendo","entreno":"Fondo suave","km":8.5,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"Tu ritmo es el único ritmo correcto.","km_dedicado":null},{"fecha":"2026-11-05","dia":"Jueves","etapa":"Construyendo","entreno":"Fondo suave","km":6.0,"tema":"Jueves de preguntas","idea":"Lanza la pregunta y responde las mejores en la story del lunes.","sticker":"Caja de preguntas: ¿Cuál es tu excusa favorita para no moverte? (sin juicio)","frase":"","km_dedicado":null},{"fecha":"2026-11-06","dia":"Viernes","etapa":"Construyendo","entreno":"Trote suave","km":4.5,"tema":"Viernes de juego: Abecedario","idea":"Juega Abecedario en tu fondito, publica tu collage y reta a tus seguidoras a jugarlo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/abecedario.html","frase":"","km_dedicado":null},{"fecha":"2026-11-07","dia":"Sábado","etapa":"Construyendo","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2026-11-08","dia":"Domingo","etapa":"Construyendo","entreno":"Fondo largo en el Ávila","km":13.0,"tema":"Domingo de cumbre","idea":"La vista desde el Ávila y tus 13 km de hoy. Invita a caminar con Cumbre Feliz.","sticker":"Encuesta: ¿Te animas a caminar con Cumbre Feliz el próximo domingo? · Sí / Todavía no","frase":"","km_dedicado":null},{"fecha":"2026-11-09","dia":"Lunes","etapa":"Construyendo","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 39 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-11-10","dia":"Martes","etapa":"Construyendo","entreno":"Fartlek (cambios de ritmo)","km":5.5,"tema":"Martes de calidad: fartlek","idea":"Hoy tocó fartlek: cambios de ritmo de un minuto, como un juego. Explícalo en una frase y muestra un pedacito en video.","sticker":"Quiz: ¿Qué es un fartlek? · Un juego de cambios de ritmo / Una marca de zapatos / Un estiramiento","frase":"","km_dedicado":null},{"fecha":"2026-11-11","dia":"Miércoles","etapa":"Construyendo","entreno":"Fondo suave","km":7.0,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"No hay línea de meta, hay una cumbre que te está esperando.","km_dedicado":null},{"fecha":"2026-11-12","dia":"Jueves","etapa":"Construyendo","entreno":"Fondo suave","km":5.0,"tema":"Jueves de preguntas","idea":"Lanza la pregunta y responde las mejores en la story del lunes.","sticker":"Caja de preguntas: ¿Qué te gustaría preguntarle a una maratonista?","frase":"","km_dedicado":null},{"fecha":"2026-11-13","dia":"Viernes","etapa":"Construyendo","entreno":"Trote suave","km":3.5,"tema":"Viernes de juego: B-I-N-G-O","idea":"Juega B-I-N-G-O en tu fondito, publica tu collage y reta a tus seguidoras a jugarlo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/bingo.html","frase":"","km_dedicado":null},{"fecha":"2026-11-14","dia":"Sábado","etapa":"Construyendo","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2026-11-15","dia":"Domingo","etapa":"Construyendo","entreno":"Fondo largo en el Ávila","km":10.0,"tema":"Domingo de cumbre","idea":"La vista desde el Ávila y tus 10 km de hoy. Invita a caminar con Cumbre Feliz.","sticker":"Actualización 42 a los 42: captura de tu tablero (vista Para historias) + \"Comenta 42 y adopta tu km\"","frase":"","km_dedicado":null},{"fecha":"2026-11-16","dia":"Lunes","etapa":"Construyendo","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 31 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-11-17","dia":"Martes","etapa":"Construyendo","entreno":"Series","km":7.0,"tema":"Martes de calidad: series","idea":"Hoy tocaron series: tramos rápidos con pausa entre uno y otro. Cuenta cómo se sienten, sin hablar de ritmos.","sticker":"Encuesta: ¿Te animarías a probar series? · Sí / Me da miedo","frase":"","km_dedicado":null},{"fecha":"2026-11-18","dia":"Miércoles","etapa":"Construyendo","entreno":"Fondo suave","km":9.0,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"Las grietas doradas no se esconden, se celebran.","km_dedicado":null},{"fecha":"2026-11-19","dia":"Jueves","etapa":"Construyendo","entreno":"Tempo","km":7.0,"tema":"Jueves de preguntas","idea":"Lanza la pregunta y responde las mejores en la story del lunes.","sticker":"Caja de preguntas: ¿Cuál fue tu primera carrera o caminata larga?","frase":"","km_dedicado":null},{"fecha":"2026-11-20","dia":"Viernes","etapa":"Construyendo","entreno":"Trote suave","km":4.0,"tema":"Viernes de juego: Letras escondidas","idea":"Juega Letras escondidas en tu fondito, publica tu collage y reta a tus seguidoras a jugarlo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/letras.html","frase":"","km_dedicado":null},{"fecha":"2026-11-21","dia":"Sábado","etapa":"Construyendo","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2026-11-22","dia":"Domingo","etapa":"Construyendo","entreno":"Fondo largo en el Ávila","km":15.0,"tema":"Domingo de cumbre","idea":"La vista desde el Ávila y tus 15 km de hoy. Invita a caminar con Cumbre Feliz.","sticker":"Encuesta: ¿Te animas a caminar con Cumbre Feliz el próximo domingo? · Sí / Todavía no","frase":"","km_dedicado":null},{"fecha":"2026-11-23","dia":"Lunes","etapa":"Construyendo","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 42 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-11-24","dia":"Martes","etapa":"Construyendo","entreno":"Fartlek (cambios de ritmo)","km":6.0,"tema":"Martes de calidad: fartlek","idea":"Hoy tocó fartlek: cambios de ritmo de un minuto, como un juego. Explícalo en una frase y muestra un pedacito en video.","sticker":"Quiz: ¿Qué es un fartlek? · Un juego de cambios de ritmo / Una marca de zapatos / Un estiramiento","frase":"","km_dedicado":null},{"fecha":"2026-11-25","dia":"Miércoles","etapa":"Construyendo","entreno":"Fondo suave","km":8.0,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"Nadie se queda atrás porque aquí no hay un adelante que perseguir.","km_dedicado":null},{"fecha":"2026-11-26","dia":"Jueves","etapa":"Construyendo","entreno":"Test 10K","km":13.0,"tema":"Día de test: mi 10K","idea":"Hoy es tu test de 10K. Antes de salir, pregunta en cuánto creen que lo haces; después, cuenta cómo te fue.","sticker":"Quiz: ¿En cuánto crees que hago mis 10K? · Menos de 55 min / 55 a 60 / Más de 60","frase":"","km_dedicado":null},{"fecha":"2026-11-27","dia":"Viernes","etapa":"Construyendo","entreno":"Trote suave","km":3.0,"tema":"Viernes de juego: Color","idea":"Juega Color en tu fondito, publica tu collage y reta a tus seguidoras a jugarlo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/color.html","frase":"","km_dedicado":null},{"fecha":"2026-11-28","dia":"Sábado","etapa":"Construyendo","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2026-11-29","dia":"Domingo","etapa":"Construyendo","entreno":"Fondo largo en el Ávila","km":15.0,"tema":"Domingo de cumbre","idea":"La vista desde el Ávila y tus 15 km de hoy. Invita a caminar con Cumbre Feliz.","sticker":"Actualización 42 a los 42: captura de tu tablero (vista Para historias) + \"Comenta 42 y adopta tu km\"","frase":"","km_dedicado":null},{"fecha":"2026-11-30","dia":"Lunes","etapa":"Construyendo","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 45 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-12-01","dia":"Martes","etapa":"Construyendo","entreno":"Series","km":8.0,"tema":"Martes de calidad: series","idea":"Hoy tocaron series: tramos rápidos con pausa entre uno y otro. Cuenta cómo se sienten, sin hablar de ritmos.","sticker":"Encuesta: ¿Te animarías a probar series? · Sí / Me da miedo","frase":"","km_dedicado":null},{"fecha":"2026-12-02","dia":"Miércoles","etapa":"Construyendo","entreno":"Fondo suave","km":9.5,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"Tu cuerpo no es un cronómetro, es un hogar.","km_dedicado":null},{"fecha":"2026-12-03","dia":"Jueves","etapa":"Construyendo","entreno":"Tempo","km":7.5,"tema":"Jueves de preguntas","idea":"Lanza la pregunta y responde las mejores en la story del lunes.","sticker":"Caja de preguntas: ¿Dónde te gustaría correr en Venezuela?","frase":"","km_dedicado":null},{"fecha":"2026-12-04","dia":"Viernes","etapa":"Construyendo","entreno":"Trote suave","km":5.0,"tema":"Viernes de juego: Bingo Flow","idea":"Juega Bingo Flow en tu fondito, publica tu collage y reta a tus seguidoras a jugarlo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/bingo-flow.html","frase":"","km_dedicado":null},{"fecha":"2026-12-05","dia":"Sábado","etapa":"Construyendo","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2026-12-06","dia":"Domingo","etapa":"Construyendo","entreno":"Fondo largo en el Ávila","km":18.0,"tema":"Mi primer 18K del plan","idea":"Tu fondo más largo hasta ahora. Muestra lo que comiste en el camino y cómo llegaste arriba.","sticker":"Escala de emoji: ¿Cuánta energía me queda?","frase":"","km_dedicado":null},{"fecha":"2026-12-07","dia":"Lunes","etapa":"Construyendo","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 48 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-12-08","dia":"Martes","etapa":"Construyendo","entreno":"Series","km":6.0,"tema":"Martes de calidad: series","idea":"Hoy tocaron series: tramos rápidos con pausa entre uno y otro. Cuenta cómo se sienten, sin hablar de ritmos.","sticker":"Encuesta: ¿Te animarías a probar series? · Sí / Me da miedo","frase":"","km_dedicado":null},{"fecha":"2026-12-09","dia":"Miércoles","etapa":"Construyendo","entreno":"Fondo suave","km":8.0,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"Romper no es el final, es donde empieza el oro.","km_dedicado":null},{"fecha":"2026-12-10","dia":"Jueves","etapa":"Construyendo","entreno":"Tempo","km":6.0,"tema":"Jueves de preguntas","idea":"Lanza la pregunta y responde las mejores en la story del lunes.","sticker":"Caja de preguntas: ¿Qué canción te pone a mover los pies?","frase":"","km_dedicado":null},{"fecha":"2026-12-11","dia":"Viernes","etapa":"Construyendo","entreno":"Trote suave","km":4.0,"tema":"Viernes de juego: Abecedario","idea":"Juega Abecedario en tu fondito, publica tu collage y reta a tus seguidoras a jugarlo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/abecedario.html","frase":"","km_dedicado":null},{"fecha":"2026-12-12","dia":"Sábado","etapa":"Construyendo","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2026-12-13","dia":"Domingo","etapa":"Construyendo","entreno":"Fondo largo en el Ávila","km":15.0,"tema":"Domingo de cumbre","idea":"La vista desde el Ávila y tus 15 km de hoy. Invita a caminar con Cumbre Feliz.","sticker":"Actualización 42 a los 42: captura de tu tablero (vista Para historias) + \"Comenta 42 y adopta tu km\"","frase":"","km_dedicado":null},{"fecha":"2026-12-14","dia":"Lunes","etapa":"Construyendo","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 39 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-12-15","dia":"Martes","etapa":"Construyendo","entreno":"Umbral","km":8.5,"tema":"Martes de calidad: umbral","idea":"Hoy entrené a umbral: ese ritmo \"cómodamente incómodo\". Cuenta qué te dices por dentro para sostenerlo.","sticker":"Escala de emoji: ¿Qué tan incómodo se ve?","frase":"","km_dedicado":null},{"fecha":"2026-12-16","dia":"Miércoles","etapa":"Construyendo","entreno":"Fondo suave","km":10.0,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"Foto a foto, paso a paso, cumbre a cumbre.","km_dedicado":null},{"fecha":"2026-12-17","dia":"Jueves","etapa":"Construyendo","entreno":"Ritmo de maratón","km":8.0,"tema":"Jueves de preguntas","idea":"Lanza la pregunta y responde las mejores en la story del lunes.","sticker":"Caja de preguntas: ¿Te mueves sola o acompañada?","frase":"","km_dedicado":null},{"fecha":"2026-12-18","dia":"Viernes","etapa":"Desde La Azulita","entreno":"Viaje a La Azulita","km":0.0,"tema":"Rumbo a mi pueblo","idea":"Viajas a La Azulita. Cuenta por qué volver a tu pueblo también es parte del camino a tus 42.","sticker":"Encuesta: ¿Tienes un lugar que te recarga? · Sí / Lo estoy buscando","frase":"","km_dedicado":null},{"fecha":"2026-12-19","dia":"Sábado","etapa":"Desde La Azulita","entreno":"Trote suave en La Azulita","km":5.5,"tema":"Primer trote en mi pueblo","idea":"Primer trote en La Azulita: muestra el paisaje, el clima y lo distinto de correr en casa.","sticker":"Escala de emoji: ¿Qué tan bonito se ve?","frase":"","km_dedicado":null},{"fecha":"2026-12-20","dia":"Domingo","etapa":"Desde La Azulita","entreno":"Fondo largo en La Azulita","km":20.0,"tema":"Mi historia, desde La Azulita","idea":"Hoy son 20 km en tu pueblo. Cuenta la parte de tu historia que quieras compartir y por qué hoy corres aquí.","sticker":"Caja de preguntas: Pregúntame lo que quieras de mi historia","frase":"","km_dedicado":null},{"fecha":"2026-12-21","dia":"Lunes","etapa":"Desde La Azulita","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 52 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-12-22","dia":"Martes","etapa":"Desde La Azulita","entreno":"Pista","km":7.0,"tema":"Martes de calidad: umbral","idea":"Hoy entrené a umbral: ese ritmo \"cómodamente incómodo\". Cuenta qué te dices por dentro para sostenerlo.","sticker":"Escala de emoji: ¿Qué tan incómodo se ve?","frase":"","km_dedicado":null},{"fecha":"2026-12-23","dia":"Miércoles","etapa":"Desde La Azulita","entreno":"Fondo suave","km":9.0,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"No perseguimos un récord. Perseguimos un recuerdo.","km_dedicado":null},{"fecha":"2026-12-24","dia":"Jueves","etapa":"Desde La Azulita","entreno":"Tempo","km":6.0,"tema":"Nochebuena en movimiento","idea":"Entrenar el 24 también es un regalo para ti. Muestra el lugar y desea feliz Navidad a tu gente.","sticker":"Agrega el tuyo: Mi movimiento de Nochebuena","frase":"","km_dedicado":null},{"fecha":"2026-12-25","dia":"Viernes","etapa":"Desde La Azulita","entreno":"Trote suave","km":4.0,"tema":"Navidad con Bingo Flow Color","idea":"Juega Bingo Flow Color con los colores de la Navidad en tu pueblo y comparte tu círculo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/color.html","frase":"","km_dedicado":null},{"fecha":"2026-12-26","dia":"Sábado","etapa":"Desde La Azulita","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2026-12-27","dia":"Domingo","etapa":"Desde La Azulita","entreno":"Fondo largo en La Azulita","km":18.0,"tema":"Domingo de fondo largo","idea":"La vista desde La Azulita y tus 18 km de hoy. Invita a caminar con Cumbre Feliz.","sticker":"Actualización 42 a los 42: captura de tu tablero (vista Para historias) + \"Comenta 42 y adopta tu km\"","frase":"","km_dedicado":null},{"fecha":"2026-12-28","dia":"Lunes","etapa":"Desde La Azulita","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 44 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2026-12-29","dia":"Martes","etapa":"Desde La Azulita","entreno":"Pista","km":9.0,"tema":"Martes de calidad: umbral","idea":"Hoy entrené a umbral: ese ritmo \"cómodamente incómodo\". Cuenta qué te dices por dentro para sostenerlo.","sticker":"Escala de emoji: ¿Qué tan incómodo se ve?","frase":"","km_dedicado":null},{"fecha":"2026-12-30","dia":"Miércoles","etapa":"Desde La Azulita","entreno":"Fondo suave","km":10.5,"tema":"Mantra del miércoles","idea":"La frase en grande sobre tu foto. Cuenta en 5 segundos por qué la elegiste hoy.","sticker":"Agrega el tuyo: Mi mantra para moverme","frase":"La montaña no pregunta cuánto pesas, pregunta si estás lista para sentir.","km_dedicado":null},{"fecha":"2026-12-31","dia":"Jueves","etapa":"Desde La Azulita","entreno":"Ritmo de maratón","km":8.5,"tema":"Último entreno de 2026","idea":"Cierra el año en que cumpliste 42 con tu último entreno. Cuenta lo que este año te enseñó.","sticker":"Caja de preguntas: ¿Cuál es tu meta de movimiento para 2027?","frase":"","km_dedicado":null},{"fecha":"2027-01-01","dia":"Viernes","etapa":"Desde La Azulita","entreno":"Trote suave","km":5.0,"tema":"2027: el año de mis 42K","idea":"Primer trote del año. Recuerda la fecha: 21 de febrero, Maratón CAF.","sticker":"Agrega el tuyo: Mi primer paso de 2027","frase":"","km_dedicado":null},{"fecha":"2027-01-02","dia":"Sábado","etapa":"Desde La Azulita","entreno":"Bici","km":0.0,"tema":"Sábado sobre ruedas","idea":"Bici o spinning: el cardio que cuida la fascia. Muestra tu ruta o tu bici.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2027-01-03","dia":"Domingo","etapa":"Desde La Azulita","entreno":"Fondo largo en La Azulita","km":22.0,"tema":"22 km por mi pueblo","idea":"El fondo más largo en La Azulita: 22 km. Muestra la carretera, la montaña y lo que comiste para aguantar.","sticker":"Escala de emoji: ¿Qué tan duro se ve?","frase":"","km_dedicado":null},{"fecha":"2027-01-04","dia":"Lunes","etapa":"Desde La Azulita","entreno":"Descanso","km":0.0,"tema":"Lunes de resumen","idea":"El plan de la semana pasada sumaba 55 km. Muestra cuántos hiciste tú, cómo te sentiste y qué viene esta semana.","sticker":"Encuesta: ¿Cómo arrancas tu semana? · Con todo / Con calma","frase":"","km_dedicado":null},{"fecha":"2027-01-05","dia":"Martes","etapa":"Desde La Azulita","entreno":"Umbral en pista","km":7.5,"tema":"Último día en La Azulita","idea":"Despídete de tu pueblo y cuenta qué te llevas para la recta final.","sticker":"Encuesta: ¿Lista para la recta final? · Sí / Más que lista","frase":"","km_dedicado":null},{"fecha":"2027-01-06","dia":"Miércoles","etapa":"De vuelta","entreno":"Fondo suave","km":9.0,"tema":"De vuelta en Caracas","idea":"Primer entreno de regreso en Caracas: el Ávila te recibe. Faltan 46 días.","sticker":"Encuesta: ¿Ustedes también vuelven a la rutina? · Sí / Todavía de vacaciones","frase":"Respira. La montaña no tiene prisa, tú tampoco.","km_dedicado":null},{"fecha":"2027-01-07","dia":"Jueves","etapa":"De vuelta","entreno":"Trote suave","km":6.0,"tema":"Jueves de preguntas","idea":"Lanza la pregunta y responde las mejores en la story del lunes.","sticker":"Caja de preguntas: ¿Qué te hace sentir orgullosa de tu cuerpo?","frase":"","km_dedicado":null},{"fecha":"2027-01-08","dia":"Viernes","etapa":"De vuelta","entreno":"Trote suave","km":4.0,"tema":"Viernes de juego: B-I-N-G-O","idea":"Juega B-I-N-G-O en tu fondito, publica tu collage y reta a tus seguidoras a jugarlo.","sticker":"Enlace: https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/bingo.html","frase":"","km_dedicado":null},{"fecha":"2027-01-09","dia":"Sábado","etapa":"De vuelta","entreno":"Descanso","km":0.0,"tema":"Sábado de descanso activo","idea":"Descansar también es entrenar: muestra cómo recuperas (estiramientos, siesta, buena comida).","sticker":"Escala de emoji: ¿Cuánto te cuesta descansar?","frase":"","km_dedicado":null},{"fecha":"2027-01-10","dia":"Domingo","etapa":"Los 42 kilómetros","entreno":"Test 21K","km":24.0,"tema":"El km 42 es de…","idea":"Dedica el kilómetro 42 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story. Hoy además es mi test de 21K.","sticker":"Mención a quien adoptó el km 42 + Agrega el tuyo: Mis 4,2 km","frase":"42 a los 42. Llegamos todas.","km_dedicado":42},{"fecha":"2027-01-11","dia":"Lunes","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 41 es de…","idea":"Dedica el kilómetro 41 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 41 + Agrega el tuyo: Mis 4,2 km","frase":"El último esfuerzo es el más bonito.","km_dedicado":41},{"fecha":"2027-01-12","dia":"Martes","etapa":"Los 42 kilómetros","entreno":"Umbral","km":8.5,"tema":"El km 40 es de…","idea":"Dedica el kilómetro 40 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 40 + Agrega el tuyo: Mis 4,2 km","frase":"Dos más y se cumple el sueño de mis 42.","km_dedicado":40},{"fecha":"2027-01-13","dia":"Miércoles","etapa":"Los 42 kilómetros","entreno":"Fondo suave","km":9.5,"tema":"El km 39 es de…","idea":"Dedica el kilómetro 39 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 39 + Agrega el tuyo: Mis 4,2 km","frase":"La meta tiene la cara de quien me espera.","km_dedicado":39},{"fecha":"2027-01-14","dia":"Jueves","etapa":"Los 42 kilómetros","entreno":"Ritmo de maratón","km":8.5,"tema":"El km 38 es de…","idea":"Dedica el kilómetro 38 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 38 + Agrega el tuyo: Mis 4,2 km","frase":"Cuatro kilómetros: el reto de 4,2 de todas ustedes.","km_dedicado":38},{"fecha":"2027-01-15","dia":"Viernes","etapa":"Los 42 kilómetros","entreno":"Trote suave","km":5.5,"tema":"El km 37 es de…","idea":"Dedica el kilómetro 37 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 37 + Agrega el tuyo: Mis 4,2 km","frase":"El final ya se escucha.","km_dedicado":37},{"fecha":"2027-01-16","dia":"Sábado","etapa":"Los 42 kilómetros","entreno":"Bici","km":0.0,"tema":"El km 36 es de…","idea":"Dedica el kilómetro 36 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 36 + Agrega el tuyo: Mis 4,2 km","frase":"Aquí se nota todo lo que entrené.","km_dedicado":36},{"fecha":"2027-01-17","dia":"Domingo","etapa":"Los 42 kilómetros","entreno":"Fondo largo en asfalto","km":26.0,"tema":"El km 35 es de…","idea":"Dedica el kilómetro 35 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story. Hoy además son 26 km con ropa y comida de carrera.","sticker":"Mención a quien adoptó el km 35 + Agrega el tuyo: Mis 4,2 km","frase":"Faltan siete: siete razones para sonreír.","km_dedicado":35},{"fecha":"2027-01-18","dia":"Lunes","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 34 es de…","idea":"Dedica el kilómetro 34 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 34 + Agrega el tuyo: Mis 4,2 km","frase":"Cansada no es lo mismo que vencida.","km_dedicado":34},{"fecha":"2027-01-19","dia":"Martes","etapa":"Los 42 kilómetros","entreno":"Fartlek (cambios de ritmo)","km":6.0,"tema":"El km 33 es de…","idea":"Dedica el kilómetro 33 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 33 + Agrega el tuyo: Mis 4,2 km","frase":"No corro sola: corren conmigo 42 personas.","km_dedicado":33},{"fecha":"2027-01-20","dia":"Miércoles","etapa":"Los 42 kilómetros","entreno":"Fondo suave","km":10.0,"tema":"El km 32 es de…","idea":"Dedica el kilómetro 32 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 32 + Agrega el tuyo: Mis 4,2 km","frase":"Faltan diez, y diez nombres me llevan.","km_dedicado":32},{"fecha":"2027-01-21","dia":"Jueves","etapa":"Los 42 kilómetros","entreno":"Tempo","km":8.0,"tema":"El km 31 es de…","idea":"Dedica el kilómetro 31 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 31 + Agrega el tuyo: Mis 4,2 km","frase":"Después del muro, cada paso es un regalo.","km_dedicado":31},{"fecha":"2027-01-22","dia":"Viernes","etapa":"Los 42 kilómetros","entreno":"Trote suave","km":5.0,"tema":"El km 30 es de…","idea":"Dedica el kilómetro 30 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 30 + Agrega el tuyo: Mis 4,2 km","frase":"El famoso muro. Lo cruzamos juntas.","km_dedicado":30},{"fecha":"2027-01-23","dia":"Sábado","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 29 es de…","idea":"Dedica el kilómetro 29 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 29 + Agrega el tuyo: Mis 4,2 km","frase":"El cuerpo duda, el corazón empuja.","km_dedicado":29},{"fecha":"2027-01-24","dia":"Domingo","etapa":"Los 42 kilómetros","entreno":"Fondo largo en el Ávila","km":18.0,"tema":"El km 28 es de…","idea":"Dedica el kilómetro 28 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 28 + Agrega el tuyo: Mis 4,2 km","frase":"Respiro, bebo y sigo.","km_dedicado":28},{"fecha":"2027-01-25","dia":"Lunes","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 27 es de…","idea":"Dedica el kilómetro 27 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 27 + Agrega el tuyo: Mis 4,2 km","frase":"Los ánimos de la calle valen oro.","km_dedicado":27},{"fecha":"2027-01-26","dia":"Martes","etapa":"Los 42 kilómetros","entreno":"Umbral","km":9.0,"tema":"El km 26 es de…","idea":"Dedica el kilómetro 26 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 26 + Agrega el tuyo: Mis 4,2 km","frase":"Lo difícil también se puede hacer a mi ritmo.","km_dedicado":26},{"fecha":"2027-01-27","dia":"Miércoles","etapa":"Los 42 kilómetros","entreno":"Fondo suave","km":11.0,"tema":"El km 25 es de…","idea":"Dedica el kilómetro 25 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 25 + Agrega el tuyo: Mis 4,2 km","frase":"Aquí la fuerza se vuelve paciencia.","km_dedicado":25},{"fecha":"2027-01-28","dia":"Jueves","etapa":"Los 42 kilómetros","entreno":"Fondo suave","km":6.0,"tema":"El km 24 es de…","idea":"Dedica el kilómetro 24 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 24 + Agrega el tuyo: Mis 4,2 km","frase":"Un paso más que ayer.","km_dedicado":24},{"fecha":"2027-01-29","dia":"Viernes","etapa":"Los 42 kilómetros","entreno":"Trote suave","km":4.0,"tema":"El km 23 es de…","idea":"Dedica el kilómetro 23 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 23 + Agrega el tuyo: Mis 4,2 km","frase":"No hay atajos, hay compañía.","km_dedicado":23},{"fecha":"2027-01-30","dia":"Sábado","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 22 es de…","idea":"Dedica el kilómetro 22 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 22 + Agrega el tuyo: Mis 4,2 km","frase":"La segunda mitad empieza en la mente.","km_dedicado":22},{"fecha":"2027-01-31","dia":"Domingo","etapa":"Los 42 kilómetros","entreno":"Ensayo general","km":32.0,"tema":"El km 21 es de…","idea":"Dedica el kilómetro 21 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story. Hoy además es el ensayo general: 32 km.","sticker":"Mención a quien adoptó el km 21 + Agrega el tuyo: Mis 4,2 km","frase":"La mitad. Desde aquí corro con el corazón.","km_dedicado":21},{"fecha":"2027-02-01","dia":"Lunes","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 20 es de…","idea":"Dedica el kilómetro 20 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 20 + Agrega el tuyo: Mis 4,2 km","frase":"Cada kilómetro tiene una historia. Este tiene la tuya.","km_dedicado":20},{"fecha":"2027-02-02","dia":"Martes","etapa":"Los 42 kilómetros","entreno":"Series","km":7.5,"tema":"El km 19 es de…","idea":"Dedica el kilómetro 19 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 19 + Agrega el tuyo: Mis 4,2 km","frase":"Cerca de la mitad, lejos del miedo.","km_dedicado":19},{"fecha":"2027-02-03","dia":"Miércoles","etapa":"Los 42 kilómetros","entreno":"Fondo suave","km":9.0,"tema":"El km 18 es de…","idea":"Dedica el kilómetro 18 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 18 + Agrega el tuyo: Mis 4,2 km","frase":"Piernas cansadas, corazón entero.","km_dedicado":18},{"fecha":"2027-02-04","dia":"Jueves","etapa":"Los 42 kilómetros","entreno":"Ritmo de maratón","km":7.0,"tema":"El km 17 es de…","idea":"Dedica el kilómetro 17 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 17 + Agrega el tuyo: Mis 4,2 km","frase":"Lo que entrené en silencio hoy se nota.","km_dedicado":17},{"fecha":"2027-02-05","dia":"Viernes","etapa":"Los 42 kilómetros","entreno":"Trote suave","km":4.5,"tema":"El km 16 es de…","idea":"Dedica el kilómetro 16 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 16 + Agrega el tuyo: Mis 4,2 km","frase":"Aquí empieza la conversación con una misma.","km_dedicado":16},{"fecha":"2027-02-06","dia":"Sábado","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 15 es de…","idea":"Dedica el kilómetro 15 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 15 + Agrega el tuyo: Mis 4,2 km","frase":"La ciudad pasa y nosotras seguimos.","km_dedicado":15},{"fecha":"2027-02-07","dia":"Domingo","etapa":"Los 42 kilómetros","entreno":"Fondo largo en asfalto","km":22.0,"tema":"El km 14 es de…","idea":"Dedica el kilómetro 14 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story. Hoy además son 22 km en asfalto.","sticker":"Mención a quien adoptó el km 14 + Agrega el tuyo: Mis 4,2 km","frase":"Un tercio del camino y sigo sonriendo.","km_dedicado":14},{"fecha":"2027-02-08","dia":"Lunes","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 13 es de…","idea":"Dedica el kilómetro 13 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 13 + Agrega el tuyo: Mis 4,2 km","frase":"El número de la suerte para quien no se rinde.","km_dedicado":13},{"fecha":"2027-02-09","dia":"Martes","etapa":"Los 42 kilómetros","entreno":"Activación","km":6.5,"tema":"El km 12 es de…","idea":"Dedica el kilómetro 12 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 12 + Agrega el tuyo: Mis 4,2 km","frase":"Hidratarse también es quererse.","km_dedicado":12},{"fecha":"2027-02-10","dia":"Miércoles","etapa":"Los 42 kilómetros","entreno":"Fondo suave","km":8.0,"tema":"El km 11 es de…","idea":"Dedica el kilómetro 11 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 11 + Agrega el tuyo: Mis 4,2 km","frase":"Aquí se corre con la cabeza tranquila.","km_dedicado":11},{"fecha":"2027-02-11","dia":"Jueves","etapa":"Los 42 kilómetros","entreno":"Activación","km":5.5,"tema":"El km 10 es de…","idea":"Dedica el kilómetro 10 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 10 + Agrega el tuyo: Mis 4,2 km","frase":"Un 10K entero, el que alguna vez fue la meta.","km_dedicado":10},{"fecha":"2027-02-12","dia":"Viernes","etapa":"Los 42 kilómetros","entreno":"Trote suave","km":4.0,"tema":"El km 9 es de…","idea":"Dedica el kilómetro 9 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 9 + Agrega el tuyo: Mis 4,2 km","frase":"Llevo tu nombre y el camino pesa menos.","km_dedicado":9},{"fecha":"2027-02-13","dia":"Sábado","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 8 es de…","idea":"Dedica el kilómetro 8 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 8 + Agrega el tuyo: Mis 4,2 km","frase":"Cada paso cuenta, también los lentos.","km_dedicado":8},{"fecha":"2027-02-14","dia":"Domingo","etapa":"Los 42 kilómetros","entreno":"Fondo largo en asfalto","km":14.0,"tema":"El km 7 es de…","idea":"Dedica el kilómetro 7 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story. Hoy además es mi último fondo largo: 14 km.","sticker":"Mención a quien adoptó el km 7 + Agrega el tuyo: Mis 4,2 km","frase":"La constancia vale más que la velocidad.","km_dedicado":7},{"fecha":"2027-02-15","dia":"Lunes","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 6 es de…","idea":"Dedica el kilómetro 6 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 6 + Agrega el tuyo: Mis 4,2 km","frase":"Respirar, mirar alrededor y agradecer.","km_dedicado":6},{"fecha":"2027-02-16","dia":"Martes","etapa":"Los 42 kilómetros","entreno":"Activación","km":5.0,"tema":"El km 5 es de…","idea":"Dedica el kilómetro 5 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 5 + Agrega el tuyo: Mis 4,2 km","frase":"El primer 5K, ese que un día nos dio miedo.","km_dedicado":5},{"fecha":"2027-02-17","dia":"Miércoles","etapa":"Los 42 kilómetros","entreno":"Trote suave","km":4.5,"tema":"El km 4 es de…","idea":"Dedica el kilómetro 4 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 4 + Agrega el tuyo: Mis 4,2 km","frase":"Aquí el cuerpo empieza a creer.","km_dedicado":4},{"fecha":"2027-02-18","dia":"Jueves","etapa":"Los 42 kilómetros","entreno":"Trote suave","km":4.0,"tema":"El km 3 es de…","idea":"Dedica el kilómetro 3 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story.","sticker":"Mención a quien adoptó el km 3 + Agrega el tuyo: Mis 4,2 km","frase":"Encontrar mi ritmo, no el de los demás.","km_dedicado":3},{"fecha":"2027-02-19","dia":"Viernes","etapa":"Los 42 kilómetros","entreno":"Descanso","km":0.0,"tema":"El km 2 es de…","idea":"Dedica el kilómetro 2 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story. Hoy descanso: el cuerpo se prepara.","sticker":"Mención a quien adoptó el km 2 + Agrega el tuyo: Mis 4,2 km","frase":"Todavía con nervios, pero ya en camino.","km_dedicado":2},{"fecha":"2027-02-20","dia":"Sábado","etapa":"Los 42 kilómetros","entreno":"Trote de soltura","km":3.0,"tema":"El km 1 es de…","idea":"Dedica el kilómetro 1 a quien lo adoptó: su nombre en grande y la mencionas para que comparta tu story. Mañana es el día. Hoy solo un trote de soltura.","sticker":"Mención a quien adoptó el km 1 + Agrega el tuyo: Mis 4,2 km","frase":"El kilómetro 1 es para quien se atreve a salir de casa.","km_dedicado":1},{"fecha":"2027-02-21","dia":"Domingo","etapa":"Día D","entreno":"Maratón CAF","km":42.2,"tema":"Hoy: 42 a los 42","idea":"Tres stories: antes de la salida, en el km 21 si puedes, y en la meta con la medalla. Menciona a las 42 personas.","sticker":"Tu cuenta regresiva llega a cero + Encuesta: ¿Me acompañan en vivo? · Sí / ¡Claro!","frase":"Llegamos todas.","km_dedicado":null},{"fecha":"2027-02-22","dia":"Lunes","etapa":"Gracias","entreno":"Recuperación","km":0,"tema":"Gracias, 42","idea":"Agradece a las 42 personas con la captura de tu tablero completo y tu medalla. Cuenta qué viene ahora para Cumbre Feliz.","sticker":"Agrega el tuyo: Mi 4,2K por las 42","frase":"No corrí sola: corrimos 42.","km_dedicado":null}];
+  var RACE = "2027-02-21";
+  var LS = "cf-mis42-v1";
+  var MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+  function $(id) { return document.getElementById(id); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function iso(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function parse(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function faltan(s) { return Math.round((parse(RACE) - parse(s)) / 864e5); }
+  function nkm(x) { var s = (Math.round(x * 10) / 10).toString(); return s.replace(".", ","); }
+  function fmtDay(x) { var d = parse(x.fecha); return x.dia + " " + d.getDate() + " " + MESES[d.getMonth()]; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]; }); }
+
+  var avisoEl = $("aviso"), avT = null;
+  function aviso(m) { avisoEl.textContent = m; avisoEl.hidden = false; clearTimeout(avT); avT = setTimeout(function () { avisoEl.hidden = true; }, 3500); }
+
+  var store = { done:{}, quien:{}, frase:{}, km:{}, verEntreno:true };
+  try { var raw = localStorage.getItem(LS); if (raw) { var o = JSON.parse(raw); if (o && typeof o === "object") { ["done","quien","frase","km"].forEach(function (k) { if (o[k] && typeof o[k] === "object") store[k] = o[k]; }); if (typeof o.verEntreno === "boolean") store.verEntreno = o.verEntreno; } } } catch (e) {}
+  function save() { try { localStorage.setItem(LS, JSON.stringify(store)); } catch (e) {} }
+
+  var todayIso = iso(new Date());
+  var idx = 0;
+  (function pickToday() {
+    if (todayIso <= DAYS[0].fecha) { idx = 0; return; }
+    if (todayIso >= DAYS[DAYS.length - 1].fecha) { idx = DAYS.length - 1; return; }
+    for (var i = 0; i < DAYS.length; i++) if (DAYS[i].fecha === todayIso) { idx = i; return; }
+  })();
+  var todayIdx = idx;
+  var photo = null, photoUrl = null, lastStory = null;
+
+  function day() { return DAYS[idx]; }
+  function countText(x) {
+    var f = faltan(x.fecha);
+    if (f > 1) return { n:String(f), t:"días para mis 42K" };
+    if (f === 1) return { n:"1", t:"día para mis 42K" };
+    if (f === 0) return { n:"HOY", t:"corro mis 42 a los 42" };
+    return { n:"42", t:"kilómetros, 42 nombres" };
+  }
+
+  function renderDay() {
+    var x = day(), c = countText(x);
+    $("fecha").textContent = fmtDay(x);
+    $("hoy").hidden = idx === todayIdx;
+    $("prev").disabled = idx === 0; $("next").disabled = idx === DAYS.length - 1;
+    $("n").textContent = c.n; $("nt").textContent = c.t;
+    $("etapa").textContent = x.etapa;
+    $("hecha").hidden = !store.done[x.fecha];
+    $("tema").textContent = x.tema;
+    $("entreno").textContent = x.entreno + (x.km ? " · " + nkm(x.km) + " km" : "");
+    $("idea").textContent = x.idea;
+    $("sticker").textContent = x.sticker;
+    var kd = x.km_dedicado;
+    $("km-quien-f").hidden = !kd;
+    if (kd) { $("km-quien-l").textContent = "¿De quién es el km " + kd + "?"; $("km-quien").value = store.quien[kd] || ""; }
+    $("frase").value = store.frase[x.fecha] != null ? store.frase[x.fecha] : (x.frase || "");
+    $("km").value = store.km[x.fecha] != null ? store.km[x.fecha] : (x.km || "");
+    $("ver-entreno").checked = store.verEntreno;
+    $("result").hidden = true;
+    $("publicada").textContent = store.done[x.fecha] ? "Publicada ✓" : "Ya la publiqué";
+    renderCal();
+  }
+
+  function renderCal() {
+    var h = "";
+    DAYS.forEach(function (x, i) {
+      var f = faltan(x.fecha), n = f > 0 ? f : (f === 0 ? "D" : "✓");
+      h += '<li><button type="button" data-i="' + i + '"' + (i === idx ? ' aria-current="date"' : "") + '><span class="cn">' + n + '</span><span class="cd">' + esc(fmtDay(x).replace(/^\S+ /, "")) + '</span><span>' + esc(x.tema) + '</span><span class="ck" aria-label="' + (store.done[x.fecha] ? "publicada" : "") + '">' + (store.done[x.fecha] ? "✓" : "") + "</span></button></li>";
+    });
+    $("calist").innerHTML = h;
+  }
+
+  $("prev").addEventListener("click", function () { if (idx > 0) { idx--; renderDay(); } });
+  $("next").addEventListener("click", function () { if (idx < DAYS.length - 1) { idx++; renderDay(); } });
+  $("hoy").addEventListener("click", function () { idx = todayIdx; renderDay(); });
+  $("calist").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-i]"); if (!b) return;
+    idx = Number(b.getAttribute("data-i")); renderDay();
+    try { window.scrollTo({ top:0, behavior:"smooth" }); } catch (er) { window.scrollTo(0, 0); }
+  });
+  $("frase").addEventListener("input", function () { store.frase[day().fecha] = this.value; save(); });
+  $("km").addEventListener("input", function () { store.km[day().fecha] = this.value; save(); });
+  $("km-quien").addEventListener("input", function () { var kd = day().km_dedicado; if (kd) { store.quien[kd] = this.value.slice(0, 40); save(); } });
+  $("ver-entreno").addEventListener("change", function () { store.verEntreno = this.checked; save(); });
+
+  $("copiar-st").addEventListener("click", function () {
+    var t = day().sticker, i = t.indexOf(": "); var txt = i >= 0 ? t.slice(i + 2) : t;
+    var done = function () { aviso("Texto del sticker copiado. Pégalo en Instagram."); };
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function () { window.prompt("Copia el texto:", txt); }); else window.prompt("Copia el texto:", txt); } catch (e) { window.prompt("Copia el texto:", txt); }
+  });
+
+  /* ---------- foto ---------- */
+  function shrink(file) {
+    return new Promise(function (res, rej) {
+      var u = URL.createObjectURL(file), im = new Image();
+      im.onload = function () {
+        var M = 1600, w = im.naturalWidth, h = im.naturalHeight, k = Math.min(1, M / Math.max(w, h));
+        var cv = document.createElement("canvas"); cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+        cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height);
+        URL.revokeObjectURL(u);
+        cv.toBlob(function (b) { b ? res(b) : rej(new Error("foto")); }, "image/jpeg", 0.88);
+      };
+      im.onerror = function () { URL.revokeObjectURL(u); rej(new Error("foto")); };
+      im.src = u;
+    });
+  }
+  $("foto").addEventListener("change", function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    $("foto-hint").textContent = "Cargando foto…";
+    shrink(f).then(function (b) {
+      photo = b; if (photoUrl) URL.revokeObjectURL(photoUrl); photoUrl = URL.createObjectURL(b);
+      $("thumb").style.backgroundImage = 'url("' + photoUrl + '")'; $("thumb").classList.add("has");
+      $("foto-hint").textContent = "Foto lista. Tu foto se queda en tu teléfono.";
+    }).catch(function () { $("foto-hint").textContent = "No se pudo leer esa foto. Prueba con otra."; });
+    this.value = "";
+  });
+
+  /* ---------- story 1080×1920 ---------- */
+  var DISPLAY = '"Barlow Condensed", "Arial Narrow", sans-serif', BODY = '"Overpass", system-ui, sans-serif', MONO = '"Overpass Mono", ui-monospace, monospace';
+  var BG = "#15251B", CREAM = "#EFE6D2", SAGE = "#A9C6A1";
+  function loadImg(u) { return new Promise(function (res, rej) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = rej; i.src = u; }); }
+  function fitFont(g, text, weight, family, start, min, maxW) { var s = start; do { g.font = weight + " " + s + "px " + family; s -= 4; } while (g.measureText(text).width > maxW && s >= min); }
+  function wrapText(g, text, maxW) { var words = String(text).split(/\s+/), lines = [], cur = ""; words.forEach(function (w) { var t = cur ? cur + " " + w : w; if (g.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }); if (cur) lines.push(cur); return lines; }
+  function drawLogo(g, x, base, h, color) {
+    var s = h / 64, wt = 1.25;
+    g.save(); g.translate(x - 4 * s, base - 54 * s); g.scale(s, s);
+    g.strokeStyle = color; g.lineCap = "round"; g.lineJoin = "round";
+    function seg(p, w) { g.lineWidth = w * wt; g.beginPath(); g.moveTo(p[0], p[1]); for (var i = 2; i < p.length; i += 2) g.lineTo(p[i], p[i + 1]); g.stroke(); }
+    seg([6, 54, 34, 26, 50, 42, 66, 20, 96, 54], 3.4); seg([76, 54, 90, 34, 114, 54], 2.6);
+    g.lineWidth = 3 * wt; g.beginPath(); g.arc(66, 9, 8, 0, Math.PI * 2); g.stroke();
+    [[66, -3, 66, -8], [55, 2, 50, -2], [77, 2, 82, -2], [50, 13, 44, 13], [82, 13, 88, 13]].forEach(function (r) { seg(r, 2.6); });
+    g.restore(); return 112 * s;
+  }
+
+  function buildStory() {
+    var x = day(), W = 1080, H = 1920, c = countText(x);
+    var fonts = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load("800 120px " + DISPLAY), document.fonts.load("700 40px " + BODY), document.fonts.load("600 30px " + MONO)]).catch(function () {}) : Promise.resolve();
+    return fonts.then(function () { return photoUrl ? loadImg(photoUrl) : null; }).then(function (im) {
+      var cv = document.createElement("canvas"); cv.width = W; cv.height = H; var g = cv.getContext("2d");
+      g.fillStyle = BG; g.fillRect(0, 0, W, H);
+      if (im) {
+        var k = Math.max(W / im.naturalWidth, H / im.naturalHeight), dw = W / k, dh = H / k;
+        g.drawImage(im, (im.naturalWidth - dw) / 2, (im.naturalHeight - dh) / 2, dw, dh, 0, 0, W, H);
+      } else {
+        g.save(); g.strokeStyle = "rgba(239,230,210,0.08)"; g.lineWidth = 3;
+        for (var r = 1; r <= 12; r++) { g.beginPath(); g.ellipse(W / 2, H / 2, 70 * r, 50 * r, -0.2 + r * 0.03, 0, Math.PI * 2); g.stroke(); }
+        g.restore();
+        drawLogo(g, W / 2 - 170, H / 2 + 80, 200, "rgba(239,230,210,0.18)");
+      }
+      var top = g.createLinearGradient(0, 0, 0, 820); top.addColorStop(0, "rgba(21,37,27,0.94)"); top.addColorStop(0.6, "rgba(21,37,27,0.6)"); top.addColorStop(1, "rgba(21,37,27,0)");
+      g.fillStyle = top; g.fillRect(0, 0, W, 820);
+      var bot = g.createLinearGradient(0, 1120, 0, H); bot.addColorStop(0, "rgba(21,37,27,0)"); bot.addColorStop(0.45, "rgba(21,37,27,0.78)"); bot.addColorStop(1, "rgba(21,37,27,0.96)");
+      g.fillStyle = bot; g.fillRect(0, 1120, W, H - 1120);
+
+      g.textAlign = "center"; g.textBaseline = "alphabetic";
+      // marca
+      g.font = "800 46px " + DISPLAY; var tw = g.measureText("CUMBRE FELIZ").width, lw = 112 * 38 / 64, gap = 14, x0 = W / 2 - (lw + gap + tw) / 2;
+      drawLogo(g, x0, 300, 38, CREAM); g.textAlign = "left"; g.fillStyle = CREAM; g.fillText("CUMBRE FELIZ", x0 + lw + gap, 300); g.textAlign = "center";
+      // cuenta regresiva
+      g.fillStyle = SAGE; g.font = "600 32px " + MONO;
+      g.fillText(faltan(x.fecha) > 0 ? (faltan(x.fecha) === 1 ? "FALTA" : "FALTAN") : (faltan(x.fecha) === 0 ? "MARATÓN CAF" : "GRACIAS"), W / 2, 380);
+      g.fillStyle = CREAM; fitFont(g, c.n, "800", DISPLAY, 300, 160, 900); g.fillText(c.n, W / 2, 640);
+      fitFont(g, c.t.toUpperCase(), "800", DISPLAY, 64, 40, 900); g.fillText(c.t.toUpperCase(), W / 2, 716);
+      g.fillStyle = SAGE; g.font = "600 28px " + MONO; g.fillText("42 A LOS 42 · MARATÓN CAF 2027", W / 2, 766);
+
+      // abajo: de abajo hacia arriba
+      var y = 1664;
+      g.fillStyle = SAGE; g.font = "600 30px " + MONO; g.fillText("#42alos42  #CumbreFeliz", W / 2, y); y -= 64;
+      var kmTxt = $("km").value !== "" && Number($("km").value) > 0 ? nkm(Number($("km").value)) + " KM" : "";
+      if ($("ver-entreno").checked && x.entreno && x.entreno !== "Recuperación") {
+        var ent = "HOY · " + x.entreno.toUpperCase() + (kmTxt ? " · " + kmTxt : "");
+        g.fillStyle = CREAM; fitFont(g, ent, "600", MONO, 32, 22, 960); g.fillText(ent, W / 2, y); y -= 70;
+      }
+      var fr = ($("frase").value || "").trim();
+      if (fr) {
+        g.fillStyle = CREAM; g.font = "700 46px " + BODY;
+        var lines = wrapText(g, "“" + fr + "”", 900).slice(0, 4);
+        for (var i = lines.length - 1; i >= 0; i--) { g.fillText(lines[i], W / 2, y); y -= 60; }
+        y -= 16;
+      }
+      if (x.km_dedicado) {
+        var who = ($("km-quien").value || "").trim();
+        if (who) {
+          g.fillStyle = CREAM; fitFont(g, who.toUpperCase(), "800", DISPLAY, 110, 60, 920); g.fillText(who.toUpperCase(), W / 2, y); y -= 104;
+          g.fillStyle = SAGE; g.font = "600 34px " + MONO; g.fillText("EL KM " + x.km_dedicado + " ES DE", W / 2, y);
+        } else {
+          g.fillStyle = CREAM; g.font = "800 110px " + DISPLAY; g.fillText("KM " + x.km_dedicado, W / 2, y); y -= 104;
+          g.fillStyle = SAGE; g.font = "600 34px " + MONO; g.fillText("DEDICADO A…", W / 2, y);
+        }
+      }
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("canvas")); }, "image/jpeg", 0.9); });
+    });
+  }
+
+  var canShare = false;
+  try { canShare = !!(navigator.share && navigator.canShare && navigator.canShare({ files:[new File([new Blob(["x"], { type:"image/jpeg" })], "x.jpg", { type:"image/jpeg" })] })); } catch (e) {}
+  function fileName() { return "mi-story-42-" + day().fecha + ".jpg"; }
+
+  $("armar").addEventListener("click", function () {
+    var b = this; b.disabled = true; b.textContent = "Armando…";
+    buildStory().then(function (blob) {
+      if (lastStory) URL.revokeObjectURL(lastStory.url);
+      lastStory = { blob:blob, url:URL.createObjectURL(blob) };
+      $("story-img").src = lastStory.url;
+      $("compartir").hidden = !canShare;
+      $("result").hidden = false;
+      try { $("result").scrollIntoView({ block:"start", behavior:"smooth" }); } catch (e) {}
+      if (!photoUrl) aviso("Sin foto queda el fondo verde. Elige tu foto para que se vea tu rodaje.");
+    }).catch(function () { aviso("No se pudo armar la story. Vuelve a intentar."); })
+      .then(function () { b.disabled = false; b.textContent = "Armar mi story"; });
+  });
+  $("compartir").addEventListener("click", function () {
+    if (!lastStory) return;
+    navigator.share({ files:[new File([lastStory.blob], fileName(), { type:"image/jpeg" })] }).catch(function (e) { if (e && e.name === "AbortError") return; aviso("No se pudo abrir el menú para compartir. Toca Guardar imagen."); });
+  });
+  $("guardar").addEventListener("click", function () {
+    if (!lastStory) return;
+    var a = document.createElement("a"); a.href = lastStory.url; a.download = fileName(); document.body.appendChild(a); a.click(); a.remove();
+  });
+  $("publicada").addEventListener("click", function () {
+    var f = day().fecha; store.done[f] = !store.done[f]; save();
+    this.textContent = store.done[f] ? "Publicada ✓" : "Ya la publiqué";
+    $("hecha").hidden = !store.done[f]; renderCal();
+    if (store.done[f]) aviso("¡Listo! Mañana te espera la siguiente.");
+  });
+
+  renderDay();
+})();
+</script>
+</body>
+</html>
