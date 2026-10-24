@@ -318,7 +318,7 @@ a.btn{ text-decoration:none; }
   var CENTER = ["mente","Tu foto especial","Algo o alguien valioso para ti, tu selfie o tu lugar favorito."];
   var POOL = [
     ["ver","Montaña de fondo","Una montaña o un cerro visto desde la ciudad, como el Ávila en Caracas."],
-    ["ver","Guacamayas","Una o varias guacamayas en vuelo o en un árbol. Vale aunque salgan lejos.","fuera"],
+    ["ver","Guacamayas","Una o varias guacamayas en vuelo o en un árbol. Vale aunque salgan lejos.","animal"],
     ["ver","Aves","Cualquier pájaro: posado, volando, en un árbol o en el suelo.","animal"],
     ["ver","Árbol en flor","Un araguaney, un apamate o un bucare en flor.","flor"],
     ["ver","Flores en la acera","Una alfombra de flores caídas en la acera.","flor"],
@@ -335,12 +335,12 @@ a.btn{ text-decoration:none; }
     ["ver","Árbol frutal","Una mata de mango, de aguacate o cualquier árbol con frutas.","planta"],
     ["ver","Carrito de calle","Un carrito de agua de coco, jugos, helados o café."],
     ["ver","Mural","Un mural o un grafiti con mucho color."],
-    ["ver","Un perro","Un perro paseando. Si sale el dueño, pide permiso.","fuera"],
+    ["ver","Un perro","Un perro paseando. Si sale el dueño, pide permiso.","animal"],
     ["ver","Amanecer","El cielo cambiando de color al amanecer.","cielo"],
     ["ver","Cielo en un charco","El cielo reflejado en un charco.","agua"],
     ["ver","Carro rojo","Un carro rojo.","calle"],
     ["ver","Semáforo en verde","Un semáforo en verde justo cuando llegas.","calle"],
-    ["ver","Pájaros en el cable","Pájaros parados en un cable.","fuera"],
+    ["ver","Pájaros en el cable","Pájaros parados en un cable.","animal"],
     ["ver","Banco de parque","Un banco de parque para descansar al final."],
     ["ver","Una bici","Una bicicleta, pasando o estacionada."],
     ["ver","Una cancha","Una cancha de básquet, de fútbol o de lo que sea."],
@@ -362,12 +362,12 @@ a.btn{ text-decoration:none; }
     ["ver","Fuente de agua","Una fuente, un bebedero o un chorro de agua.","agua"],
     ["ver","Reflejo en el agua","Árboles, edificios o cielo reflejados en el agua.","agua"],
     ["ver","Gotas o rocío","Gotas de lluvia o rocío sobre una hoja.","agua"],
-    ["ver","Una iguana","Una iguana tomando sol.","fuera"],
-    ["ver","Una mariposa","Una mariposa, posada o volando.","fuera"],
-    ["ver","Una ardilla","Una ardilla en un árbol o en el suelo.","fuera"],
-    ["ver","Un gato","Un gato en una ventana, un muro o una acera.","fuera"],
-    ["ver","Zamuros volando","Zamuros dando vueltas en el cielo.","fuera"],
-    ["ver","Patos o peces","Patos, peces o tortugas en una laguna.","fuera"],
+    ["ver","Una iguana","Una iguana tomando sol.","animal"],
+    ["ver","Una mariposa","Una mariposa, posada o volando.","animal"],
+    ["ver","Una ardilla","Una ardilla en un árbol o en el suelo.","animal"],
+    ["ver","Un gato","Un gato en una ventana, un muro o una acera.","animal"],
+    ["ver","Zamuros volando","Zamuros dando vueltas en el cielo.","animal"],
+    ["ver","Patos o peces","Patos, peces o tortugas en una laguna.","animal"],
     ["ver","Contraluz","Una silueta, una persona o un árbol con el sol detrás.","foto"],
     ["ver","Detalle de color","Un detalle de cerca con un color fuerte: una puerta, una reja o un objeto.","foto"],
     ["cuerpo","Una textura","Una textura de cerca: corteza, pared, piedra o asfalto."],
@@ -423,7 +423,41 @@ a.btn{ text-decoration:none; }
     ["mente","Lo que te hizo salir","Lo que te motivó hoy: una persona, una idea o un recuerdo."],
     ["mente","Rincón de calma","Un rincón del camino donde sentiste calma."],
     ["mente","Algo que sueltas","Una piedra o una hoja que representa algo que hoy dejas atrás."],
-    ["mente","Algo que te hizo sonreír","Lo que te sacó una sonrisa en el camino."]
+    ["mente","Algo que te hizo sonreír","Lo que te sacó una sonrisa en el camino."],
+    ["ver","Forma de corazón","Una piedra, una hoja o una mancha en el piso con forma de corazón.","forma"],
+    ["ver","Cara escondida","Una cara que aparece sola en un tronco, una pared o una roca.","forma"],
+    ["ver","Algo redondo","Algo bien redondo del camino: una rueda, una tapa, una fruta o una flor.","forma"],
+    ["ver","Patrón que se repite","Algo que se repite: escalones, rejas, baldosas o filas de matas.","foto"],
+    ["ver","Algo diminuto","Algo muy pequeño visto de cerca: una gota, una hormiga o un caracolito.","foto"],
+    ["ver","Algo que brilla","Algo que brille con el sol: agua, un vidrio o una hoja mojada.","foto"],
+    ["ver","Lo más alto","Lo más alto que veas hoy: un árbol, una torre, un poste o un edificio."],
+    ["ver","Un puente","Un puente, una pasarela o un paso sobre una quebrada."],
+    ["ver","Telaraña","Una telaraña, mejor si tiene gotas de rocío."],
+    ["ver","Fila de hormigas","Una fila de hormigas trabajando en el camino.","animal"],
+    ["ver","Algo azul","Algo azul que no sea el cielo: una flor, un ave, una puerta o una piedra."],
+    ["ver","La luna de día","La luna en el cielo de la mañana.","cielo"],
+    ["ver","Avión o su estela","Un avión o la raya blanca que deja en el cielo.","cielo"],
+    ["ver","Algo con historia","Algo viejo: una casa, una pared, una puerta o un árbol de muchos años."],
+    ["ver","Un columpio","Un columpio, un tobogán o un parque para niños.","calle"],
+    ["ver","La letra de tu nombre","La primera letra de tu nombre en un letrero, una placa o un grafiti.","calle"],
+    ["ver","Bambú o caña","Bambú, caña brava o una planta más alta que tú.","planta"],
+    ["ver","Un cactus","Un cactus o una planta con espinas.","planta"],
+    ["cuerpo","Algo que huele rico","Lo que te gustó oler: una flor, una fruta, un café o la tierra mojada."],
+    ["cuerpo","Lo que suena","De dónde viene un sonido del camino: agua, pájaros o viento en los árboles."],
+    ["cuerpo","Algo frío","Algo frío al tocarlo: agua de una fuente o una piedra a la sombra."],
+    ["cuerpo","Algo tibio de sol","Una piedra, un banco o una pared calentada por el sol."],
+    ["cuerpo","El viento","Algo que el viento esté moviendo: hojas, ramas, tu pelo o una bandera."],
+    ["cuerpo","La subida de hoy","La cuesta o los escalones más duros de hoy, vistos desde abajo."],
+    ["comer","Papelón con limón","Un papelón con limón, una limonada o tu bebida casera."],
+    ["comer","Hecho en casa","Algo que preparaste tú en casa para el rodaje."],
+    ["comer","Cacao venezolano","Un pedacito de chocolate o de cacao para la energía."],
+    ["comer","Hervido de domingo","La sopa o el hervido del almuerzo del domingo."],
+    ["mente","Te recuerda a alguien","Algo del camino que te recuerde a una persona querida."],
+    ["mente","Un sueño por cumplir","Algo que represente un sueño que quieres cumplir."],
+    ["mente","Algo que te da fuerza","Un árbol, una roca o algo que te haga sentir fuerte."],
+    ["mente","Tu próxima cumbre","La montaña o el lugar al que quieres llegar algún día."],
+    ["mente","Un consejo","Un consejo para quien empieza mañana, escrito en un papel."],
+    ["mente","Lo que aprendiste hoy","Algo que aprendiste hoy de ti o del camino."]
   ];
   var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
@@ -432,18 +466,21 @@ a.btn{ text-decoration:none; }
     return a;
   }
   function rid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
-  function newCard() {
+  function newCard(avoid) {
+    var skip = {}; (avoid || []).forEach(function (i) { skip[i] = 1; });
     var by = { ver:[], cuerpo:[], mente:[], comer:[] };
     POOL.forEach(function (x, i) { if (x[3] !== "fuera") by[x[0]].push(i); });
     var picked = [];
     Object.keys(PICK).forEach(function (k) {
       var used = {}, got = [];
-      shuffle(by[k].slice()).forEach(function (i) {
-        if (got.length >= PICK[k]) return;
-        var grp = POOL[i][3] || "";
-        if (grp && (used[grp] || 0) >= 2) return;
-        if (grp) used[grp] = (used[grp] || 0) + 1;
-        got.push(i);
+      [true, false].forEach(function (fresh) {
+        shuffle(by[k].slice()).forEach(function (i) {
+          if (got.length >= PICK[k] || got.indexOf(i) >= 0 || (fresh && skip[i])) return;
+          var grp = POOL[i][3] || "";
+          if (grp && (used[grp] || 0) >= 2) return;
+          if (grp) used[grp] = (used[grp] || 0) + 1;
+          got.push(i);
+        });
       });
       picked = picked.concat(got);
     });
@@ -650,7 +687,7 @@ a.btn{ text-decoration:none; }
       if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} delete urls[key]; }
       if (card.filled[s]) idbDel(key);
     }
-    state.card = newCard(); lastBingo = null;
+    state.card = newCard(state.card ? state.card.order : null); lastBingo = null;
     $("result").hidden = true;
     saveLocal(); render();
   });
