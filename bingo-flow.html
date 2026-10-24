@@ -237,10 +237,10 @@ a.btn{ text-decoration:none; }
   </div>
 
   <ul class="legend" aria-label="Tipos de foto">
-    <li><i class="mk ver" aria-hidden="true"></i><span><b>Mira</b> la ciudad</span></li>
-    <li><i class="mk cuerpo" aria-hidden="true"></i><span><b>Siente</b> tu cuerpo</span></li>
-    <li><i class="mk mente" aria-hidden="true"></i><span><b>Piensa</b> ánimo y grupo</span></li>
-    <li><i class="mk comer" aria-hidden="true"></i><span><b>Come</b> agua y comida</span></li>
+    <li><i class="mk ver" aria-hidden="true"></i><span><b>Observa</b> la naturaleza, el entorno</span></li>
+    <li><i class="mk cuerpo" aria-hidden="true"></i><span><b>Siente</b> tu cuerpo, texturas</span></li>
+    <li><i class="mk comer" aria-hidden="true"></i><span><b>Nutre e hidrata</b> comida y/o bebida</span></li>
+    <li><i class="mk mente" aria-hidden="true"></i><span><b>Piensa</b> ánimo, meta, frase</span></li>
   </ul>
 
   <section class="card" id="carton" aria-label="Tu cartón de fotos">
@@ -313,7 +313,7 @@ a.btn{ text-decoration:none; }
 (function(){
   "use strict";
   var LS = "bingo-sendero-caracas-9";
-  var CATS = { ver:"Mira", cuerpo:"Siente", mente:"Piensa", comer:"Come" };
+  var CATS = { ver:"Observa", cuerpo:"Siente", mente:"Piensa", comer:"Nutre e hidrata" };
   var PICK = { ver:5, cuerpo:1, mente:1, comer:1 };
   var CENTER = ["mente","Tu foto especial","Algo o alguien valioso para ti, tu selfie o tu lugar favorito."];
   var POOL = [
@@ -349,7 +349,7 @@ a.btn{ text-decoration:none; }
     ["cuerpo","Zapatos listos","Tus zapatos de correr antes de salir."],
     ["cuerpo","Tu sombra","Tu sombra corriendo con el sol de la mañana."],
     ["cuerpo","Tu tiempo","Tu tiempo o tu distancia en el reloj o en la app al terminar."],
-    ["cuerpo","Estiramiento","Tu estiramiento al final: gemelos, muslos y planta del pie."],
+    ["cuerpo","Estiramiento","Tu estiramiento al final: piernas, gemelos, brazos y planta del pie."],
     ["mente","Algo que agradeces","Algo del camino que te haga dar gracias hoy."],
     ["mente","Tu meta escrita","Tu meta escrita en un papel o en tu mano."],
     ["comer","Tu botella","Tu botella de agua o de hidratación."],
@@ -370,7 +370,7 @@ a.btn{ text-decoration:none; }
     ["ver","Patos o peces","Patos, peces o tortugas en una laguna.","fuera"],
     ["ver","Contraluz","Una silueta, una persona o un árbol con el sol detrás.","foto"],
     ["ver","Detalle de color","Un detalle de cerca con un color fuerte: una puerta, una reja o un objeto.","foto"],
-    ["ver","Una textura","Una textura de cerca: corteza, pared, piedra o asfalto.","foto"],
+    ["cuerpo","Una textura","Una textura de cerca: corteza, pared, piedra o asfalto."],
     ["ver","Hojas","Hojas de formas o colores distintos, o una hoja más grande que tu mano.","planta"],
     ["ver","Una palma","Una palma o una palmera.","planta"],
     ["ver","Raíces","Raíces gruesas que salen de la tierra o levantan la acera.","planta"],
@@ -384,7 +384,46 @@ a.btn{ text-decoration:none; }
     ["cuerpo","Medias de colores","Tus medias de colores, o las más divertidas del grupo."],
     ["cuerpo","Zapatos con historia","Tus zapatos después del rodaje, con polvo, tierra o agua."],
     ["comer","Comida en carrera","Lo que comes mientras corres: cambur, gel, dátiles o caramelos."],
-    ["comer","Jugo de después","Un jugo natural, una merengada o un agua de coco al terminar."]
+    ["comer","Jugo de después","Un jugo natural, una merengada o un agua de coco al terminar."],
+    ["ver","Flor silvestre","Una flor pequeñita que crece sola en la montaña o entre las grietas de la acera.","flor"],
+    ["ver","Un helecho","Un helecho o una planta de hojas finas en la sombra.","planta"],
+    ["ver","Musgo","Musgo verde sobre una piedra, un muro o un tronco.","planta"],
+    ["ver","Semilla o fruto caído","Una semilla, una vaina o un fruto caído en el suelo.","planta"],
+    ["ver","Tronco curioso","Un tronco con nudos, huecos o una forma divertida.","planta"],
+    ["ver","Quebrada o río","Una quebrada, un riachuelo o un río.","agua"],
+    ["ver","Tres verdes","Tres tonos de verde distintos en una sola foto.","foto"],
+    ["ver","Luz y sombra","Sombras de hojas o ramas dibujadas en el piso o en una pared.","foto"],
+    ["ver","Tu camino","El sendero o la calle por donde vas, mirando hacia adelante."],
+    ["ver","La ciudad desde arriba","La ciudad vista desde un punto alto del camino.","vista"],
+    ["ver","Tu cumbre de hoy","El punto más alto al que llegaste hoy.","vista"],
+    ["ver","Algo nuevo","Un detalle del camino en el que nunca te habías fijado."],
+    ["ver","Ventana con plantas","Una ventana, un balcón o una puerta con plantas o flores.","calle"],
+    ["cuerpo","Tu mano en un tronco","Tu mano sobre la corteza de un árbol. Siente su textura."],
+    ["cuerpo","Pies en la tierra","Tus pies o tus zapatos sobre tierra, grama, arena o piedras."],
+    ["cuerpo","Algo suave","Algo suave del camino: un pétalo, una hoja, una pluma o musgo."],
+    ["cuerpo","Algo rugoso","Algo áspero o rugoso: una piedra, una pared o una corteza."],
+    ["cuerpo","Agua en tus manos","Tus manos mojadas en una fuente, una quebrada o con tu botella."],
+    ["cuerpo","En el aire","Tú, tu grupo o tu sombra saltando de alegría."],
+    ["cuerpo","Manos al cielo","Tus brazos arriba al llegar a tu punto más alto."],
+    ["cuerpo","Tu pulso","Tu pulso en el reloj o en la app después de una subida."],
+    ["cuerpo","Zapatos del grupo","Los zapatos de todo el grupo juntos, en círculo."],
+    ["comer","Recarga de agua","Llenando tu botella en un bebedero o en una parada."],
+    ["comer","Café o té","Tu café, tu guayoyo o tu té de antes o de después."],
+    ["comer","Tu desayuno","Lo que desayunaste para tener energía, antes o después."],
+    ["comer","Frutos secos","Maní, merey, pasas o tu mezcla de frutos secos."],
+    ["comer","Colores en el plato","Una comida o merienda con tres colores o más."],
+    ["comer","Merienda para compartir","Una merienda que repartes con tu grupo."],
+    ["comer","Botellas del grupo","Las botellas de agua de todo el grupo juntas."],
+    ["comer","Helado de premio","Un helado artesanal o un raspado al terminar."],
+    ["mente","Frase que te inspira","Una frase escrita en un papel, en tu mano o en la arena."],
+    ["mente","Mensaje en el camino","Un letrero, un grafiti o un mensaje que te diga algo hoy."],
+    ["mente","Tu palabra de hoy","Una palabra que diga cómo te sientes, escrita donde quieras."],
+    ["mente","Tu ánimo en una foto","Algo del camino que muestre tu ánimo: un color, un cielo, una flor."],
+    ["mente","Meta cumplida","El lugar, el número o el momento que muestra que hoy lo lograste."],
+    ["mente","Lo que te hizo salir","Lo que te motivó hoy: una persona, una idea o un recuerdo."],
+    ["mente","Rincón de calma","Un rincón del camino donde sentiste calma."],
+    ["mente","Algo que sueltas","Una piedra o una hoja que representa algo que hoy dejas atrás."],
+    ["mente","Algo que te hizo sonreír","Lo que te sacó una sonrisa en el camino."]
   ];
   var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
