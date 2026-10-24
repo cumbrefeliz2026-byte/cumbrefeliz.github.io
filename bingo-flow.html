@@ -806,7 +806,7 @@ a.btn{ text-decoration:none; }
       var bingo = isBingo(got), lines = bingo ? linesOf(got) : [];
       var who = ((state.nombre || "").trim() || "Mi rodaje").toUpperCase();
       var place = (state.lugar || "").trim();
-      var subLine = "BINGO FLOW BY ALITA" + (place ? " · " + place.toUpperCase() : "");
+      var subLine = "BINGO FLOW" + (place ? " · " + place.toUpperCase() : "");
       g.textBaseline = "alphabetic";
       var stampLabel = (bingo || n === 9) ? (n === 9 ? "¡META LOGRADA!" : "¡BINGO!") : "";
       var SFS = story ? 42 : 38; g.font = "800 " + SFS + "px " + DISPLAY;
