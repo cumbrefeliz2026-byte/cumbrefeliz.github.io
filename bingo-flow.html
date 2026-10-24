@@ -743,20 +743,20 @@ a.btn{ text-decoration:none; }
     g.restore();
   }
   /* Dibuja el logo con su esquina superior izquierda en (x, y) y alto h. */
-  function drawLockupArt(g, x, y, h, ink) {
+  function drawLockupArt(g, x, y, h, ink, full) {
     var P = lockupPaths(), k = h / LOCKUP.h;
     g.save(); g.translate(x - LOCKUP.x * k, y - LOCKUP.y * k); g.scale(k, k);
     g.lineCap = "round"; g.lineJoin = "round";
     g.save(); g.translate(-0.71, 8.65); g.scale(0.85, 0.85);
     g.fillStyle = "#F2B90F"; g.beginPath(); g.arc(141, 35, 11, 0, Math.PI * 2); g.fill();
     g.strokeStyle = "#F2B90F"; g.lineWidth = 3.3; g.stroke(P.rays);
-    g.strokeStyle = "#7FB0EE"; g.lineWidth = 3.2; g.stroke(P.blue);
+    g.strokeStyle = full ? "#4A80D9" : "#7FB0EE"; g.lineWidth = 3.2; g.stroke(P.blue);
     g.strokeStyle = ink; g.lineWidth = 11; g.stroke(P.mark);
     g.strokeStyle = "#5E8E6A"; g.lineWidth = 1.3; g.stroke(P.stem);
     drawRose(g, 125.5, 52, 0.13);
     g.restore();
-    g.globalAlpha = 0.3; g.strokeStyle = ink; g.lineWidth = 1.2; g.stroke(P.divider); g.globalAlpha = 1;
-    g.strokeStyle = "#F7B7CB"; g.lineWidth = 1.2; g.stroke(P.lines);
+    g.globalAlpha = full ? 0.25 : 0.3; g.strokeStyle = ink; g.lineWidth = 1.2; g.stroke(P.divider); g.globalAlpha = 1;
+    g.strokeStyle = full ? "#E06E96" : "#F7B7CB"; g.lineWidth = 1.2; g.stroke(P.lines);
     g.fillStyle = ink; g.fill(P.proyecto);
     g.save(); g.translate(197, 42.1); g.scale(0.495, 0.495);
     g.strokeStyle = ink; g.lineWidth = 11; g.stroke(P.name);
@@ -767,19 +767,22 @@ a.btn{ text-decoration:none; }
   }
   /* El logo arriba del collage: alto según el tamaño pedido, sin pasarse de maxW; su borde inferior queda en base + 12.
      Mismos argumentos que la versión anterior; family ya no se usa. */
-  function drawLockup(g, x, base, maxW, start, min, color, center, family) {
+  function drawLockup(g, x, base, maxW, start, min, color, center, family, full) {
     var h = start * (center ? 2.3 : 1.55), w = h * LOCKUP.w / LOCKUP.h;
     if (w > maxW) { w = maxW; h = w * LOCKUP.h / LOCKUP.w; }
     var x0 = center ? x - w / 2 : x;
-    drawLockupArt(g, x0, base + 12 - h, h, color);
+    drawLockupArt(g, x0, base + 12 - h, h, color, full);
     return w;
   }
 
+  /* Colores del collage: banda clara arriba con el logo a todo color (si band), fondo y textos. */
+  var TEMA_COLLAGE = {"bg": "#E2E9DB", "contour": "rgba(30,74,59,0.08)", "band": null, "bandStory": 0, "bandFeed": 0, "headInk": "#1E4A3B", "full": true, "headSub": "#2F5B41", "headWho": "#15251B", "name": "#1E4A3B", "info": "#556659", "tags": "#2F5B41", "tile": "#F3F5EF", "tileLine": "#BCCAB5", "soft": "#F9FBF6", "emptyText": "#556659", "centerText": "#1E4A3B", "centerBorder": "rgba(30,74,59,.55)", "winLine": "#2E7A4B", "stampFill": "#1E4A3B", "stampText": "#F3F5EF", "stampFillFeed": "#1E4A3B", "stampTextFeed": "#F3F5EF", "stampShadow": "rgba(21,37,27,.25)"};
   function buildCollage(fmt) {
     var card = state.card, story = fmt === "story";
     var W = 1080, H = story ? 1920 : 1350, C = story ? 312 : 320, G = 12, M = 48, GW = 3 * C + 2 * G;
     var gx = (W - GW) / 2, gy = story ? 420 : 272;
-    var BG = "#15251B", PAPER = "#EEF2EA", LIGHT = "#B9C7B6", STAMP = "#EFE6D2", SAGE = "#A9C6A1", TILE = "#22352A", TILE_LINE = "#3D5546", SOFT = "#2B3D31";
+    var T = TEMA_COLLAGE;
+    var BG = T.bg, PAPER = T.name, LIGHT = T.info, STAMP = T.stampFill, SAGE = T.tags, TILE = T.tile, TILE_LINE = T.tileLine, SOFT = T.soft;
     var CAT = { ver:"#2E7A4B", cuerpo:"#2A66A4", mente:"#B23946", comer:"#BF651B" };
     var DISPLAY = '"Fredoka", "Nunito", system-ui, sans-serif', BODY = '"Overpass", system-ui, sans-serif', MONO = '"Overpass Mono", ui-monospace, monospace';
     var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
@@ -794,19 +797,20 @@ a.btn{ text-decoration:none; }
       g.fillStyle = BG; g.fillRect(0, 0, W, H);
 
       // curvas de nivel de fondo
-      g.save(); g.strokeStyle = "rgba(238,242,234,0.07)"; g.lineWidth = 2;
+      g.save(); g.strokeStyle = T.contour; g.lineWidth = 2;
       for (var r = 1; r <= 9; r++) {
         g.beginPath();
         g.ellipse(W - 120, story ? 230 : 120, 70 * r, 46 * r, -0.25 + r * 0.04, 0, Math.PI * 2);
         g.stroke();
       }
       g.restore();
+      if (T.band) { g.fillStyle = T.band; g.fillRect(0, 0, W, story ? T.bandStory : T.bandFeed); }
 
       var got = imgs.map(function (x) { return !!x; }), n = got.filter(Boolean).length, today = new Date();
       var bingo = isBingo(got), lines = bingo ? linesOf(got) : [];
       var who = ((state.nombre || "").trim() || "Mi rodaje").toUpperCase();
       var place = (state.lugar || "").trim();
-      var subLine = "BINGO FLOW BY ALITA" + (place ? " · " + place.toUpperCase() : "");
+      var subLine = "BINGO FLOW" + (place ? " · " + place.toUpperCase() : "");
       g.textBaseline = "alphabetic";
       var stampLabel = (bingo || n === 9) ? (n === 9 ? "¡META LOGRADA!" : "¡BINGO!") : "";
       var SFS = story ? 42 : 38; g.font = "800 " + SFS + "px " + DISPLAY;
@@ -814,17 +818,17 @@ a.btn{ text-decoration:none; }
 
       if (story) {
         g.textAlign = "center";
-        drawLockup(g, W / 2, 330, GW, 96, 64, STAMP, true, DISPLAY);
+        drawLockup(g, W / 2, 330, GW, 96, 64, T.headInk, true, DISPLAY, T.full);
         g.textAlign = "center";
-        g.fillStyle = SAGE; fitFont(g, subLine, "600", MONO, 30, 18, GW);
+        g.fillStyle = T.headSub; fitFont(g, subLine, "600", MONO, 30, 18, GW);
         g.fillText(subLine, W / 2, 382);
       } else {
         g.textAlign = "left";
-        drawLockup(g, gx, 150, GW - (stampW ? stampW + 32 : 0), 80, 52, STAMP, false, DISPLAY);
-        g.fillStyle = SAGE; g.font = "600 26px " + MONO;
+        drawLockup(g, gx, 150, GW - (stampW ? stampW + 32 : 0), 80, 52, T.headInk, false, DISPLAY, T.full);
+        g.fillStyle = T.headSub; g.font = "600 26px " + MONO;
         fitFont(g, subLine, "600", MONO, 26, 16, GW - (stampW ? stampW + 32 : 0));
         g.fillText(subLine, gx, 196);
-        g.fillStyle = PAPER; fitFont(g, who + " • " + fmtLong(today), "700", BODY, 28, 18, GW);
+        g.fillStyle = T.headWho; fitFont(g, who + " • " + fmtLong(today), "700", BODY, 28, 18, GW);
         g.fillText(who + " • " + fmtLong(today), gx, 240);
       }
 
@@ -842,13 +846,13 @@ a.btn{ text-decoration:none; }
           tl.forEach(function (t, i) { g.fillText(t, x + 16, y + C - 18 - (tl.length - 1 - i) * 28); });
         } else {
           g.fillStyle = center ? SOFT : TILE; g.fillRect(x, y, C, C);
-          g.fillStyle = center ? STAMP : LIGHT; g.font = (center ? "800 42px " + DISPLAY : "600 26px " + BODY); g.textAlign = "center";
+          g.fillStyle = center ? T.centerText : T.emptyText; g.font = (center ? "800 42px " + DISPLAY : "600 26px " + BODY); g.textAlign = "center";
           var el = wrapText(g, center ? "TU FOTO ESPECIAL" : it[1], C - 48), lh = center ? 44 : 32, y0 = y + C / 2 - (el.length - 1) * lh / 2 + 10;
           el.forEach(function (t, i) { g.fillText(t, x + C / 2, y0 + i * lh); });
           g.textAlign = "left";
         }
         g.restore();
-        if (center) { g.save(); g.strokeStyle = "rgba(239,230,210,.75)"; g.lineWidth = 4; roundRect(g, x + 2, y + 2, C - 4, C - 4, 14); g.stroke(); g.restore(); }
+        if (center) { g.save(); g.strokeStyle = T.centerBorder; g.lineWidth = 4; roundRect(g, x + 2, y + 2, C - 4, C - 4, 14); g.stroke(); g.restore(); }
         else if (!im) { g.save(); g.setLineDash([10, 8]); g.strokeStyle = TILE_LINE; g.lineWidth = 2.5; roundRect(g, x + 1.5, y + 1.5, C - 3, C - 3, 15); g.stroke(); g.restore(); }
         if (!center) drawMark(g, it[0], x + 16, y + 16, CAT[it[0]], !!im);
       }
@@ -856,7 +860,7 @@ a.btn{ text-decoration:none; }
       if (n < 9 && lines.length) {
         var win = {};
         lines.forEach(function (L) { L.forEach(function (s) { win[s] = 1; }); });
-        g.save(); g.strokeStyle = SAGE; g.lineWidth = 5;
+        g.save(); g.strokeStyle = T.winLine; g.lineWidth = 5;
         Object.keys(win).forEach(function (k) {
           var s = Number(k); if (s === 4) return;
           var x = gx + (s % 3) * (C + G), y = gy + Math.floor(s / 3) * (C + G);
@@ -872,10 +876,10 @@ a.btn{ text-decoration:none; }
         var sw = stampW, sh = Math.round(SFS * 1.55);
         var cx = story ? W / 2 : W - gx - sw / 2 - 6, cy = story ? gy + GW + 58 : 118;
         g.translate(cx, cy); g.rotate(-0.06);
-        g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 18; g.shadowOffsetY = 6;
-        roundRect(g, -sw / 2, -sh / 2, sw, sh, 10); g.fillStyle = STAMP; g.fill();
+        g.shadowColor = T.stampShadow; g.shadowBlur = 18; g.shadowOffsetY = 6;
+        roundRect(g, -sw / 2, -sh / 2, sw, sh, 10); g.fillStyle = story ? T.stampFill : T.stampFillFeed; g.fill();
         g.shadowColor = "transparent";
-        g.fillStyle = BG; g.textAlign = "center"; g.fillText(label, 0, Math.round(SFS * 0.35));
+        g.fillStyle = story ? T.stampText : T.stampTextFeed; g.textAlign = "center"; g.fillText(label, 0, Math.round(SFS * 0.35));
         g.restore();
       }
 
