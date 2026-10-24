@@ -6,7 +6,8 @@
 <meta name="author" content="Alita · Cumbre Feliz">
 <meta name="copyright" content="© 2026 Alita. Todos los derechos reservados.">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#15251B">
+<meta name="theme-color" content="#E2E9DB">
+<meta name="color-scheme" content="only light">
 <meta name="description" content="Escribe una palabra con fotos de formas que encuentres.">
 <meta property="og:title" content="Bingo Flow Letras escondidas · Cumbre Feliz">
 <meta property="og:description" content="Escribe una palabra con fotos de formas que encuentres.">
@@ -25,6 +26,7 @@
 <style>
 /* Layout: columna de teléfono, hermana del Bingo Flow. Banda con curvas de nivel; tres modos (Abecedario, B-I-N-G-O, Letras escondidas); nombre; cartón de letras grandes que se llenan con fotos; progreso; collage armado en el teléfono. Verde del Ávila + amarillo de guacamaya. */
 :root{
+  color-scheme:only light;
   --paper:#EEF2EA;
   --band:#E2E9DB;
   --panel:#F9FBF6;
@@ -46,20 +48,6 @@
   --font-display:"Fredoka","Nunito",system-ui,sans-serif;
   --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
   --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0F1712; --band:#142019; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E;
-    --line:#2C3B31; --contour:#26382D; --stamp:#E6DCC3; --stamp-soft:#243429; --stamp-ink:#15251B; --logo:#E9DFC7; --logo-azul:#7FB0EE; --logo-linea:#F7B7CB; --logo-div:.3;
-    --accent:#78ACE3; --danger:#EE8792; --scrim:rgba(0,0,0,.78); --on-photo:#FFFFFF;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0F1712; --band:#142019; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E;
-  --line:#2C3B31; --contour:#26382D; --stamp:#E6DCC3; --stamp-soft:#243429; --stamp-ink:#15251B; --logo:#E9DFC7; --logo-azul:#7FB0EE; --logo-linea:#F7B7CB; --logo-div:.3;
-  --accent:#78ACE3; --danger:#EE8792; --scrim:rgba(0,0,0,.78); --on-photo:#FFFFFF;
-  color-scheme:dark;
 }
 
 *,*::before,*::after{ box-sizing:border-box; }

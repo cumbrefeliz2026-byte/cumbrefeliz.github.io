@@ -6,7 +6,8 @@
 <meta name="author" content="Alita · Cumbre Feliz">
 <meta name="copyright" content="© 2026 Alita. Todos los derechos reservados.">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#15251B">
+<meta name="theme-color" content="#E2E9DB">
+<meta name="color-scheme" content="only light">
 <title>Cumbre Feliz · Bingo Flow</title>
 <meta name="description" content="Juegos de fotos para tu rodaje. Corre a tu ritmo, llena tu cartón y comparte tu collage con Cumbre Feliz.">
 <meta property="og:title" content="Cumbre Feliz · Bingo Flow">
@@ -23,24 +24,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Fredoka:wght@500;600;700&family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@500;600&display=swap">
 <style>
-/* Portada de Cumbre Feliz: banda verde oscura con el logo horizontal grande y el lema; lista de juegos como tarjetas grandes para el pulgar; consejo para anclarla al inicio del teléfono. */
+/* Portada de Cumbre Feliz: banda verde clara con el logo horizontal grande y el lema; lista de juegos como tarjetas grandes para el pulgar; consejo para anclarla al inicio del teléfono. */
 :root{
-  --paper:#EEF2EA; --band:#15251B; --band-ink:#EFE6D2; --band-muted:#A9C6A1;
+  color-scheme:only light;
+  --paper:#EEF2EA; --band:#E2E9DB; --band-ink:#15251B; --band-muted:#556659;
   --panel:#F9FBF6; --ink:#15251B; --muted:#556659; --line:#C4CFBF;
   --accent:#2F5B41; --chip:#E6EEDF;
   --font-display:"Fredoka","Nunito",system-ui,sans-serif;
   --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
   --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0F1712; --band:#15251B; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E; --line:#2C3B31;
-    --accent:#A9C6A1; --chip:#243429; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0F1712; --band:#15251B; --panel:#17231B; --ink:#E2EADE; --muted:#9BAB9E; --line:#2C3B31;
-  --accent:#A9C6A1; --chip:#243429; color-scheme:dark;
 }
 *,*::before,*::after{ box-sizing:border-box; }
 html,body{ margin:0; }
@@ -51,9 +43,9 @@ body{ background:var(--paper); color:var(--ink); font:400 16px/1.5 var(--font-bo
 .hero .wrap{ padding-top:max(28px, env(safe-area-inset-top, 0px)); padding-bottom:26px; position:relative; z-index:1; }
 .hero svg.rings{ position:absolute; right:-80px; top:-60px; width:340px; height:auto; opacity:.10; z-index:0; }
 .brand{ display:block; }
-.lockup{ display:block; width:min(100%, 440px); height:auto; color:var(--band-ink); --logo-azul:#7FB0EE; --logo-linea:#F7B7CB; --logo-div:.3; }
+.lockup{ display:block; width:min(100%, 440px); height:auto; color:#1E4A3B; --logo-azul:#4A80D9; --logo-linea:#E06E96; --logo-div:.25; }
 .tagline{ margin:14px 0 0; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--band-muted); }
-.hero h1{ margin:6px 0 8px; font:600 clamp(32px, 9vw, 42px)/1.04 var(--font-display); letter-spacing:0; }
+.hero h1{ margin:6px 0 8px; font:600 clamp(32px, 9vw, 42px)/1.04 var(--font-display); letter-spacing:0; color:#1E4A3B; }
 .hero p{ margin:0; color:var(--band-muted); max-width:40ch; }
 
 main.wrap{ padding-top:18px; padding-bottom:40px; display:grid; gap:12px; }
