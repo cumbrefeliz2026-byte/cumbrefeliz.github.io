@@ -652,20 +652,20 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     g.restore();
   }
   /* Dibuja el logo con su esquina superior izquierda en (x, y) y alto h. */
-  function drawLockupArt(g, x, y, h, ink, full) {
+  function drawLockupArt(g, x, y, h, ink) {
     var P = lockupPaths(), k = h / LOCKUP.h;
     g.save(); g.translate(x - LOCKUP.x * k, y - LOCKUP.y * k); g.scale(k, k);
     g.lineCap = "round"; g.lineJoin = "round";
     g.save(); g.translate(-0.71, 8.65); g.scale(0.85, 0.85);
     g.fillStyle = "#F2B90F"; g.beginPath(); g.arc(141, 35, 11, 0, Math.PI * 2); g.fill();
     g.strokeStyle = "#F2B90F"; g.lineWidth = 3.3; g.stroke(P.rays);
-    g.strokeStyle = full ? "#4A80D9" : "#7FB0EE"; g.lineWidth = 3.2; g.stroke(P.blue);
+    g.strokeStyle = "#7FB0EE"; g.lineWidth = 3.2; g.stroke(P.blue);
     g.strokeStyle = ink; g.lineWidth = 11; g.stroke(P.mark);
     g.strokeStyle = "#5E8E6A"; g.lineWidth = 1.3; g.stroke(P.stem);
     drawRose(g, 125.5, 52, 0.13);
     g.restore();
-    g.globalAlpha = full ? 0.25 : 0.3; g.strokeStyle = ink; g.lineWidth = 1.2; g.stroke(P.divider); g.globalAlpha = 1;
-    g.strokeStyle = full ? "#E06E96" : "#F7B7CB"; g.lineWidth = 1.2; g.stroke(P.lines);
+    g.globalAlpha = 0.3; g.strokeStyle = ink; g.lineWidth = 1.2; g.stroke(P.divider); g.globalAlpha = 1;
+    g.strokeStyle = "#F7B7CB"; g.lineWidth = 1.2; g.stroke(P.lines);
     g.fillStyle = ink; g.fill(P.proyecto);
     g.save(); g.translate(197, 42.1); g.scale(0.495, 0.495);
     g.strokeStyle = ink; g.lineWidth = 11; g.stroke(P.name);
@@ -676,18 +676,18 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   }
   /* El logo arriba del collage: alto según el tamaño pedido, sin pasarse de maxW; su borde inferior queda en base + 12.
      Mismos argumentos que la versión anterior; family ya no se usa. */
-  function drawLockup(g, x, base, maxW, start, min, color, center, family, full) {
+  function drawLockup(g, x, base, maxW, start, min, color, center, family) {
     var h = start * (center ? 2.3 : 1.55), w = h * LOCKUP.w / LOCKUP.h;
     if (w > maxW) { w = maxW; h = w * LOCKUP.h / LOCKUP.w; }
     var x0 = center ? x - w / 2 : x;
-    drawLockupArt(g, x0, base + 12 - h, h, color, full);
+    drawLockupArt(g, x0, base + 12 - h, h, color);
     return w;
   }
 
   function buildCollage(fmt) {
     var c = card(), slots = slotsOf(c), n = slots.length, story = fmt === "story";
     var W = 1080, H = story ? 1920 : 1350, REG = 984, REGH = story ? 960 : 984, regTop = story ? 420 : 272;
-    var BG = "#E2E9DB", PAPER = "#1E4A3B", LIGHT = "#556659", STAMP = "#1E4A3B", SAGE = "#2F5B41", INK = "#15251B", TILE = "#F3F5EF", STAMP_INK = "#F3F5EF";
+    var BG = "#15251B", PAPER = "#EEF2EA", LIGHT = "#B9C7B6", STAMP = "#EFE6D2", SAGE = "#A9C6A1", INK = "#15251B", TILE = "#22352A";
     var DISPLAY = '"Fredoka", "Nunito", system-ui, sans-serif', BODY = '"Overpass", system-ui, sans-serif', MONO = '"Overpass Mono", ui-monospace, monospace';
     var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load("800 120px " + DISPLAY), document.fonts.load("600 28px " + MONO), document.fonts.load("700 28px " + BODY)]).catch(function () {}) : Promise.resolve();
     return fontsReady.then(function () {
@@ -700,7 +700,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
       var stamp = stampOf(c, got);
       var who = ((state.nombre || "").trim() || "Mi rodaje").toUpperCase();
       var place = (state.lugar || "").trim();
-      var sub = "BINGO FLOW · " + (reto ? "RETO DEL DÍA · " : "") + (c.mode === "circulo" ? "CÍRCULO CROMÁTICO" : "DEGRADÉ " + FAMS[c.fam].name.toUpperCase());
+      var sub = "BINGO FLOW BY ALITA · " + (reto ? "RETO DEL DÍA · " : "") + (c.mode === "circulo" ? "CÍRCULO CROMÁTICO" : "DEGRADÉ " + FAMS[c.fam].name.toUpperCase());
       g.textBaseline = "alphabetic";
       var stampFs = story ? 42 : 38;
       if (stamp && !story) {
@@ -714,12 +714,12 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
 
       if (story) {
         g.textAlign = "center";
-        drawLockup(g, W / 2, 330, REG, 96, 64, STAMP, true, DISPLAY, true); g.textAlign = "center";
+        drawLockup(g, W / 2, 330, REG, 96, 64, STAMP, true, DISPLAY); g.textAlign = "center";
         g.fillStyle = SAGE; fitFont(g, sub, "600", MONO, 30, 18, REG); g.fillText(sub, W / 2, 382);
       } else {
         g.textAlign = "left";
         var tw = REG - (stampW ? stampW + 32 : 0);
-        drawLockup(g, 48, 150, tw, 80, 52, STAMP, false, DISPLAY, true);
+        drawLockup(g, 48, 150, tw, 80, 52, STAMP, false, DISPLAY);
         g.fillStyle = SAGE; fitFont(g, sub, "600", MONO, 26, 16, tw); g.fillText(sub, 48, 196);
         g.fillStyle = PAPER; var whoLine = who + " • " + (place ? place + " • " : "") + fmtLong(today); fitFont(g, whoLine, "700", BODY, 28, 18, REG); g.fillText(whoLine, 48, 240);
       }
@@ -727,7 +727,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
       if (c.mode === "circulo") {
         var cx = W / 2, cy = regTop + REGH / 2 + (story ? 0 : 10), R = story ? 388 : 392, tr = story ? 97 : 98, cr = story ? 132 : 136;
         // anillo guía
-        g.save(); g.lineWidth = 2; g.strokeStyle = "rgba(30,74,59,0.15)"; circleClip(g, cx, cy, R); g.stroke(); g.restore();
+        g.save(); g.lineWidth = 2; g.strokeStyle = "rgba(238,242,234,0.12)"; circleClip(g, cx, cy, R); g.stroke(); g.restore();
         for (var i = 0; i < 12; i++) {
           var a = -Math.PI / 2 + i * Math.PI / 6, x = cx + R * Math.cos(a), y = cy + R * Math.sin(a), s = slots[i], im = imgs[i];
           g.save(); circleClip(g, x, y, tr); g.clip();
@@ -739,9 +739,9 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
         }
         var sim = imgs[12];
         g.save(); circleClip(g, cx, cy, cr); g.clip();
-        if (sim) cover(g, sim, cx - cr, cy - cr, cr * 2, cr * 2); else { g.fillStyle = "#F9FBF6"; g.fillRect(cx - cr, cy - cr, cr * 2, cr * 2); }
+        if (sim) cover(g, sim, cx - cr, cy - cr, cr * 2, cr * 2); else { g.fillStyle = "#2B3D31"; g.fillRect(cx - cr, cy - cr, cr * 2, cr * 2); }
         g.restore();
-        g.save(); g.lineWidth = 5; g.strokeStyle = "rgba(30,74,59,.55)"; circleClip(g, cx, cy, cr - 2.5); g.stroke(); g.restore();
+        g.save(); g.lineWidth = 5; g.strokeStyle = "rgba(239,230,210,.75)"; circleClip(g, cx, cy, cr - 2.5); g.stroke(); g.restore();
         if (!sim) { g.save(); g.fillStyle = STAMP; g.textAlign = "center"; g.font = "800 50px " + DISPLAY; g.fillText("TU FOTO", cx, cy - 6); g.fillText("ESPECIAL", cx, cy + 44); g.restore(); }
       } else {
         var G = 12, sw = story ? 168 : 150, bh = (REGH - 5 * G) / 6, bx = 48, px = bx + sw + G, pw = W - 48 - px;
@@ -755,7 +755,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
           g.save(); roundRect(g, px, yy, pw, bh, 14); g.clip();
           if (im2) cover(g, im2, px, yy, pw, bh); else { g.fillStyle = TILE; g.fillRect(px, yy, pw, bh); }
           g.restore();
-          if (!im2) { g.save(); g.setLineDash([10, 8]); g.strokeStyle = "#BCCAB5"; g.lineWidth = 2.5; roundRect(g, px + 1.5, yy + 1.5, pw - 3, bh - 3, 13); g.stroke(); g.restore(); }
+          if (!im2) { g.save(); g.setLineDash([10, 8]); g.strokeStyle = "#3D5546"; g.lineWidth = 2.5; roundRect(g, px + 1.5, yy + 1.5, pw - 3, bh - 3, 13); g.stroke(); g.restore(); }
           if (im2 && c.colors[j]) { g.save(); g.beginPath(); g.arc(px + pw - 34, yy + 34, 18, 0, Math.PI * 2); g.fillStyle = c.colors[j]; g.fill(); g.lineWidth = 4; g.strokeStyle = "#FFFFFF"; g.stroke(); g.restore(); }
         }
       }
@@ -764,9 +764,9 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
         g.save(); g.font = "800 " + stampFs + "px " + DISPLAY;
         var sh = Math.round(stampFs * 1.55), scx = story ? W / 2 : W - 48 - stampW / 2 - 6, scy = story ? regTop + REGH + 58 : 118;
         g.translate(scx, scy); g.rotate(-0.06);
-        g.shadowColor = "rgba(21,37,27,.25)"; g.shadowBlur = 18; g.shadowOffsetY = 6;
+        g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 18; g.shadowOffsetY = 6;
         roundRect(g, -stampW / 2, -sh / 2, stampW, sh, 10); g.fillStyle = STAMP; g.fill();
-        g.shadowColor = "transparent"; g.fillStyle = STAMP_INK; g.textAlign = "center"; g.fillText(stamp, 0, Math.round(stampFs * 0.35));
+        g.shadowColor = "transparent"; g.fillStyle = INK; g.textAlign = "center"; g.fillText(stamp, 0, Math.round(stampFs * 0.35));
         g.restore();
       }
       if (story) {
