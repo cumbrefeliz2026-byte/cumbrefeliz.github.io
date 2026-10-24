@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: columna de teléfono, familia Bingo Flow. Dos juegos: Círculo cromático (12 colores en anillo alrededor de la selfie) y Degradé (6 tonos de un color, de oscuro a claro). Las casillas vacías muestran el color a buscar; al llenarse, el borde queda del color meta y un punto muestra el color que detectó la foto. */
+/* Layout: columna de teléfono, familia Bingo Flow. Dos juegos: Círculo cromático (12 colores en anillo alrededor de la foto especial) y Degradé (6 tonos de un color, de oscuro a claro). Las casillas vacías muestran el color a buscar; al llenarse, el borde queda del color meta y un punto muestra el color que detectó la foto. */
 :root{
   --paper:#EEF2EA;
   --band:#E2E9DB;
@@ -232,7 +232,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   <div class="retobox" id="retobox" hidden></div>
 
   <div class="modes" role="tablist" aria-label="Juego">
-    <button type="button" class="mode" role="tab" data-mode="circulo" aria-controls="carton" aria-selected="true"><span class="mname">Círculo cromático</span><span class="msub">12 colores + tu selfie</span></button>
+    <button type="button" class="mode" role="tab" data-mode="circulo" aria-controls="carton" aria-selected="true"><span class="mname">Círculo cromático</span><span class="msub">12 colores + tu foto especial</span></button>
     <button type="button" class="mode" role="tab" data-mode="degrade" aria-controls="carton" aria-selected="false" tabindex="-1"><span class="mname">Degradé</span><span class="msub">6 tonos de un color</span></button>
   </div>
 
@@ -263,7 +263,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   </div>
 
   <div class="bingo" id="bingo" role="status" hidden><span class="bw" id="bw">¡Bingo!</span><span class="bs" id="bs"></span></div>
-  <p class="falta" id="falta" hidden>Ya tienes tres colores seguidos. Te falta tu selfie del centro para cantar bingo.</p>
+  <p class="falta" id="falta" hidden>Ya tienes tres colores seguidos. Te falta tu foto del centro para cantar bingo.</p>
 
   <div class="actions">
     <button type="button" class="btn primary" id="armar" disabled>Armar mi collage</button>
@@ -369,11 +369,11 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     return { mode:mode, p:p, key:mode + ":" + p };
   }
   function retoToken(r) { return "reto-" + r.mode + (r.p ? "-" + r.p : ""); }
-  function describeReto(r) { return r.mode === "circulo" ? "Círculo cromático: 12 colores alrededor de tu selfie." : "Degradé " + FAMS[r.p].name.toLowerCase() + ": 6 tonos, del más oscuro al más claro."; }
+  function describeReto(r) { return r.mode === "circulo" ? "Círculo cromático: 12 colores alrededor de tu foto especial." : "Degradé " + FAMS[r.p].name.toLowerCase() + ": 6 tonos, del más oscuro al más claro."; }
 
   /* ---------- cartones ---------- */
   function slotsOf(c) {
-    if (c.mode === "circulo") return WHEEL.map(function (w) { return { name:w[0], hex:w[1], hint:w[2] }; }).concat([{ name:"Tu selfie", center:true }]);
+    if (c.mode === "circulo") return WHEEL.map(function (w) { return { name:w[0], hex:w[1], hint:w[2] }; }).concat([{ name:"Tu foto especial", center:true }]);
     return FAMS[c.fam].tones.map(function (w) { return { name:w[0], hex:w[1], hint:w[2] }; });
   }
   function newCard(mode, fam) {
@@ -472,7 +472,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   function renderDesc() {
     var m = state.mode, d = $("desc");
     d.innerHTML = m === "circulo"
-      ? "<p>Busca los 12 colores del círculo cromático en tu rodaje. Tu selfie va al centro. Tres colores seguidos más tu selfie es bingo; los 13 son el círculo completo.</p>"
+      ? "<p>Busca los 12 colores del círculo cromático en tu rodaje. Al centro va tu foto especial: algo o alguien valioso para ti, tu selfie o tu lugar favorito. Tres colores seguidos más tu foto del centro es bingo; los 13 son el círculo completo.</p>"
       : "<p>Elige un color y busca sus 6 tonos, del más oscuro al más claro: como un árbol verde oscuro, una hoja verde claro y la grama al sol. Con los 6, tu degradé está completo.</p>";
     document.querySelector(".modes").hidden = !!reto;
     $("retobox").hidden = !reto;
@@ -505,7 +505,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
         html += '<span class="cname">' + esc(s.name) + '</span><span class="vh">. Toca para cambiar la foto.</span>';
         if (!url) html += '<span class="loading">Cargando…</span>';
       } else if (s.center) {
-        html += '<span class="cbig">Tú</span><span class="cname">Tu selfie</span><span class="add">foto</span>';
+        html += '<span class="cbig">Tú</span><span class="cname">Tu foto especial</span><span class="add">foto</span>';
       } else {
         html += '<span class="cname">' + esc(s.name) + '</span><span class="chint">' + esc(s.hint) + '</span><span class="add">foto</span>';
       }
@@ -528,7 +528,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     if (st) {
       banner.hidden = false;
       $("bw").textContent = st === "¡BINGO!" ? "¡Bingo!" : st === "CÍRCULO COMPLETO" ? "¡Círculo completo!" : "¡Degradé completo!";
-      $("bs").textContent = st === "¡BINGO!" ? "Tres colores seguidos con tu selfie" : "Toca Compartir mi cartón para subirlo a Instagram o WhatsApp.";
+      $("bs").textContent = st === "¡BINGO!" ? "Tres colores seguidos con tu foto especial" : "Toca Compartir mi cartón para subirlo a Instagram o WhatsApp.";
       if (lastStamp !== null && key2 !== lastStamp) { banner.classList.remove("pop"); void banner.offsetWidth; banner.classList.add("pop"); }
     } else banner.hidden = true;
     lastStamp = st ? key2 : "";
@@ -754,7 +754,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
         if (sim) cover(g, sim, cx - cr, cy - cr, cr * 2, cr * 2); else { g.fillStyle = "#2B3D31"; g.fillRect(cx - cr, cy - cr, cr * 2, cr * 2); }
         g.restore();
         g.save(); g.lineWidth = 5; g.strokeStyle = "rgba(239,230,210,.75)"; circleClip(g, cx, cy, cr - 2.5); g.stroke(); g.restore();
-        if (!sim) { g.save(); g.fillStyle = STAMP; g.textAlign = "center"; g.font = "800 50px " + DISPLAY; g.fillText("TU SELFIE", cx, cy + 17); g.restore(); }
+        if (!sim) { g.save(); g.fillStyle = STAMP; g.textAlign = "center"; g.font = "800 50px " + DISPLAY; g.fillText("TU FOTO", cx, cy - 6); g.fillText("ESPECIAL", cx, cy + 44); g.restore(); }
       } else {
         var G = 12, sw = story ? 168 : 150, bh = (REGH - 5 * G) / 6, bx = 48, px = bx + sw + G, pw = W - 48 - px;
         if (!story) bh = (REG - 50 - 5 * G) / 6;
@@ -807,8 +807,8 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
       return st ? "¡Degradé " + nm + " completo en el Bingo Flow Color de Cumbre Feliz! 6 tonos encontrados en mi rodaje. #CumbreFeliz #BingoFlow"
                 : "Voy " + k + "/6 tonos del degradé " + nm + " en el Bingo Flow Color de Cumbre Feliz. #CumbreFeliz #BingoFlow";
     }
-    if (st === "CÍRCULO COMPLETO") return "¡Círculo cromático completo en el Bingo Flow Color de Cumbre Feliz! 12 colores de mi rodaje y mi selfie. #CumbreFeliz #BingoFlow";
-    if (st) return "¡Bingo! Tres colores seguidos con mi selfie en el Bingo Flow Color de Cumbre Feliz. Llevo " + k + "/13 fotos. #CumbreFeliz #BingoFlow";
+    if (st === "CÍRCULO COMPLETO") return "¡Círculo cromático completo en el Bingo Flow Color de Cumbre Feliz! 12 colores de mi rodaje y mi foto especial. #CumbreFeliz #BingoFlow";
+    if (st) return "¡Bingo! Tres colores seguidos con mi foto especial en el Bingo Flow Color de Cumbre Feliz. Llevo " + k + "/13 fotos. #CumbreFeliz #BingoFlow";
     return "Llevo " + k + "/13 fotos del círculo cromático en el Bingo Flow Color de Cumbre Feliz. #CumbreFeliz #BingoFlow";
   }
   function renderFormats() { Array.prototype.forEach.call(document.querySelectorAll(".fmt"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-fmt") === state.fmt ? "true" : "false"); }); }

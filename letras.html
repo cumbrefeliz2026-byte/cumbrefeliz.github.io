@@ -288,7 +288,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   </div>
 
   <div class="bingo" id="bingo" role="status" hidden><span class="bw" id="bw">¡Bingo!</span><span class="bs" id="bs"></span></div>
-  <p class="falta" id="falta" hidden>Ya tienes línea. Te falta la selfie del centro para cantar bingo.</p>
+  <p class="falta" id="falta" hidden>Ya tienes línea. Te falta la foto del centro para cantar bingo.</p>
 
   <div class="actions">
     <button type="button" class="btn primary" id="armar" disabled>Armar mi collage</button>
@@ -454,7 +454,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   }
   function hintOf(card, i) {
     var s = card.slots[i];
-    if (card.mode === "abc") return s.c ? "Y de Yo: tu selfie" : "Ej.: " + (HINT[s.l] || "");
+    if (card.mode === "abc") return s.c ? "Yo: selfie, algo valioso o tu lugar favorito" : "Ej.: " + (HINT[s.l] || "");
     if (card.mode === "bingo") return s.c ? "N de Nosotros" : "";
     return SHAPE[s.l] ? "Busca " + SHAPE[s.l] : "Búscala en rejas, ramas, sombras o tu cuerpo";
   }
@@ -537,9 +537,9 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
   function renderDesc() {
     var m = state.mode, d = $("desc");
     if (m === "abc") {
-      d.innerHTML = "<p>Cada casilla es una letra: fotografía algo que empiece con ella. El centro es <b>Y de Yo</b>, tu selfie, y canta el bingo junto con cualquier línea de tres.</p>";
+      d.innerHTML = "<p>Cada casilla es una letra: fotografía algo que empiece con ella. El centro es <b>Y de Yo</b>: algo o alguien valioso para ti, tu selfie o tu lugar favorito. Canta el bingo junto con cualquier línea de tres.</p>";
     } else if (m === "bingo") {
-      d.innerHTML = "<p>Cada columna es una letra de BINGO. En cada casilla va algo distinto que empiece con la letra de su columna. El centro es <b>N de Nosotros</b>: selfie o foto de grupo. Una fila o una columna completa es bingo.</p>" +
+      d.innerHTML = "<p>Cada columna es una letra de BINGO. En cada casilla va algo distinto que empiece con la letra de su columna. El centro es <b>N de Nosotros</b>: foto de grupo, alguien valioso para ti, tu selfie o tu lugar favorito. Una fila o una columna completa es bingo.</p>" +
         '<ul class="hints"><li><b>B</b> banco, bici, botella, bandera</li><li><b>I</b> iglesia, insecto, tu inicial en un letrero</li><li><b>N</b> nube, naranja, número, nido</li><li><b>G</b> grafiti, gorra, grama, gato</li><li><b>O</b> orquídea, ojos de un mural, algo redondo</li></ul>';
     } else {
       d.innerHTML = "<p>Elige una palabra de <b>4, 6, 9 o 12 letras</b> y búscala letra por letra en formas de la calle o la naturaleza: una rama en Y, una rueda en O, un poste en I. También vale hacer la letra con tu cuerpo o con el grupo.</p>";
@@ -600,7 +600,7 @@ main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14p
     if (st) {
       banner.hidden = false;
       $("bw").textContent = st === "¡BINGO!" ? "¡Bingo!" : st === "¡META LOGRADA!" ? "¡Meta lograda!" : "¡Palabra completa!";
-      $("bs").textContent = st === "¡BINGO!" ? (c.mode === "abc" ? "Línea con tu selfie" : "Fila o columna completa") : "Toca Compartir mi cartón para subirlo a Instagram o WhatsApp.";
+      $("bs").textContent = st === "¡BINGO!" ? (c.mode === "abc" ? "Línea con tu foto del centro" : "Fila o columna completa") : "Toca Compartir mi cartón para subirlo a Instagram o WhatsApp.";
       if (lastStamp !== null && key2 !== lastStamp) { banner.classList.remove("pop"); void banner.offsetWidth; banner.classList.add("pop"); }
     } else banner.hidden = true;
     lastStamp = st ? key2 : "";
