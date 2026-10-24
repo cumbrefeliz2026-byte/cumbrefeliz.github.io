@@ -1,0 +1,1157 @@
+<!doctype html>
+<!-- Bingo Sendero · Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Prohibida su copia, reproducción o modificación sin autorización. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Alita · Cumbre Feliz">
+<meta name="copyright" content="© 2026 Alita. Todos los derechos reservados.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E2E9DB">
+<meta name="color-scheme" content="only light">
+<meta name="description" content="Un cartón de 24 fotos para tus fondos largos en el Ávila, la calle o los Andes.">
+<meta property="og:title" content="Bingo Sendero · Cumbre Feliz">
+<meta property="og:description" content="Un cartón de 24 fotos para tus fondos largos en el Ávila, la calle o los Andes.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/og-sendero.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/sendero.html">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Bingo Sendero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: columna de teléfono, hermana del Bingo Sendero. Banda con curvas de nivel y el logo de Cumbre Feliz; cartón 5×5 donde cada casilla se llena con una foto; panel de la casilla elegida; álbum de fondos con su mosaico; reglas cortas. Verde del Ávila + rojo, azul y amarillo de guacamaya. */
+:root{
+  color-scheme:only light;
+  --paper:#EEF2EA;
+  --band:#E2E9DB;
+  --panel:#F9FBF6;
+  --ink:#15251B;
+  --muted:#556659;
+  --line:#C4CFBF;
+  --contour:#BCCAB5;
+  --stamp:#F2C230;
+  --stamp-ink:#2A2200;
+  --ver:#2E7A4B;
+  --cuerpo:#2A66A4;
+  --mente:#B23946;
+  --comer:#BF651B;
+  --scrim:rgba(8,14,10,.78);
+  --on-photo:#FFFFFF;
+  --logo:#1E4A3B;
+  --logo-azul:#4A80D9;
+  --logo-linea:#E06E96;
+  --logo-div:.25;
+  --font-display:"Fredoka","Nunito",system-ui,sans-serif;
+  --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+body{ background:var(--paper); color:var(--ink); font:400 15px/1.5 var(--font-body); }
+
+.wrap{
+  position:relative; z-index:1; max-width:560px; margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+
+.band{ position:relative; background:var(--band); border-bottom:1px solid var(--line); overflow:hidden; }
+.band::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0;
+  background:var(--contour);
+  -webkit-mask-image:var(--contours); mask-image:var(--contours);
+  -webkit-mask-size:cover; mask-size:cover;
+  -webkit-mask-position:right center; mask-position:right center;
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+}
+.band.has-contours::before{ opacity:1; }
+.band .wrap{ padding-block:24px 20px; }
+.back{ display:inline-flex; align-items:center; gap:6px; margin:0 0 12px; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-decoration:none; }
+.back:hover{ color:var(--ink); }
+.eyebrow{ margin:0; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.brand{ margin:0 0 14px; }
+.lockup{ display:block; width:min(100%, 430px); height:auto; color:var(--logo); }
+h1{ margin:4px 0 8px; font:600 clamp(30px, 8.6vw, 40px)/1.04 var(--font-display); color:var(--logo); letter-spacing:0; text-wrap:balance; }
+h1 .tag{ display:inline-block; vertical-align:.16em; margin-left:.2em; padding:.2em .55em .14em; font-size:.48em; font-weight:600; letter-spacing:.01em; background:var(--stamp); color:var(--stamp-ink); border-radius:999px; }
+.lede{ margin:0; color:var(--muted); max-width:44ch; }
+
+main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14px; }
+
+.notice{ margin:0; padding:10px 12px; border-radius:8px; border:1.5px solid var(--comer); background:var(--panel); font-size:13.5px; line-height:1.45; }
+.aviso{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; margin:0; padding:10px 12px; border-radius:8px; background:var(--ink); color:var(--paper); font-size:13.5px; line-height:1.4; }
+
+.tabs{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px; }
+.tab{
+  appearance:none; font:inherit; color:var(--ink); background:var(--panel);
+  border:1.5px solid var(--line); border-radius:8px; padding:8px 9px 7px;
+  display:flex; flex-direction:column; gap:2px; text-align:left; cursor:pointer; min-width:0;
+}
+.tab .tname{ font:600 22px/1 var(--font-display); letter-spacing:0; }
+.tab .tplace{ font:500 10.5px/1.25 var(--font-mono); color:var(--muted); overflow-wrap:anywhere; }
+.tab[aria-selected="true"]{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.tab[aria-selected="true"] .tplace{ color:var(--paper); opacity:.78; }
+
+.legend{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12.5px; color:var(--muted); }
+.legend li{ display:flex; align-items:center; gap:6px; }
+.legend b{ color:var(--ink); font-weight:700; }
+
+.mk{ display:inline-block; flex:none; width:8px; height:8px; background:var(--cat, var(--muted)); }
+.mk.ver{ --cat:var(--ver); border-radius:50%; }
+.mk.cuerpo{ --cat:var(--cuerpo); border-radius:1px; }
+.mk.mente{ --cat:var(--mente); width:9px; clip-path:polygon(50% 0, 100% 100%, 0 100%); }
+.mk.comer{ --cat:var(--comer); border-radius:1px; transform:rotate(45deg) scale(.82); }
+
+.card{ background:var(--panel); border:1.5px solid var(--ink); border-radius:10px; padding:10px 8px 9px; }
+.cardmeta{ margin:0 2px 8px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; font:600 11.5px/1.3 var(--font-mono); color:var(--muted); }
+.letters,.grid{ display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:4px; }
+.letters{ margin-bottom:6px; }
+.letters span{ text-align:center; font:600 30px/1 var(--font-display); }
+
+.cell{
+  appearance:none; position:relative; min-width:0; max-width:100%; aspect-ratio:1; min-height:66px;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  padding:16px 3px 5px; border:1.5px solid var(--line); border-radius:6px;
+  background:var(--paper); color:var(--ink); cursor:pointer; overflow:visible;
+  font:600 clamp(10px, 2.6vw, 12.5px)/1.15 var(--font-body);
+  -webkit-hyphens:auto; hyphens:auto; overflow-wrap:break-word;
+}
+.cell.empty{ border-style:dashed; }
+.cell .lbl{ position:relative; z-index:1; text-wrap:balance; }
+.cell .mk{ position:absolute; top:5px; left:5px; z-index:2; }
+.cell img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:5px; z-index:0; }
+.cell.has-photo{ border-style:solid; border-color:transparent; padding:0; }
+.cell.has-photo .lbl{
+  position:absolute; left:0; right:0; bottom:0; padding:12px 3px 3px;
+  background:linear-gradient(to bottom, transparent, var(--scrim));
+  color:var(--on-photo); font-size:clamp(8.5px, 2.15vw, 11px); font-weight:700; border-radius:0 0 5px 5px;
+}
+.cell.has-photo .mk{ top:4px; left:4px; outline:1.5px solid var(--on-photo); }
+.cell.has-photo .mk.mente{ outline:none; }
+.cell.broken img{ visibility:hidden; }
+.cell.broken .lbl{ background:none; color:var(--muted); }
+.cell.uploading img{ opacity:.55; }
+.cell.free .lbl{ display:flex; flex-direction:column; gap:3px; }
+.cell.free .big{ font:700 16px/1 var(--font-display); letter-spacing:.04em; }
+.cell.free .sm{ font-size:.82em; }
+.cell.free.has-photo .lbl{ display:block; }
+.cell.win::after{ content:""; position:absolute; inset:-1.5px; border:3px solid var(--stamp); border-radius:6px; z-index:3; pointer-events:none; }
+.cell.sel{ outline:2.5px solid var(--cuerpo); outline-offset:2px; z-index:4; }
+.badge{ position:absolute; top:4px; right:4px; z-index:4; padding:3px 4px 2px; border-radius:3px; font:600 8.5px/1 var(--font-mono); letter-spacing:.05em; text-transform:uppercase; background:var(--panel); color:var(--ink); }
+.badge.err{ background:var(--mente); color:var(--paper); }
+
+.status{ margin-top:9px; padding:0 2px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; font:600 12.5px/1.3 var(--font-mono); color:var(--muted); font-variant-numeric:tabular-nums; }
+.status b{ color:var(--ink); }
+
+.bingo{ display:flex; align-items:baseline; justify-content:center; flex-wrap:wrap; gap:4px 12px; background:var(--stamp); color:var(--stamp-ink); border-radius:6px; padding:9px 14px 6px; transform:rotate(-1.2deg); }
+.bingo .bw{ font:700 32px/1 var(--font-display); text-transform:uppercase; letter-spacing:.04em; }
+.bingo .bs{ font:700 13.5px/1.2 var(--font-body); }
+.bingo.pop{ animation:pop .45s cubic-bezier(.3,1.6,.5,1); }
+@keyframes pop{ from{ transform:rotate(-6deg) scale(1.25); } to{ transform:rotate(-1.2deg) scale(1); } }
+
+.panel{ display:grid; gap:12px; background:var(--band); border-radius:10px; padding:14px; scroll-margin-top:16px; }
+.panel .pv{ margin:0; }
+.panel .pv img{ display:block; width:100%; max-height:58vh; object-fit:contain; border-radius:6px; background:var(--panel); }
+.dcat{ margin:0 0 3px; display:flex; align-items:center; gap:7px; font:600 11px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.panel h2{ margin:0 0 4px; font:600 26px/1.05 var(--font-display); letter-spacing:0; text-wrap:balance; }
+.dtext{ margin:0; font-size:14.5px; line-height:1.45; max-width:60ch; }
+.pactions,.actions{ display:flex; flex-wrap:wrap; gap:8px; }
+
+.btn{ appearance:none; position:relative; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font:700 14px/1 var(--font-body); padding:12px 16px 10px; border-radius:6px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); }
+.btn.primary{ background:var(--ink); color:var(--paper); }
+.btn.armed{ background:var(--mente); border-color:var(--mente); color:var(--paper); }
+.btn.small{ font-size:12.5px; padding:9px 11px 7px; }
+.btn[disabled]{ opacity:.45; cursor:not-allowed; }
+.vh{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; opacity:0; }
+.filebtn:focus-within{ outline:2px solid var(--cuerpo); outline-offset:2px; }
+:focus-visible{ outline:2px solid var(--cuerpo); outline-offset:2px; }
+.hint{ margin:0; font-size:12.5px; color:var(--muted); }
+
+.result{ display:grid; gap:12px; padding:14px; background:var(--band); border-radius:10px; scroll-margin-top:16px; }
+.result h2{ margin:0; font:600 24px/1.05 var(--font-display); letter-spacing:0; }
+.result img{ display:block; max-width:100%; max-height:70vh; width:auto; height:auto; margin:0 auto; border-radius:6px; background:var(--panel); }
+.section-title{ margin:12px 0 0; font:600 23px/1.1 var(--font-display); letter-spacing:0; }
+.album{ display:grid; gap:10px; }
+.empty-note{ margin:0; padding:14px; border:1.5px dashed var(--line); border-radius:8px; color:var(--muted); font-size:13.5px; }
+.fondo{ display:grid; grid-template-columns:128px minmax(0,1fr); gap:12px; align-items:start; padding:10px; background:var(--panel); border:1px solid var(--line); border-radius:8px; }
+.mosaic{ display:grid; grid-template-columns:repeat(5,1fr); gap:2px; width:128px; }
+.mosaic .m{ position:relative; aspect-ratio:1; border-radius:2px; background:var(--band); overflow:hidden; }
+.mosaic .m img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.mosaic .m.w{ box-shadow:inset 0 0 0 2px var(--stamp); }
+.finfo{ min-width:0; display:flex; flex-direction:column; gap:2px; }
+.fl{ margin:0; font:600 20px/1 var(--font-display); letter-spacing:0; }
+.fd{ margin:0; font-size:13.5px; }
+.fs{ margin:0 0 6px; font:600 12px/1.3 var(--font-mono); color:var(--muted); font-variant-numeric:tabular-nums; }
+.factions{ display:flex; flex-wrap:wrap; gap:6px; }
+
+.notes{ display:grid; gap:22px; margin-top:8px; }
+.notes h2{ margin:0 0 8px; font:600 23px/1.1 var(--font-display); letter-spacing:0; text-wrap:balance; }
+.notes ol,.notes ul{ margin:0; padding-left:20px; display:grid; gap:7px; max-width:62ch; }
+.notes strong{ font-weight:700; }
+.foot{ margin:6px 0 0; padding-top:12px; border-top:1px solid var(--line); font:500 11.5px/1.45 var(--font-mono); color:var(--muted); }
+.autoria{ margin:6px 0 0; font:500 11.5px/1.5 var(--font-mono); color:var(--muted); }
+.autoria strong{ color:var(--ink); font-weight:600; }
+
+@media (prefers-reduced-motion: reduce){ .bingo.pop{ animation:none; } }
+</style>
+</head>
+<body>
+<header class="band" lang="es">
+  <div class="wrap">
+    <a class="back" href="./">← Todos los juegos</a>
+    <div class="brand"><svg class="lockup" viewBox="6 16 498 132" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Cumbre Feliz · Proyecto"><defs><linearGradient id="cfl-g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8325F"/><stop offset="0.45" stop-color="#E06E96"/><stop offset="1" stop-color="#F7B7CB"/></linearGradient><path id="cfl-p" d="M0,-5 C-9,-13 -13,-33 -7,-43 C-3,-48 3,-48 7,-43 C13,-33 9,-13 0,-5 Z" fill="url(#cfl-g)"/></defs><g transform="translate(-0.71,8.65) scale(0.85)"><circle cx="141" cy="35" r="11" fill="#F2B90F"/><path d="M141,19.5 L141,15 M148.75,21.58 L151,17.68 M133.25,21.58 L131,17.68 M154.42,27.25 L158.32,25 M127.58,27.25 L123.68,25" stroke="#F2B90F" stroke-width="3.3"/><path d="M98,80 L106,80 C109,80 111,71 116,67.6 C119,65.4 122.5,64 126,64 C130,64 134,66 136.6,68.4 C138.6,70.3 139.6,72.6 140.6,72.6 C141.8,72.6 142.6,67 145.6,61.6 C149,55.6 154,50 161,50 C168,50 173,54 177,58.6 C181,63.4 185,70 189,78.4" stroke="var(--logo-azul)" stroke-width="3.2"/><path d="M74.8,90.7 A34,34 0 1 0 74.8,141.3 M94,152 L94,90 L108,90 C116,90 120,74 126,74 C132,74 134,84 140,84 C148,84 154,60 162,60 C170,60 176,78 184,90 M94,120 L118,120" stroke="currentColor" stroke-width="11"/><path d="M126,68.5 C126,64.5 125.8,61.2 125.5,58.3" stroke="#5E8E6A" stroke-width="1.3"/><g transform="translate(125.5,52) scale(0.13)"><use href="#cfl-p"/><use href="#cfl-p" transform="rotate(51.43)"/><use href="#cfl-p" transform="rotate(102.86)"/><use href="#cfl-p" transform="rotate(154.29)"/><use href="#cfl-p" transform="rotate(205.71)"/><use href="#cfl-p" transform="rotate(257.14)"/><use href="#cfl-p" transform="rotate(308.57)"/><circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></g></g><path d="M182,44 L182,118" stroke="currentColor" stroke-width="1.2" opacity="var(--logo-div)"/><path d="M202,109.8 L299,109.8 M401,109.8 L497,109.8" stroke="var(--logo-linea)" stroke-width="1.2"/><path d="M310.47 111.19V110.18H312.02Q312.82 110.18 313.21 109.86Q313.61 109.54 313.61 108.81Q313.61 108.16 313.24 107.83Q312.87 107.5 312.1 107.5H310.47V106.5H312.13Q312.77 106.5 313.28 106.65Q313.8 106.8 314.16 107.09Q314.52 107.38 314.7 107.82Q314.89 108.27 314.89 108.85Q314.89 109.61 314.54 110.13Q314.2 110.65 313.52 110.92Q312.85 111.19 311.85 111.19ZM309.63 113.1V106.5H310.9V113.1ZM320.2 113.1V106.5H322.76Q323.28 106.5 323.71 106.58Q324.15 106.67 324.48 106.83Q324.82 106.99 325.05 107.22Q325.28 107.46 325.4 107.76Q325.52 108.07 325.52 108.44Q325.52 108.79 325.41 109.07Q325.3 109.36 325.08 109.57Q324.87 109.78 324.55 109.91Q324.23 110.05 323.8 110.11V110.24Q324.26 110.3 324.55 110.47Q324.84 110.64 325.02 110.94Q325.2 111.24 325.33 111.7L325.74 113.1H324.35L324.03 111.82Q323.94 111.41 323.75 111.17Q323.57 110.94 323.29 110.84Q323.01 110.74 322.61 110.74H321.47V113.1ZM321.47 109.77H322.67Q323.42 109.77 323.81 109.49Q324.21 109.21 324.21 108.63Q324.21 108.05 323.83 107.77Q323.46 107.49 322.69 107.49H321.47ZM333.92 113.23Q333.2 113.23 332.63 113Q332.07 112.77 331.67 112.33Q331.28 111.9 331.07 111.27Q330.87 110.64 330.87 109.83Q330.87 108.66 331.27 107.89Q331.67 107.13 332.37 106.75Q333.07 106.37 333.95 106.37Q334.64 106.37 335.2 106.59Q335.76 106.82 336.16 107.25Q336.56 107.69 336.78 108.33Q337 108.98 337 109.81Q337 110.64 336.78 111.28Q336.57 111.91 336.17 112.34Q335.77 112.78 335.2 113Q334.63 113.23 333.92 113.23ZM333.95 112.21Q334.51 112.21 334.9 111.94Q335.29 111.66 335.5 111.14Q335.7 110.62 335.7 109.87Q335.7 109.1 335.49 108.55Q335.28 108 334.88 107.72Q334.49 107.43 333.92 107.43Q333.37 107.43 332.98 107.7Q332.58 107.98 332.37 108.51Q332.16 109.05 332.16 109.82Q332.16 110.4 332.28 110.84Q332.4 111.29 332.62 111.59Q332.85 111.89 333.18 112.05Q333.52 112.21 333.95 112.21ZM343.89 113.1V111.02L341.5 106.5H343L344.5 109.85H344.56L346.05 106.5H347.55L345.16 111.01V113.1ZM352.61 113.1V106.5H353.88V113.1ZM353.43 113.1V112.06H357.56V113.1ZM353.43 110.23V109.27H357.06V110.23ZM353.43 107.54V106.5H357.54V107.54ZM365.73 113.23Q364.98 113.23 364.39 113.01Q363.8 112.8 363.38 112.38Q362.97 111.95 362.75 111.32Q362.54 110.7 362.54 109.88Q362.54 109.04 362.76 108.39Q362.98 107.74 363.39 107.28Q363.81 106.83 364.38 106.6Q364.95 106.37 365.65 106.37Q366.19 106.37 366.64 106.51Q367.1 106.65 367.44 106.92Q367.78 107.19 367.97 107.58Q368.16 107.97 368.17 108.45L366.99 108.77Q366.99 108.31 366.8 108.01Q366.6 107.72 366.29 107.57Q365.97 107.42 365.61 107.42Q365.29 107.42 364.98 107.55Q364.66 107.68 364.41 107.96Q364.16 108.24 364.01 108.69Q363.86 109.15 363.86 109.81Q363.86 110.65 364.11 111.17Q364.35 111.69 364.79 111.94Q365.22 112.18 365.77 112.18Q366.33 112.18 366.66 111.95Q366.99 111.73 367.14 111.36Q367.29 110.99 367.31 110.55L368.42 110.74Q368.41 111.26 368.26 111.71Q368.11 112.17 367.79 112.51Q367.47 112.85 366.96 113.04Q366.45 113.23 365.73 113.23ZM375.1 113.1V106.5H376.37V113.1ZM373.13 107.57V106.5H378.34V107.57ZM386.13 113.23Q385.41 113.23 384.85 113Q384.28 112.77 383.88 112.33Q383.49 111.9 383.29 111.27Q383.08 110.64 383.08 109.83Q383.08 108.66 383.48 107.89Q383.88 107.13 384.58 106.75Q385.28 106.37 386.16 106.37Q386.85 106.37 387.41 106.59Q387.97 106.82 388.37 107.25Q388.77 107.69 388.99 108.33Q389.21 108.98 389.21 109.81Q389.21 110.64 389 111.28Q388.78 111.91 388.38 112.34Q387.98 112.78 387.41 113Q386.84 113.23 386.13 113.23ZM386.16 112.21Q386.72 112.21 387.11 111.94Q387.5 111.66 387.71 111.14Q387.91 110.62 387.91 109.87Q387.91 109.1 387.7 108.55Q387.49 108 387.1 107.72Q386.7 107.43 386.13 107.43Q385.58 107.43 385.19 107.7Q384.79 107.98 384.58 108.51Q384.37 109.05 384.37 109.82Q384.37 110.4 384.49 110.84Q384.61 111.29 384.84 111.59Q385.06 111.89 385.39 112.05Q385.73 112.21 386.16 112.21Z" fill="currentColor" stroke="none"/><g transform="translate(197,42.1) scale(0.495)"><path d="M59.3,34.32 A28,35.25 0 1 0 59.3,84.18 M75.5,55.5 L75.5,77.5 A17,17 0 0 0 109.5,77.5 M109.5,55.5 L109.5,94.5 M130,94.5 L130,74 C130,66 140,52 143.5,52 C147,52 157,66 157,74 L157,94.5 M157,74 C157,64 171,40 175,40 C179,40 191,62 191,72 L191,94.5 M211.5,22 L211.5,94.5 M271.5,57 L271.5,94.5 M271.5,73 C274,61 284,55 293,56.5 C299,57.5 301,62.5 296.5,64.5 M317.5,75 L356.5,75 A19.5,19.5 0 1 0 350.8,88.8 M405,94.5 L405,24 L433,24 M405,57 L427,57 M448,75 L487,75 A19.5,19.5 0 1 0 481.3,88.8 M510.5,22 L510.5,84 C510.5,92 514.5,95.5 521.5,94.5 C528.5,93.5 534.5,86 538,76 M538,60 L538,94.5 M558.5,55.5 L593.5,55.5 L558.5,94.5 L586.5,94.5 C596.5,94.5 601.5,99 603.5,107" stroke="currentColor" stroke-width="11"/><circle cx="231" cy="75" r="19.5" stroke="currentColor" stroke-width="11"/><g transform="translate(538,40) scale(0.22)"><use href="#cfl-p"/><use href="#cfl-p" transform="rotate(51.43)"/><use href="#cfl-p" transform="rotate(102.86)"/><use href="#cfl-p" transform="rotate(154.29)"/><use href="#cfl-p" transform="rotate(205.71)"/><use href="#cfl-p" transform="rotate(257.14)"/><use href="#cfl-p" transform="rotate(308.57)"/><circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></g></g></svg></div>
+    <p class="eyebrow">Fondos largos · Maratón CAF 2027</p>
+    <h1>Bingo Sendero <span class="tag">Fotos</span></h1>
+    <p class="lede">Cada casilla se llena con una foto. Cuando terminas, el fondo queda en tu álbum y sale un collage para compartir.</p>
+  </div>
+</header>
+
+<main class="wrap" lang="es">
+  <p class="aviso" id="aviso" role="status" hidden></p>
+  <p class="notice" id="modo" hidden></p>
+
+  <div class="tabs" role="tablist" aria-label="Cartones por lugar">
+    <button type="button" class="tab" role="tab" id="tab-avila" data-key="avila" aria-controls="carton" aria-selected="true"><span class="tname">Ávila</span><span class="tplace">Sabas Nieves · Cortafuegos</span></button>
+    <button type="button" class="tab" role="tab" id="tab-calle" data-key="calle" aria-controls="carton" aria-selected="false" tabindex="-1"><span class="tname">Calle</span><span class="tplace">Parque del Este · asfalto</span></button>
+    <button type="button" class="tab" role="tab" id="tab-andes" data-key="andes" aria-controls="carton" aria-selected="false" tabindex="-1"><span class="tname">Andes</span><span class="tplace">La Azulita · pista y carretera</span></button>
+  </div>
+
+  <ul class="legend" aria-label="Tipos de casilla">
+    <li><i class="mk ver" aria-hidden="true"></i><span><b>Mira</b> lo de afuera</span></li>
+    <li><i class="mk cuerpo" aria-hidden="true"></i><span><b>Siente</b> tu cuerpo</span></li>
+    <li><i class="mk mente" aria-hidden="true"></i><span><b>Piensa</b> cabeza y ánimo</span></li>
+    <li><i class="mk comer" aria-hidden="true"></i><span><b>Come</b> combustible</span></li>
+  </ul>
+
+  <section class="card" id="carton" role="tabpanel" aria-label="Cartón de fotos">
+    <p class="cardmeta"><span id="place">Sabas Nieves · Cortafuegos</span><span id="started"></span></p>
+    <div class="letters" id="letters" aria-hidden="true"></div>
+    <div class="grid" id="grid"></div>
+    <div class="status" id="stat"></div>
+  </section>
+
+  <div class="bingo" id="bingo" role="status" hidden><span class="bw" id="bw">¡Bingo!</span><span class="bs" id="bs"></span></div>
+
+  <section class="panel" id="panel" aria-live="polite">
+    <figure class="pv" id="pv" hidden><img id="pvimg" alt=""></figure>
+    <div>
+      <p class="dcat" id="dcat"><span id="dcatt">Cómo llenar</span></p>
+      <h2 id="ptitle">Toca una casilla</h2>
+      <p class="dtext" id="dtext">Ahí ves qué foto pide. Puedes tomarla en el momento o elegirla de la galería al terminar el fondo.</p>
+    </div>
+    <div class="pactions" id="pactions" hidden>
+      <label class="btn primary filebtn"><input type="file" id="foto-camara" class="vh" accept="image/*" capture="environment"><span id="lbl-camara">Tomar foto</span></label>
+      <label class="btn filebtn"><input type="file" id="foto-galeria" class="vh" accept="image/*"><span>De la galería</span></label>
+      <button type="button" class="btn" id="reintentar" hidden>Reintentar</button>
+      <button type="button" class="btn" id="quitar" hidden>Quitar foto</button>
+    </div>
+  </section>
+
+  <div class="actions">
+    <button type="button" class="btn primary" id="collage" hidden>Armar collage</button>
+    <button type="button" class="btn" id="terminar">Cambiar casillas</button>
+  </div>
+  <p class="hint" id="thint" hidden></p>
+
+  <section class="result" id="result" hidden>
+    <h2>Tu collage</h2>
+    <img id="collage-img" alt="Tu collage del Bingo Sendero">
+    <div class="actions">
+      <button type="button" class="btn primary" id="compartir" hidden>Compartir imagen</button>
+      <button type="button" class="btn" id="guardar">Guardar imagen</button>
+      <button type="button" class="btn" id="cerrar">Cerrar</button>
+    </div>
+    <p class="hint">Si no puedes guardarla con el botón, mantén presionada la imagen y elige guardar.</p>
+  </section>
+
+  <h2 class="section-title">Álbum de fondos</h2>
+  <div class="album" id="album"><p class="empty-note">Cargando tu álbum…</p></div>
+
+  <div class="notes">
+    <section>
+      <h2>Cómo jugar</h2>
+      <ol>
+        <li>Antes de salir, mira el cartón y elige una fila como misión del fondo.</li>
+        <li>Detente para cada foto. Nunca en bajadas técnicas ni cruzando la calle.</li>
+        <li>Si prefieres no sacar el teléfono a cada rato, toma las fotos con tu cámara y llena el cartón al terminar con <strong>De la galería</strong>.</li>
+        <li>Al final, toca <strong>Armar collage</strong> para guardarlo o compartirlo, y luego <strong>Guardar en el álbum y empezar otro</strong>. El cartón siguiente sale con otras casillas.</li>
+      </ol>
+    </section>
+    <section>
+      <h2>Reglas del sendero</h2>
+      <ul>
+        <li>Gente en la foto solo con su permiso. Las huellas, los objetos y los paisajes valen igual.</li>
+        <li>Las casillas de Siente y Come son tu chequeo de Z2 y de combustible. No te las saltes por buscar la guacamaya.</li>
+        <li>En series, tempos y bloques a ritmo maratón, el teléfono se queda guardado.</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="foot">No necesitas cuenta ni descargar nada. Tu cartón, tus fotos y tu álbum se quedan en tu teléfono, en este navegador: no se suben a internet hasta que tú compartes tu collage. Si borras los datos del navegador, se borran también.</p>
+  <p class="autoria">Bingo Sendero es un juego creado por <strong>Alita</strong> para Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Prohibida su copia, reproducción o modificación sin autorización.</p>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var LS = "cf-sendero-v1", LS_ALBUM = "cf-sendero-album-v1";
+  var CATS = {
+    ver:   { name:"Mira",   hint:"lo de afuera" },
+    cuerpo:{ name:"Siente", hint:"chequeo del cuerpo" },
+    mente: { name:"Piensa", hint:"cabeza y ánimo" },
+    comer: { name:"Come",   hint:"combustible" }
+  };
+  var PICK = { ver:12, cuerpo:5, mente:4, comer:3 };
+
+  var S = {
+    guacamaya:["ver","Guacamaya","Una guacamaya en vuelo o en un árbol. Vale aunque salga lejos."],
+    cristofue:["ver","Cristofué","Un cristofué, el pájaro de pecho amarillo y antifaz negro. Si no se deja, el árbol donde cantó."],
+    colibri:  ["ver","Colibrí o su flor","Un colibrí, o la flor donde lo viste comer."],
+    zapatos:  ["cuerpo","Zapatos con tierra","Tus zapatos llenos de tierra o barro a mitad del camino."],
+    relojz2:  ["cuerpo","Reloj en Z2","El reloj en la subida más larga, con la FC por debajo de tu techo de Z2."],
+    cadencia: ["cuerpo","Cadencia en el reloj","La cadencia del reloj en un tramo plano. Busca 170 a 180 pasos por minuto."],
+    estira:   ["cuerpo","Estiramiento final","Tu estiramiento de gemelo y planta del pie al terminar. La fascia lo agradece."],
+    cuesta:   ["cuerpo","La cuesta más dura","La subida más empinada del día, vista desde arriba después de subirla en Z2."],
+    sombra:   ["cuerpo","Tu sombra","Tu sombra en movimiento con el sol de la mañana."],
+    selfie:   ["mente","Selfie sonriendo","Selfie sonriendo en una subida. Sonreír baja el esfuerzo percibido."],
+    gracias:  ["mente","Algo que agradeces","Algo del camino por lo que hoy te sientes agradecida."],
+    frase:    ["mente","Tu frase escrita","Escribe tu frase de autodiálogo en la tierra, en una hoja o en tu mano, y fotografíala."],
+    km35:     ["mente","Lugar del km 35","Un lugar que vas a imaginar cuando llegues al km 35 del CAF."],
+    dedica:   ["mente","Dedicatoria","Algo que te recuerde a quien te enseñó a correr."],
+    pintar:   ["mente","Paisaje para pintar","Una vista que te gustaría pintar después."],
+    cambur:   ["comer","Cambur del min 45","Tu cambur o gel justo antes de comerlo, entre el minuto 45 y el 60."],
+    botella:  ["comer","Tu botella","Tu botella con electrolitos a mitad del fondo."],
+    toma2:    ["comer","Segunda toma","La segunda toma de carbohidrato, 40 a 45 minutos después de la primera."],
+    plato:    ["comer","Plato de recuperación","Tu comida de recuperación en los 30 minutos después de terminar."]
+  };
+
+  var CARDS = {
+    avila: {
+      name:"Ávila", place:"Sabas Nieves · Cortafuegos", letters:"ÁVILA",
+      items:[
+        S.guacamaya, S.cristofue, S.colibri,
+        ["ver","Bachacos en fila","Una fila de bachacos cargando hojas. Pásalos sin pisarlos."],
+        ["ver","Mariposa","Una mariposa posada. Las azules casi nunca se quedan quietas, así que vale cualquiera."],
+        ["ver","Caracas desde arriba","La ciudad completa desde un claro del camino."],
+        ["ver","Nube en el cerro","La neblina bajando o una nube tocando la montaña."],
+        ["ver","Flor roja","Una flor roja a la orilla del sendero."],
+        ["ver","Hoja gigante","Una hoja más grande que tu mano. Pon la mano al lado para la escala."],
+        ["ver","Musgo en piedra","Musgo en una piedra o en un tronco."],
+        ["ver","Sol entre hojas","Un rayo de sol atravesando las hojas."],
+        ["ver","Huellas de perro","Huellas de perro en la tierra del sendero."],
+        ["ver","Puesto Sabas Nieves","El puesto de guardaparques de Sabas Nieves."],
+        ["ver","Letrero del camino","Un letrero de Inparques o una señal del sendero."],
+        ["ver","Tres verdes","Un mismo encuadre con tres tonos de verde distintos."],
+        ["ver","Raíces escalón","Raíces que cruzan el sendero como escalones."],
+        ["ver","Agua corriendo","Una quebrada o un hilo de agua."],
+        ["ver","Piedra con forma","Una piedra que parezca otra cosa."],
+        S.zapatos, S.relojz2, S.cadencia, S.estira, S.cuesta, S.sombra,
+        S.selfie, S.gracias, S.frase, S.km35, S.dedica, S.pintar,
+        S.cambur, S.botella, S.toma2, S.plato
+      ]
+    },
+    calle: {
+      name:"Calle", place:"Parque del Este · asfalto", letters:"CALLE",
+      items:[
+        ["ver","El Ávila de fondo","El Ávila visto desde abajo, detrás de la calle."],
+        S.guacamaya,
+        ["ver","Agua de coco","El carrito de agua de coco."],
+        ["ver","Bici de ruta","Una bici de ruta, pasando o estacionada."],
+        ["ver","Mural","Un mural o un grafiti que no habías visto."],
+        ["ver","Carro rojo","Un carro rojo."],
+        ["ver","Árbol en flor","Un bucare, un araguaney o un apamate en flor."],
+        ["ver","Flores caídas","Una alfombra de flores caídas en la acera."],
+        ["ver","Amanecer","El cielo cambiando de color al amanecer."],
+        ["ver","Número de tu km","Un número en la calle que coincida con el kilómetro que vas corriendo."],
+        ["ver","Semáforo en verde","Un semáforo en verde justo cuando llegas."],
+        ["ver","Un perro","Un perro paseando. Si sale el dueño, pide permiso."],
+        ["ver","Cielo en un charco","El cielo reflejado en un charco."],
+        ["ver","Banco para estirar","El banco o la baranda donde estiras al final."],
+        ["ver","Pájaros en el cable","Pájaros parados en un cable."],
+        S.cristofue,
+        ["cuerpo","Reloj a RM","El reloj en un kilómetro a ritmo maratón. Solo en fondos con bloques a RM."],
+        ["cuerpo","Adivina el ritmo","Di tu ritmo en voz alta antes de mirar el reloj y luego fotografíalo. Vale si fallaste por menos de 10 s/km."],
+        S.sombra,
+        ["cuerpo","Zapatos y asfalto","Tus zapatos sobre el asfalto a mitad del fondo."],
+        S.cadencia, S.estira,
+        ["mente","Selfie en el km duro","Selfie sonriendo en el kilómetro que más te cueste. Sonreír baja el esfuerzo percibido."],
+        S.gracias, S.frase, S.km35, S.dedica, S.pintar,
+        S.cambur, S.botella,
+        ["comer","Gel en carrera","Tu gel o cambur, tomado sin parar ni bajar el ritmo. La foto va después."],
+        S.plato
+      ]
+    },
+    andes: {
+      name:"Andes", place:"La Azulita · pista y carretera", letters:"ANDES",
+      items:[
+        S.colibri,
+        ["ver","Neblina en el valle","La neblina subiendo o bajando por la montaña."],
+        ["ver","Café","Matas de café, granos secándose o una taza recién colada."],
+        ["ver","Plaza Bolívar","La Plaza Bolívar del pueblo."],
+        ["ver","Vacas o caballos","Vacas o caballos en un potrero."],
+        ["ver","Una quebrada","Una quebrada que cruzas o que escuchas cerca."],
+        ["ver","Ave de colores","Un ave de colores. Pregunta su nombre en el pueblo."],
+        ["ver","Orquídea","Una orquídea en un árbol o en un jardín."],
+        ["ver","Arcoíris","Un arcoíris sobre el valle."],
+        ["ver","Pan del pueblo","Pan recién salido del horno en la panadería."],
+        ["ver","Camión de cosecha","Un camión cargado de verduras o de cambures."],
+        ["ver","La iglesia","La iglesia del pueblo."],
+        ["ver","Perro escolta","Un perro que te acompaña un tramo."],
+        ["ver","Montañas en capas","Las capas de montaña que se ven en el horizonte."],
+        ["ver","Matas con flores","Un corredor o una ventana llena de matas con flores."],
+        ["ver","La pista","La pista donde haces las series."],
+        ["ver","Letrero del pueblo","La entrada o un letrero con el nombre de La Azulita."],
+        ["cuerpo","Vuelta a ciegas","Corre una vuelta de pista sin mirar el reloj, adivina el tiempo y fotografía el reloj."],
+        ["cuerpo","Bici en la cima","Tu bici en lo más alto de la ruta del día."],
+        ["cuerpo","Zapatos con barro","Tus zapatos con barro de la carretera o del camino."],
+        S.relojz2, S.estira, S.cuesta,
+        S.selfie,
+        ["mente","Cuenta tu meta","Una foto con alguien de tu familia después de contarle tu meta del CAF."],
+        S.gracias, S.pintar, S.dedica, S.frase,
+        S.cambur, S.botella, S.toma2,
+        ["comer","Desayuno de vuelta","Tu comida de recuperación en casa: arepa, huevos o lo que haya en la mesa."]
+      ]
+    }
+  };
+
+  var LINES = [];
+  for (var r = 0; r < 5; r++) {
+    var row = [], col = [];
+    for (var c = 0; c < 5; c++) { row.push(r * 5 + c); col.push(c * 5 + r); }
+    LINES.push(row, col);
+  }
+  LINES.push([0, 6, 12, 18, 24], [4, 8, 12, 16, 20]);
+
+  var ID_RE = /^[A-Za-z0-9_-]{6,80}$/;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function newCard(key) {
+    var by = { ver:[], cuerpo:[], mente:[], comer:[] };
+    CARDS[key].items.forEach(function (x, i) { by[x[0]].push(i); });
+    var picked = [];
+    Object.keys(PICK).forEach(function (k) { picked = picked.concat(shuffle(by[k].slice()).slice(0, PICK[k])); });
+    shuffle(picked);
+    return { order:picked.slice(0, 12).concat(["F"], picked.slice(12)), cells:{}, started:new Date().toISOString() };
+  }
+  function cleanCard(key, c) {
+    if (!CARDS[key] || !c || !Array.isArray(c.order) || c.order.length !== 25) return null;
+    var n = CARDS[key].items.length, seen = {};
+    for (var i = 0; i < 25; i++) {
+      var v = c.order[i];
+      if (i === 12) { if (v !== "F") return null; continue; }
+      if (typeof v !== "number" || v < 0 || v >= n || v % 1 !== 0 || seen[v]) return null;
+      seen[v] = 1;
+    }
+    var cells = {};
+    if (c.cells && typeof c.cells === "object") {
+      Object.keys(c.cells).forEach(function (k) {
+        var j = Number(k), x = c.cells[k];
+        if (j >= 0 && j < 25 && j % 1 === 0 && x && typeof x.a === "string" && ID_RE.test(x.a)) cells[j] = { a:x.a };
+      });
+    }
+    var started = typeof c.started === "string" && !isNaN(Date.parse(c.started)) ? c.started : new Date().toISOString();
+    return { order:c.order.slice(), cells:cells, started:started };
+  }
+  var photoUrl = {};   // id de la foto -> enlace local a la foto guardada en el teléfono
+  function blobSrc(id) { return photoUrl[id] || null; }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (ch) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[ch]; });
+  }
+  function fmtShort(iso) {
+    try { return new Date(iso).toLocaleDateString("es", { weekday:"short", day:"numeric", month:"short" }); } catch (e) { return ""; }
+  }
+  function fmtLong(iso) {
+    try { return new Date(iso).toLocaleDateString("es", { day:"numeric", month:"long", year:"numeric" }); } catch (e) { return ""; }
+  }
+  function ymd(iso) {
+    var d = new Date(iso); if (isNaN(d)) d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  /* ---------- estado ---------- */
+  var state = { tab:"avila", cards:{}, sel:null };
+  var pending = {};          // "lugar:i" -> { url, status:"up"|"err"|"local", blob }
+  var caps = { db:null, assets:null, downloads:null }, uid = null, bingoRef = null, albumCol = null;
+  var capsReady = false, album = [], albumShown = 8, writeChain = Promise.resolve(), inflight = 0;
+
+  function loadLocal() {
+    var s = null;
+    try { var raw = localStorage.getItem(LS); if (raw) s = JSON.parse(raw); } catch (e) { s = null; }
+    Object.keys(CARDS).forEach(function (k) { state.cards[k] = (s && s.cards && cleanCard(k, s.cards[k])) || newCard(k); });
+    if (s && CARDS[s.tab]) state.tab = s.tab;
+    var h = (location.hash || "").replace("#", "");
+    if (CARDS[h]) state.tab = h;
+  }
+  function saveLocal() {
+    try { localStorage.setItem(LS, JSON.stringify({ tab:state.tab, cards:state.cards })); } catch (e) {}
+  }
+  function canSave() { return !!caps.assets; }
+  function persist() {
+    saveLocal();
+    if (!bingoRef) return;
+    var body = { v:1, cards:JSON.parse(JSON.stringify(state.cards)) };
+    inflight++;
+    writeChain = writeChain.then(function () { return bingoRef.set(body); })
+      .catch(function (e) { aviso(dbMsg(e)); })
+      .then(function () { inflight--; });
+  }
+  function dbMsg(e) {
+    if (e && e.code === "quota_exceeded") return "Se llenó el espacio de guardado del teléfono. Borra fondos viejos del álbum para seguir.";
+    return "No se pudo guardar en el teléfono. Revisa que tengas espacio libre y vuelve a intentar.";
+  }
+
+  /* ---------- utilidades del cartón ---------- */
+  function hasPhoto(key, i) { return !!(state.cards[key].cells[i] || pending[key + ":" + i]); }
+  function linesOf(isMarked) { return LINES.filter(function (L) { return L.every(isMarked); }); }
+  function currentLines(key) { return linesOf(function (i) { return i === 12 || hasPhoto(key, i); }); }
+  function photoCount(key) { var n = 0; for (var i = 0; i < 25; i++) if (i !== 12 && hasPhoto(key, i)) n++; return n; }
+  function itemOf(key, card, i) { return i === 12 ? null : CARDS[key].items[card.order[i]]; }
+  function srcOf(key, i) {
+    var p = pending[key + ":" + i]; if (p) return p.url;
+    var c = state.cards[key].cells[i]; return c ? blobSrc(c.a) : null;
+  }
+  function pendingFor(key, statusList) {
+    return Object.keys(pending).some(function (k) { return k.indexOf(key + ":") === 0 && (!statusList || statusList.indexOf(pending[k].status) >= 0); });
+  }
+  function clearPending(key) {
+    Object.keys(pending).forEach(function (k) { if (k.indexOf(key + ":") === 0) { try { URL.revokeObjectURL(pending[k].url); } catch (e) {} delete pending[k]; } });
+  }
+
+  /* ---------- DOM ---------- */
+  function $(id) { return document.getElementById(id); }
+  var grid = $("grid"), letters = $("letters"), stat = $("stat"), banner = $("bingo"), bw = $("bw"), bs = $("bs");
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  var avisoEl = $("aviso"), avisoTimer = null;
+
+  function aviso(msg) {
+    avisoEl.textContent = msg; avisoEl.hidden = false;
+    clearTimeout(avisoTimer); avisoTimer = setTimeout(function () { avisoEl.hidden = true; }, 6500);
+  }
+
+  var lastLines = -1;
+  function render() {
+    var key = state.tab, def = CARDS[key], card = state.cards[key];
+    tabs.forEach(function (t) {
+      var on = t.getAttribute("data-key") === key;
+      t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1;
+    });
+    $("place").textContent = def.place;
+    $("started").textContent = "Empezado " + fmtShort(card.started);
+    letters.innerHTML = def.letters.split("").map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("");
+
+    var lines = currentLines(key), win = {};
+    lines.forEach(function (L) { L.forEach(function (i) { win[i] = 1; }); });
+
+    var html = "";
+    for (var i = 0; i < 25; i++) {
+      var it = itemOf(key, card, i), src = srcOf(key, i), p = pending[key + ":" + i];
+      var cls = "cell" + (src ? " has-photo" : " empty") + (i === 12 ? " free" : "") + (win[i] ? " win" : "") +
+                (state.sel === i ? " sel" : "") + (p && p.status === "up" ? " uploading" : "");
+      var aria = i === 12 ? "Casilla libre, selfie de salida" + (src ? ", con foto" : "") :
+                 CATS[it[0]].name + ": " + it[1] + (src ? ", con foto" : ", sin foto");
+      html += '<button type="button" class="' + cls + '" data-i="' + i + '" aria-pressed="' + (state.sel === i ? "true" : "false") + '" aria-label="' + esc(aria) + '">';
+      if (src) html += '<img src="' + esc(src) + '" alt="" decoding="async">';
+      if (it) html += '<i class="mk ' + it[0] + '" aria-hidden="true"></i>';
+      if (i === 12 && !src) html += '<span class="lbl"><span class="big">LIBRE</span><span class="sm">Selfie de salida</span></span>';
+      else html += '<span class="lbl">' + esc(i === 12 ? "Salida" : it[1]) + "</span>";
+      if (p && p.status === "up") html += '<span class="badge">Guardando</span>';
+      if (p && p.status === "err") html += '<span class="badge err">Sin guardar</span>';
+      if (p && p.status === "local") html += '<span class="badge">Solo aquí</span>';
+      html += "</button>";
+    }
+    grid.innerHTML = html;
+
+    var n = photoCount(key), food = 0, foodTotal = 0;
+    for (var j = 0; j < 25; j++) {
+      var y = itemOf(key, card, j);
+      if (y && y[0] === "comer") { foodTotal++; if (hasPhoto(key, j)) food++; }
+    }
+    stat.innerHTML = "<span>Fotos <b>" + n + "/24</b></span><span>Líneas <b>" + lines.length + "</b></span><span>Come <b>" + food + "/" + foodTotal + "</b></span>";
+
+    if (lines.length) {
+      banner.hidden = false;
+      if (n === 24) { bw.textContent = "¡Cartón lleno!"; bs.textContent = "Fondo de leyenda."; }
+      else { bw.textContent = "¡Bingo!"; bs.textContent = lines.length === 1 ? "1 línea" : lines.length + " líneas"; }
+      if (lastLines >= 0 && lines.length > lastLines) { banner.classList.remove("pop"); void banner.offsetWidth; banner.classList.add("pop"); }
+    } else banner.hidden = true;
+    lastLines = lines.length;
+
+    renderPanel(); renderActions();
+  }
+
+  function renderPanel() {
+    var key = state.tab, card = state.cards[key], i = state.sel;
+    var pv = $("pv"), pvimg = $("pvimg"), acts = $("pactions"), dcat = $("dcat");
+    var old = dcat.querySelector(".mk"); if (old) old.remove();
+    if (i === null) {
+      pv.hidden = true; acts.hidden = true;
+      $("dcatt").textContent = "Cómo llenar";
+      $("ptitle").textContent = "Toca una casilla";
+      $("dtext").textContent = "Ahí ves qué foto pide. Puedes tomarla en el momento o elegirla de la galería al terminar el fondo.";
+      return;
+    }
+    var it = itemOf(key, card, i), src = srcOf(key, i), p = pending[key + ":" + i];
+    if (it) {
+      var mk = document.createElement("i"); mk.className = "mk " + it[0]; mk.setAttribute("aria-hidden", "true");
+      dcat.insertBefore(mk, dcat.firstChild);
+      $("dcatt").textContent = CATS[it[0]].name + " · " + CATS[it[0]].hint;
+      $("ptitle").textContent = it[1];
+      $("dtext").textContent = it[2];
+    } else {
+      $("dcatt").textContent = "Casilla libre";
+      $("ptitle").textContent = "Selfie de salida";
+      $("dtext").textContent = "Ya saliste a entrenar y eso cuenta. Si quieres, ponle tu selfie al empezar.";
+    }
+    if (src) { pv.hidden = false; if (pvimg.getAttribute("src") !== src) pvimg.src = src; pvimg.alt = it ? it[1] : "Selfie de salida"; }
+    else { pv.hidden = true; pvimg.removeAttribute("src"); }
+    acts.hidden = false;
+    $("lbl-camara").textContent = src ? "Tomar otra" : "Tomar foto";
+    $("reintentar").hidden = !(p && p.status === "err");
+    $("quitar").hidden = !src;
+    var uploading = !!(p && p.status === "up");
+    $("foto-camara").disabled = uploading; $("foto-galeria").disabled = uploading;
+  }
+
+  function renderActions() {
+    var key = state.tab, n = photoCount(key);
+    var col = $("collage"), ter = $("terminar"), hint = $("thint");
+    col.hidden = !(caps.downloads && n > 0);
+    if (ter !== armedBtn) {
+      ter.textContent = n === 0 ? "Cambiar casillas" : (canSave() ? "Guardar en el álbum y empezar otro" : "Empezar otro cartón");
+    }
+    var blocked = n > 0 && canSave() && pendingFor(key, ["up", "err"]);
+    ter.disabled = blocked;
+    hint.hidden = !blocked;
+    hint.textContent = blocked ? "Espera a que terminen de guardarse las fotos, o reintenta las que dicen Sin guardar." : "";
+  }
+
+  function renderAlbum() {
+    var box = $("album");
+    if (!capsReady) { box.innerHTML = '<p class="empty-note">Cargando tu álbum…</p>'; return; }
+    if (!albumCol) { box.innerHTML = '<p class="empty-note">Este navegador no deja guardar el álbum. Abre el enlace en Safari o Chrome, fuera del modo incógnito.</p>'; return; }
+    if (!album.length) { box.innerHTML = '<p class="empty-note">Aquí aparece cada fondo que guardes, con su mosaico de fotos y su collage.</p>'; return; }
+    var html = album.slice(0, albumShown).map(function (f) {
+      var isM = function (i) { return i === 12 || !!f.cells[i]; };
+      var win = {}; linesOf(isM).forEach(function (L) { L.forEach(function (i) { win[i] = 1; }); });
+      var m = "";
+      for (var i = 0; i < 25; i++) {
+        var c = f.cells[i];
+        m += '<span class="m' + (win[i] ? " w" : "") + '">' + (c && blobSrc(c.a) ? '<img src="' + esc(blobSrc(c.a)) + '" alt="" loading="lazy" decoding="async">' : "") + "</span>";
+      }
+      var nf = 0; for (var k = 0; k < 25; k++) if (k !== 12 && f.cells[k]) nf++;
+      var nl = linesOf(isM).length;
+      return '<article class="fondo" data-id="' + esc(f.id) + '">' +
+        '<div class="mosaic" aria-hidden="true">' + m + "</div>" +
+        '<div class="finfo"><p class="fl">' + esc(CARDS[f.lugar].name) + '</p><p class="fd">' + esc(fmtLong(f.cerrado)) + "</p>" +
+        '<p class="fs">' + nf + " fotos · " + nl + (nl === 1 ? " línea" : " líneas") + "</p>" +
+        '<div class="factions">' + (caps.downloads ? '<button type="button" class="btn small" data-act="collage">Ver collage</button>' : "") +
+        '<button type="button" class="btn small" data-act="borrar">Borrar</button></div></div></article>';
+    }).join("");
+    if (album.length > albumShown) html += '<button type="button" class="btn" id="mas">Ver más fondos</button>';
+    box.innerHTML = html;
+  }
+
+  /* ---------- fotos ---------- */
+  function loadImg(src) {
+    return new Promise(function (res) {
+      var im = new Image();
+      im.onload = function () { res(im); };
+      im.onerror = function () { res(null); };
+      im.src = src;
+    });
+  }
+  function shrink(file) {
+    var u = URL.createObjectURL(file);
+    return loadImg(u).then(function (im) {
+      URL.revokeObjectURL(u);
+      if (!im || !im.naturalWidth) throw new Error("decode");
+      var max = 1280, w = im.naturalWidth, h = im.naturalHeight, s = Math.min(1, max / Math.max(w, h));
+      var cw = Math.round(w * s), ch = Math.round(h * s), cv = document.createElement("canvas");
+      cv.width = cw; cv.height = ch;
+      cv.getContext("2d").drawImage(im, 0, 0, cw, ch);
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("encode")); }, "image/jpeg", 0.82); });
+    });
+  }
+  function upMsg(e) {
+    if (e && e.code === "quota_or_state") return "No se pudo guardar la foto: se llenó el espacio del teléfono. Borra fondos viejos del álbum y toca Reintentar.";
+    return "No se pudo guardar la foto en el teléfono. Toca Reintentar.";
+  }
+  function uploadOnce(blob) {
+    return caps.assets.upload(blob, { type:"image/jpeg" }).catch(function (e) {
+      if (e && e.code === "store_unavailable") {
+        return new Promise(function (r) { setTimeout(r, 900 + Math.random() * 600); }).then(function () { return caps.assets.upload(blob, { type:"image/jpeg" }); });
+      }
+      throw e;
+    });
+  }
+  function startUpload(key, i) {
+    var pk = key + ":" + i, p = pending[pk];
+    if (!p) return;
+    if (!canSave()) { p.status = "local"; render(); return; }
+    p.status = "up"; render();
+    var startedAt = state.cards[key].started;
+    uploadOnce(p.blob).then(function (r) {
+      var card = state.cards[key];
+      if (card.started !== startedAt || pending[pk] !== p) {
+        caps.assets.delete(r.id).catch(function () {});
+        return;
+      }
+      var prev = card.cells[i] ? card.cells[i].a : null;
+      card.cells[i] = { a:r.id };
+      delete pending[pk];
+      persist();
+      if (prev && prev !== r.id) writeChain.then(function () { return caps.assets.delete(prev); }).catch(function () {});
+      loadImg(r.url).then(function () { try { URL.revokeObjectURL(p.url); } catch (e) {} });
+      render();
+    }).catch(function (e) {
+      if (pending[pk] === p) { p.status = "err"; render(); }
+      aviso(upMsg(e));
+    });
+  }
+  function handleFile(input) {
+    var file = input.files && input.files[0];
+    input.value = "";
+    var key = state.tab, i = state.sel;
+    if (!file || i === null) return;
+    shrink(file).then(function (blob) {
+      var pk = key + ":" + i;
+      if (pending[pk]) { try { URL.revokeObjectURL(pending[pk].url); } catch (e) {} }
+      pending[pk] = { url:URL.createObjectURL(blob), status:"up", blob:blob };
+      startUpload(key, i);
+    }).catch(function () {
+      aviso("No pude leer esa foto. Prueba con otra o con una captura de pantalla.");
+    });
+  }
+  $("foto-camara").addEventListener("change", function () { handleFile(this); });
+  $("foto-galeria").addEventListener("change", function () { handleFile(this); });
+  $("reintentar").addEventListener("click", function () { if (state.sel !== null) startUpload(state.tab, state.sel); });
+
+  /* ---------- confirmación en dos toques ---------- */
+  var armedBtn = null, armTimer = null, armedLabel = "";
+  function disarm() {
+    if (armedBtn) { armedBtn.classList.remove("armed"); armedBtn.textContent = armedLabel; armedBtn = null; }
+    clearTimeout(armTimer);
+  }
+  function confirmTap(btn, needed) {
+    if (!needed) { disarm(); return true; }
+    if (armedBtn === btn) { disarm(); return true; }
+    disarm(); armedBtn = btn; armedLabel = btn.textContent;
+    btn.classList.add("armed"); btn.textContent = "Toca otra vez para confirmar";
+    armTimer = setTimeout(disarm, 3500);
+    return false;
+  }
+
+  $("quitar").addEventListener("click", function () {
+    var key = state.tab, i = state.sel; if (i === null) return;
+    if (!confirmTap(this, true)) return;
+    var pk = key + ":" + i;
+    if (pending[pk]) { try { URL.revokeObjectURL(pending[pk].url); } catch (e) {} delete pending[pk]; }
+    var c = state.cards[key].cells[i];
+    if (c) {
+      delete state.cards[key].cells[i];
+      persist();
+      if (caps.assets) { var id = c.a; writeChain.then(function () { return caps.assets.delete(id); }).catch(function () {}); }
+    }
+    render();
+  });
+
+  $("terminar").addEventListener("click", function () {
+    var key = state.tab, n = photoCount(key), btn = this;
+    if (!confirmTap(btn, n > 0)) return;
+    var card = state.cards[key];
+    var finish = function () {
+      clearPending(key); state.cards[key] = newCard(key); state.sel = null; persist(); render();
+    };
+    if (n > 0 && canSave() && albumCol) {
+      btn.disabled = true;
+      var body = { lugar:key, inicio:card.started, cerrado:new Date().toISOString(), order:card.order.slice(), cells:JSON.parse(JSON.stringify(card.cells)) };
+      writeChain.then(function () { return albumCol.add(body); }).then(function () {
+        aviso("Fondo guardado en el álbum.");
+        finish();
+      }).catch(function (e) { btn.disabled = false; aviso(dbMsg(e)); });
+    } else finish();
+  });
+
+  /* ---------- collage ---------- */
+  function wrapText(g, text, maxW) {
+    var words = String(text).split(" "), lines = [], cur = "";
+    words.forEach(function (w) {
+      var t = cur ? cur + " " + w : w;
+      if (g.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t;
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+  function roundRect(g, x, y, w, h, r) {
+    g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+  }
+  function drawMark(g, cat, x, y, color, outline) {
+    g.save(); g.fillStyle = color;
+    if (outline) { g.strokeStyle = "#FFFFFF"; g.lineWidth = 3; }
+    g.beginPath();
+    if (cat === "ver") g.arc(x + 9, y + 9, 9, 0, Math.PI * 2);
+    else if (cat === "cuerpo") g.rect(x, y, 18, 18);
+    else if (cat === "mente") { g.moveTo(x + 9, y); g.lineTo(x + 19, y + 18); g.lineTo(x - 1, y + 18); g.closePath(); }
+    else { g.moveTo(x + 9, y - 2); g.lineTo(x + 20, y + 9); g.lineTo(x + 9, y + 20); g.lineTo(x - 2, y + 9); g.closePath(); }
+    if (outline) g.stroke();
+    g.fill(); g.restore();
+  }
+  /* Logo horizontal de Cumbre Feliz (CF con la montaña, el sol, la rosa y La Azulita, el nombre y PROYECTO), dibujado
+     en vector para el collage. Los colores llegan en pal según el fondo. Caja del dibujo: x 6–504, y 16–148. */
+  var LOCKUP = { x: 6, y: 16, w: 498, h: 132 }, LOCKUP_P = null;
+  function lockupPaths() {
+    if (!LOCKUP_P) LOCKUP_P = {
+      petal: new Path2D("M0,-5 C-9,-13 -13,-33 -7,-43 C-3,-48 3,-48 7,-43 C13,-33 9,-13 0,-5 Z"),
+      rays: new Path2D("M141,19.5 L141,15 M148.75,21.58 L151,17.68 M133.25,21.58 L131,17.68 M154.42,27.25 L158.32,25 M127.58,27.25 L123.68,25"),
+      blue: new Path2D("M98,80 L106,80 C109,80 111,71 116,67.6 C119,65.4 122.5,64 126,64 C130,64 134,66 136.6,68.4 C138.6,70.3 139.6,72.6 140.6,72.6 C141.8,72.6 142.6,67 145.6,61.6 C149,55.6 154,50 161,50 C168,50 173,54 177,58.6 C181,63.4 185,70 189,78.4"),
+      mark: new Path2D("M74.8,90.7 A34,34 0 1 0 74.8,141.3 M94,152 L94,90 L108,90 C116,90 120,74 126,74 C132,74 134,84 140,84 C148,84 154,60 162,60 C170,60 176,78 184,90 M94,120 L118,120"),
+      stem: new Path2D("M126,68.5 C126,64.5 125.8,61.2 125.5,58.3"),
+      divider: new Path2D("M182,44 L182,118"),
+      lines: new Path2D("M202,109.8 L299,109.8 M401,109.8 L497,109.8"),
+      proyecto: new Path2D("M310.47 111.19V110.18H312.02Q312.82 110.18 313.21 109.86Q313.61 109.54 313.61 108.81Q313.61 108.16 313.24 107.83Q312.87 107.5 312.1 107.5H310.47V106.5H312.13Q312.77 106.5 313.28 106.65Q313.8 106.8 314.16 107.09Q314.52 107.38 314.7 107.82Q314.89 108.27 314.89 108.85Q314.89 109.61 314.54 110.13Q314.2 110.65 313.52 110.92Q312.85 111.19 311.85 111.19ZM309.63 113.1V106.5H310.9V113.1ZM320.2 113.1V106.5H322.76Q323.28 106.5 323.71 106.58Q324.15 106.67 324.48 106.83Q324.82 106.99 325.05 107.22Q325.28 107.46 325.4 107.76Q325.52 108.07 325.52 108.44Q325.52 108.79 325.41 109.07Q325.3 109.36 325.08 109.57Q324.87 109.78 324.55 109.91Q324.23 110.05 323.8 110.11V110.24Q324.26 110.3 324.55 110.47Q324.84 110.64 325.02 110.94Q325.2 111.24 325.33 111.7L325.74 113.1H324.35L324.03 111.82Q323.94 111.41 323.75 111.17Q323.57 110.94 323.29 110.84Q323.01 110.74 322.61 110.74H321.47V113.1ZM321.47 109.77H322.67Q323.42 109.77 323.81 109.49Q324.21 109.21 324.21 108.63Q324.21 108.05 323.83 107.77Q323.46 107.49 322.69 107.49H321.47ZM333.92 113.23Q333.2 113.23 332.63 113Q332.07 112.77 331.67 112.33Q331.28 111.9 331.07 111.27Q330.87 110.64 330.87 109.83Q330.87 108.66 331.27 107.89Q331.67 107.13 332.37 106.75Q333.07 106.37 333.95 106.37Q334.64 106.37 335.2 106.59Q335.76 106.82 336.16 107.25Q336.56 107.69 336.78 108.33Q337 108.98 337 109.81Q337 110.64 336.78 111.28Q336.57 111.91 336.17 112.34Q335.77 112.78 335.2 113Q334.63 113.23 333.92 113.23ZM333.95 112.21Q334.51 112.21 334.9 111.94Q335.29 111.66 335.5 111.14Q335.7 110.62 335.7 109.87Q335.7 109.1 335.49 108.55Q335.28 108 334.88 107.72Q334.49 107.43 333.92 107.43Q333.37 107.43 332.98 107.7Q332.58 107.98 332.37 108.51Q332.16 109.05 332.16 109.82Q332.16 110.4 332.28 110.84Q332.4 111.29 332.62 111.59Q332.85 111.89 333.18 112.05Q333.52 112.21 333.95 112.21ZM343.89 113.1V111.02L341.5 106.5H343L344.5 109.85H344.56L346.05 106.5H347.55L345.16 111.01V113.1ZM352.61 113.1V106.5H353.88V113.1ZM353.43 113.1V112.06H357.56V113.1ZM353.43 110.23V109.27H357.06V110.23ZM353.43 107.54V106.5H357.54V107.54ZM365.73 113.23Q364.98 113.23 364.39 113.01Q363.8 112.8 363.38 112.38Q362.97 111.95 362.75 111.32Q362.54 110.7 362.54 109.88Q362.54 109.04 362.76 108.39Q362.98 107.74 363.39 107.28Q363.81 106.83 364.38 106.6Q364.95 106.37 365.65 106.37Q366.19 106.37 366.64 106.51Q367.1 106.65 367.44 106.92Q367.78 107.19 367.97 107.58Q368.16 107.97 368.17 108.45L366.99 108.77Q366.99 108.31 366.8 108.01Q366.6 107.72 366.29 107.57Q365.97 107.42 365.61 107.42Q365.29 107.42 364.98 107.55Q364.66 107.68 364.41 107.96Q364.16 108.24 364.01 108.69Q363.86 109.15 363.86 109.81Q363.86 110.65 364.11 111.17Q364.35 111.69 364.79 111.94Q365.22 112.18 365.77 112.18Q366.33 112.18 366.66 111.95Q366.99 111.73 367.14 111.36Q367.29 110.99 367.31 110.55L368.42 110.74Q368.41 111.26 368.26 111.71Q368.11 112.17 367.79 112.51Q367.47 112.85 366.96 113.04Q366.45 113.23 365.73 113.23ZM375.1 113.1V106.5H376.37V113.1ZM373.13 107.57V106.5H378.34V107.57ZM386.13 113.23Q385.41 113.23 384.85 113Q384.28 112.77 383.88 112.33Q383.49 111.9 383.29 111.27Q383.08 110.64 383.08 109.83Q383.08 108.66 383.48 107.89Q383.88 107.13 384.58 106.75Q385.28 106.37 386.16 106.37Q386.85 106.37 387.41 106.59Q387.97 106.82 388.37 107.25Q388.77 107.69 388.99 108.33Q389.21 108.98 389.21 109.81Q389.21 110.64 389 111.28Q388.78 111.91 388.38 112.34Q387.98 112.78 387.41 113Q386.84 113.23 386.13 113.23ZM386.16 112.21Q386.72 112.21 387.11 111.94Q387.5 111.66 387.71 111.14Q387.91 110.62 387.91 109.87Q387.91 109.1 387.7 108.55Q387.49 108 387.1 107.72Q386.7 107.43 386.13 107.43Q385.58 107.43 385.19 107.7Q384.79 107.98 384.58 108.51Q384.37 109.05 384.37 109.82Q384.37 110.4 384.49 110.84Q384.61 111.29 384.84 111.59Q385.06 111.89 385.39 112.05Q385.73 112.21 386.16 112.21Z"),
+      name: new Path2D("M59.3,34.32 A28,35.25 0 1 0 59.3,84.18 M75.5,55.5 L75.5,77.5 A17,17 0 0 0 109.5,77.5 M109.5,55.5 L109.5,94.5 M130,94.5 L130,74 C130,66 140,52 143.5,52 C147,52 157,66 157,74 L157,94.5 M157,74 C157,64 171,40 175,40 C179,40 191,62 191,72 L191,94.5 M211.5,22 L211.5,94.5 M271.5,57 L271.5,94.5 M271.5,73 C274,61 284,55 293,56.5 C299,57.5 301,62.5 296.5,64.5 M317.5,75 L356.5,75 A19.5,19.5 0 1 0 350.8,88.8 M405,94.5 L405,24 L433,24 M405,57 L427,57 M448,75 L487,75 A19.5,19.5 0 1 0 481.3,88.8 M510.5,22 L510.5,84 C510.5,92 514.5,95.5 521.5,94.5 C528.5,93.5 534.5,86 538,76 M538,60 L538,94.5 M558.5,55.5 L593.5,55.5 L558.5,94.5 L586.5,94.5 C596.5,94.5 601.5,99 603.5,107")
+    };
+    return LOCKUP_P;
+  }
+  function drawRose(g, cx, cy, k) {
+    var P = lockupPaths();
+    g.save(); g.translate(cx, cy); g.scale(k, k);
+    var rg = g.createRadialGradient(0, 0, 0, 0, 0, 46);
+    rg.addColorStop(0, "#B8325F"); rg.addColorStop(0.45, "#E06E96"); rg.addColorStop(1, "#F7B7CB");
+    g.fillStyle = rg;
+    for (var i = 0; i < 7; i++) { g.save(); g.rotate(i * Math.PI * 2 / 7); g.fill(P.petal); g.restore(); }
+    g.globalAlpha = 0.3; g.fillStyle = "#9E2450"; g.beginPath(); g.arc(0, 0, 11, 0, Math.PI * 2); g.fill(); g.globalAlpha = 1;
+    g.fillStyle = "#E9D98A"; g.beginPath(); g.arc(0, 0, 7.5, 0, Math.PI * 2); g.fill();
+    g.fillStyle = "#8FA94C"; g.beginPath(); g.arc(0, 0, 3.2, 0, Math.PI * 2); g.fill();
+    g.restore();
+  }
+  /* Dibuja el logo con su esquina superior izquierda en (x, y) y alto h. */
+  function drawLockupArt(g, x, y, h, pal) {
+    var ink = pal.ink;
+    var P = lockupPaths(), k = h / LOCKUP.h;
+    g.save(); g.translate(x - LOCKUP.x * k, y - LOCKUP.y * k); g.scale(k, k);
+    g.lineCap = "round"; g.lineJoin = "round";
+    g.save(); g.translate(-0.71, 8.65); g.scale(0.85, 0.85);
+    g.fillStyle = "#F2B90F"; g.beginPath(); g.arc(141, 35, 11, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = "#F2B90F"; g.lineWidth = 3.3; g.stroke(P.rays);
+    g.strokeStyle = pal.blue; g.lineWidth = 3.2; g.stroke(P.blue);
+    g.strokeStyle = ink; g.lineWidth = 11; g.stroke(P.mark);
+    g.strokeStyle = "#5E8E6A"; g.lineWidth = 1.3; g.stroke(P.stem);
+    drawRose(g, 125.5, 52, 0.13);
+    g.restore();
+    g.globalAlpha = pal.div; g.strokeStyle = ink; g.lineWidth = 1.2; g.stroke(P.divider); g.globalAlpha = 1;
+    g.strokeStyle = pal.lines; g.lineWidth = 1.2; g.stroke(P.lines);
+    g.fillStyle = ink; g.fill(P.proyecto);
+    g.save(); g.translate(197, 42.1); g.scale(0.495, 0.495);
+    g.strokeStyle = ink; g.lineWidth = 11; g.stroke(P.name);
+    g.beginPath(); g.arc(231, 75, 19.5, 0, Math.PI * 2); g.stroke();
+    drawRose(g, 538, 40, 0.22);
+    g.restore();
+    g.restore();
+  }
+  function buildCollage(key, order, srcFor, dateISO) {
+    var W = 1080, H = 1350, M = 48, gap = 12, top = 282;
+    var cell = (W - 2 * M - 4 * gap) / 5;
+    var PAPER = "#EEF2EA", PANEL = "#F9FBF6", INK = "#15251B", MUTED = "#556659", LINE = "#C4CFBF", STAMP = "#F2C230";
+    var CAT = { ver:"#2E7A4B", cuerpo:"#2A66A4", mente:"#B23946", comer:"#BF651B" };
+    var def = CARDS[key];
+    var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
+      document.fonts.load('600 100px "Fredoka"'), document.fonts.load('600 26px "Overpass Mono"'), document.fonts.load('700 28px "Overpass"')
+    ]).catch(function () {}) : Promise.resolve();
+    var srcs = []; for (var i = 0; i < 25; i++) srcs.push(srcFor(i));
+    return fontsReady.then(function () {
+      return Promise.all(srcs.map(function (s) { return s ? loadImg(s) : null; }));
+    }).then(function (imgs) {
+      var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      var g = cv.getContext("2d");
+      g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+
+      var isM = function (i) { return i === 12 || !!imgs[i]; };
+      var lines = linesOf(isM), nf = 0;
+      for (var k = 0; k < 25; k++) if (k !== 12 && imgs[k]) nf++;
+
+      g.textBaseline = "alphabetic";
+      // logo de Cumbre Feliz arriba a la izquierda, en los colores para fondo claro
+      var LH = 76, LW = LH * LOCKUP.w / LOCKUP.h;
+      drawLockupArt(g, M, 34, LH, { ink:"#1E4A3B", blue:"#4A80D9", lines:"#E06E96", div:0.25 });
+      var tagLine = ("Bingo Sendero · " + def.name).toUpperCase(), ts = 26;
+      g.fillStyle = MUTED; g.textAlign = "right";
+      do { g.font = '600 ' + ts + 'px "Overpass Mono", ui-monospace, monospace'; ts -= 2; } while (g.measureText(tagLine).width > W - 2 * M - LW - 24 && ts > 14);
+      g.fillText(tagLine, W - M, 82);
+      g.textAlign = "left";
+      var title = fmtLong(dateISO), size = 96;
+      g.fillStyle = INK;
+      do { g.font = '600 ' + size + 'px "Fredoka", "Nunito", system-ui, sans-serif'; size -= 4; } while (g.measureText(title).width > W - 2 * M && size > 40);
+      g.fillText(title, M, 194);
+      g.font = '700 28px "Overpass", system-ui, sans-serif';
+      g.fillText((nf + " fotos · " + lines.length + (lines.length === 1 ? " línea" : " líneas") + " · " + def.place).replace(/ · /g, " • "), M, 240);
+
+      for (var i = 0; i < 25; i++) {
+        var x = M + (i % 5) * (cell + gap), y = top + Math.floor(i / 5) * (cell + gap), im = imgs[i];
+        var it = i === 12 ? null : def.items[order[i]];
+        g.save(); roundRect(g, x, y, cell, cell, 10); g.clip();
+        if (im) {
+          var sw = im.naturalWidth, sh = im.naturalHeight, sc = Math.max(cell / sw, cell / sh);
+          var dw = cell / sc, dh = cell / sc;
+          g.drawImage(im, (sw - dw) / 2, (sh - dh) / 2, dw, dh, x, y, cell, cell);
+        } else {
+          g.fillStyle = PANEL; g.fillRect(x, y, cell, cell);
+          g.fillStyle = MUTED; g.textAlign = "center";
+          if (i === 12) {
+            g.font = '700 38px "Fredoka", "Nunito", system-ui, sans-serif'; g.fillStyle = INK;
+            g.fillText("LIBRE", x + cell / 2, y + cell / 2 + 12);
+          } else {
+            g.font = '600 22px "Overpass", system-ui, sans-serif';
+            var tl = wrapText(g, it[1], cell - 28), lh = 26, y0 = y + cell / 2 - (tl.length - 1) * lh / 2 + 10;
+            tl.forEach(function (t, n) { g.fillText(t, x + cell / 2, y0 + n * lh); });
+          }
+          g.textAlign = "left";
+        }
+        g.restore();
+        if (!im) { g.save(); g.setLineDash([8, 6]); g.strokeStyle = LINE; g.lineWidth = 2; roundRect(g, x + 1, y + 1, cell - 2, cell - 2, 10); g.stroke(); g.restore(); }
+        if (it) drawMark(g, it[0], x + 12, y + 12, CAT[it[0]], !!im);
+      }
+
+      g.save(); g.strokeStyle = STAMP; g.globalAlpha = 0.85; g.lineWidth = 20; g.lineCap = "round";
+      lines.forEach(function (L) {
+        var a = L[0], b = L[4];
+        var ax = M + (a % 5) * (cell + gap) + cell / 2, ay = top + Math.floor(a / 5) * (cell + gap) + cell / 2;
+        var bx = M + (b % 5) * (cell + gap) + cell / 2, by = top + Math.floor(b / 5) * (cell + gap) + cell / 2;
+        g.beginPath(); g.moveTo(ax, ay); g.lineTo(bx, by); g.stroke();
+      });
+      g.restore();
+
+      g.fillStyle = MUTED; g.font = '600 24px "Overpass Mono", ui-monospace, monospace';
+      g.fillText("Camino al Maratón CAF · 21 feb 2027", M, H - 34);
+      g.textAlign = "right"; g.fillStyle = "#1E4A3B";
+      g.fillText("#CumbreFeliz", W - M, H - 34);
+      g.textAlign = "left";
+
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("canvas")); }, "image/jpeg", 0.9); });
+    });
+  }
+  var lastCollage = null;
+  function saveCollage(btn, key, order, srcFor, dateISO) {
+    var label = btn.textContent; btn.disabled = true; btn.textContent = "Armando collage…";
+    buildCollage(key, order, srcFor, dateISO).then(function (blob) {
+      if (lastCollage) { try { URL.revokeObjectURL(lastCollage.url); } catch (e) {} }
+      lastCollage = { blob:blob, url:URL.createObjectURL(blob), filename:"bingo-sendero-" + key + "-" + ymd(dateISO) + ".jpg" };
+      $("collage-img").src = lastCollage.url;
+      $("compartir").hidden = !canShareFiles;
+      $("result").hidden = false;
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      try { $("result").scrollIntoView({ block:"start", behavior:reduce ? "auto" : "smooth" }); } catch (e) {}
+    }).catch(function () {
+      aviso("No se pudo armar el collage. Revisa que las fotos hayan cargado y vuelve a intentar.");
+    }).then(function () { btn.disabled = false; btn.textContent = label; });
+  }
+  $("compartir").addEventListener("click", function () {
+    if (!lastCollage) return;
+    var file = new File([lastCollage.blob], lastCollage.filename, { type:"image/jpeg" });
+    navigator.share({ files:[file] }).catch(function (e) { if (e && e.name === "AbortError") return; aviso("No se pudo abrir el menú para compartir. Toca Guardar imagen."); });
+  });
+  $("guardar").addEventListener("click", function () {
+    if (!lastCollage || !caps.downloads) return;
+    caps.downloads.save({ filename:lastCollage.filename, data:lastCollage.blob }).catch(function () {
+      aviso("No se pudo guardar. Mantén presionada la imagen y elige guardar.");
+    });
+  });
+  $("cerrar").addEventListener("click", function () { $("result").hidden = true; });
+  $("collage").addEventListener("click", function () {
+    var key = state.tab, card = state.cards[key];
+    saveCollage(this, key, card.order, function (i) { return srcOf(key, i); }, new Date().toISOString());
+  });
+
+  /* ---------- eventos ---------- */
+  grid.addEventListener("click", function (e) {
+    var b = e.target.closest(".cell"); if (!b) return;
+    var i = parseInt(b.getAttribute("data-i"), 10);
+    state.sel = i; disarm(); render();
+    var nb = grid.querySelector('[data-i="' + i + '"]');
+    if (nb) { try { nb.focus({ preventScroll:true }); } catch (err) {} }
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    try { $("panel").scrollIntoView({ block:"nearest", behavior:reduce ? "auto" : "smooth" }); } catch (err) {}
+  });
+  grid.addEventListener("error", function (e) {
+    if (e.target && e.target.tagName === "IMG") { var c = e.target.closest(".cell"); if (c) c.classList.add("broken"); }
+  }, true);
+
+  function select(k) {
+    if (!CARDS[k]) return;
+    state.tab = k; state.sel = null; lastLines = -1; disarm(); saveLocal(); render();
+    try { history.replaceState(null, "", "#" + k); } catch (e) {}
+  }
+  tabs.forEach(function (t, idx) {
+    t.addEventListener("click", function () { select(t.getAttribute("data-key")); });
+    t.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      var n = tabs[(idx + d + tabs.length) % tabs.length];
+      select(n.getAttribute("data-key")); n.focus();
+    });
+  });
+
+  $("album").addEventListener("click", function (e) {
+    if (e.target.id === "mas") { albumShown += 8; renderAlbum(); return; }
+    var btn = e.target.closest("button[data-act]"); if (!btn) return;
+    var art = btn.closest(".fondo"), id = art && art.getAttribute("data-id");
+    var f = album.filter(function (x) { return x.id === id; })[0]; if (!f) return;
+    if (btn.getAttribute("data-act") === "collage") {
+      saveCollage(btn, f.lugar, f.order, function (i) { return f.cells[i] ? blobSrc(f.cells[i].a) : null; }, f.cerrado);
+      return;
+    }
+    if (!confirmTap(btn, true)) return;
+    btn.disabled = true;
+    var ids = Object.keys(f.cells).map(function (k) { return f.cells[k].a; });
+    albumCol.doc(f.id).delete().then(function () {
+      if (caps.assets) ids.reduce(function (pr, a) { return pr.then(function () { return caps.assets.delete(a); }).catch(function () {}); }, Promise.resolve());
+      aviso("Fondo borrado del álbum.");
+    }).catch(function (e2) { btn.disabled = false; aviso(dbMsg(e2)); });
+  });
+
+  /* ---------- curvas de nivel ---------- */
+  (function contours() {
+    var band = document.querySelector(".band"); if (!band) return;
+    var d = "M320 30C370 30 410 60 405 95C400 135 360 160 315 155C265 150 235 125 240 90C245 55 280 30 320 30Z";
+    var paths = [0.3, 0.55, 0.8, 1.08, 1.4, 1.78, 2.2, 2.7, 3.25].map(function (k, n) {
+      return '<path d="' + d + '" transform="translate(322 92) rotate(' + (n * 3 - 8) + ') scale(' + k + ') translate(-322 -92)" vector-effect="non-scaling-stroke"/>';
+    }).join("");
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMaxYMid slice"><g fill="none" stroke="#000" stroke-width="1.2">' + paths + "</g></svg>";
+    band.style.setProperty("--contours", 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+    band.classList.add("has-contours");
+  })();
+
+  /* ---------- versión web (sin Claude): fotos, cartón y álbum se guardan en este teléfono ---------- */
+  function rid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+  function openIdb() {
+    return new Promise(function (res) {
+      try {
+        var rq = indexedDB.open("cf-sendero", 1);
+        rq.onupgradeneeded = function () { rq.result.createObjectStore("fotos"); };
+        rq.onsuccess = function () { res(rq.result); };
+        rq.onerror = function () { res(null); };
+        rq.onblocked = function () { res(null); };
+      } catch (e) { res(null); }
+    });
+  }
+  var idbReady = openIdb();
+  function idbOp(mode, fn) {
+    return idbReady.then(function (db) {
+      if (!db) return null;
+      return new Promise(function (res) {
+        try {
+          var tx = db.transaction("fotos", mode), st = tx.objectStore("fotos"), out = { v:true };
+          fn(st, out);
+          tx.oncomplete = function () { res(out.v); };
+          tx.onerror = tx.onabort = function () { res(null); };
+        } catch (e) { res(null); }
+      });
+    });
+  }
+  function loadPhotos() {
+    return idbOp("readonly", function (st, out) {
+      var found = {}; out.v = found;
+      var rq = st.openCursor();
+      rq.onsuccess = function () {
+        var cur = rq.result; if (!cur) return;
+        if (cur.value instanceof Blob) found[cur.key] = cur.value;
+        cur.continue();
+      };
+    }).then(function (found) {
+      if (!found) return false;
+      Object.keys(found).forEach(function (k) { if (!photoUrl[k]) photoUrl[k] = URL.createObjectURL(found[k]); });
+      return true;
+    });
+  }
+  var assetsLocal = {
+    upload: function (blob) {
+      var id = rid();
+      return idbOp("readwrite", function (st) { st.put(blob, id); }).then(function (ok) {
+        if (!ok) { var e = new Error("idb"); e.code = "quota_or_state"; throw e; }
+        photoUrl[id] = URL.createObjectURL(blob);
+        return { id:id, url:photoUrl[id] };
+      });
+    },
+    delete: function (id) {
+      if (photoUrl[id]) { try { URL.revokeObjectURL(photoUrl[id]); } catch (e) {} delete photoUrl[id]; }
+      return idbOp("readwrite", function (st) { st.delete(id); });
+    }
+  };
+
+  var albumRaw = [];
+  function saveAlbum(list) { try { localStorage.setItem(LS_ALBUM, JSON.stringify(list)); return true; } catch (e) { return false; } }
+  function refreshAlbum() {
+    album = albumRaw.map(function (f) {
+      var c = f && typeof f.id === "string" && cleanCard(f.lugar, f);
+      return c ? { id:f.id, lugar:f.lugar, cerrado:typeof f.cerrado === "string" ? f.cerrado : c.started, order:c.order, cells:c.cells } : null;
+    }).filter(Boolean).sort(function (a, b) { return a.cerrado < b.cerrado ? 1 : a.cerrado > b.cerrado ? -1 : 0; });
+    renderAlbum();
+  }
+  function loadAlbum() {
+    var a = null;
+    try { a = JSON.parse(localStorage.getItem(LS_ALBUM) || "[]"); } catch (e) { a = null; }
+    albumRaw = Array.isArray(a) ? a : [];
+    refreshAlbum();
+  }
+  function writeAlbum(next) {
+    if (!saveAlbum(next)) { var e = new Error("ls"); e.code = "quota_exceeded"; return Promise.reject(e); }
+    albumRaw = next; refreshAlbum(); return Promise.resolve();
+  }
+  var albumLocal = {
+    add: function (body) { return writeAlbum(albumRaw.concat([Object.assign({ id:rid() }, body)])); },
+    doc: function (id) { return { delete: function () { return writeAlbum(albumRaw.filter(function (f) { return !f || f.id !== id; })); } }; }
+  };
+
+  var canShareFiles = false;
+  try { canShareFiles = !!(navigator.share && navigator.canShare && navigator.canShare({ files:[new File([new Blob(["x"], { type:"image/jpeg" })], "x.jpg", { type:"image/jpeg" })] })); } catch (e) {}
+  var downloadsLocal = { save: function (o) { return new Promise(function (res, rej) {
+    try {
+      var u = URL.createObjectURL(o.data), a = document.createElement("a");
+      a.href = u; a.download = o.filename; document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 4000); res();
+    } catch (e) { rej(e); }
+  }); } };
+
+  function showMode() {
+    var m = $("modo");
+    if (canSave()) { m.hidden = true; return; }
+    m.hidden = false;
+    m.textContent = "Este navegador no deja guardar fotos (puede ser el modo incógnito). Puedes jugar, pero se pierden al cerrar. Abre el enlace en Safari o Chrome normal para que queden en tu teléfono.";
+  }
+  function initCaps() {
+    caps.downloads = downloadsLocal;
+    loadPhotos().then(function (ok) {
+      if (ok) {
+        caps.assets = assetsLocal; albumCol = albumLocal;
+        var fixed = false;
+        Object.keys(state.cards).forEach(function (k) {
+          var cells = state.cards[k].cells;
+          Object.keys(cells).forEach(function (i) { if (!photoUrl[cells[i].a]) { delete cells[i]; fixed = true; } });
+        });
+        if (fixed) saveLocal();
+        loadAlbum();
+      }
+      capsReady = true;
+      Object.keys(pending).forEach(function (pk) {
+        if (pending[pk].status === "local" && canSave()) { var parts = pk.split(":"); startUpload(parts[0], Number(parts[1])); }
+      });
+      showMode(); render(); renderAlbum();
+    });
+  }
+
+  loadLocal();
+  render();
+  renderAlbum();
+  initCaps();
+})();
+</script>
+</body>
+</html>
