@@ -1,7 +1,9 @@
 # Cumbre Feliz · Bingo Flow
 
-Juegos de fotos para el rodaje de Cumbre Feliz: Bingo Flow, Abecedario, B-I-N-G-O, Letras escondidas, Color y Bingo Sendero.
+Juegos de fotos para el rodaje de Cumbre Feliz: Bingo Flow, Bitácora Flow, Abecedario, B-I-N-G-O, Letras escondidas, Color y Bingo Sendero.
+
+Bitácora Flow es el juego hermano del Bingo Flow: fotos de los cinco sentidos con una palabra al lado, una página privada de bitácora y ediciones (Clásica, Del color, Después de la lluvia, De las aves y De cumpleaños). En la carpeta `bitacora/` están el PDF para imprimir y las imágenes.
 
 Se juegan desde el navegador del teléfono, sin cuenta. Las fotos se quedan en el teléfono de cada persona.
 
-**© 2026 Alita. Todos los derechos reservados.** Bingo Flow es un juego creado por Alita para Cumbre Feliz. Prohibida su copia, reproducción o modificación sin autorización. Ver [LICENSE](LICENSE).
+**© 2026 Alita. Todos los derechos reservados.** Bingo Flow y Bitácora Flow son juegos creados por Alita para Cumbre Feliz. Prohibida su copia, reproducción o modificación sin autorización. Ver [LICENSE](LICENSE).

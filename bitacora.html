@@ -1,0 +1,936 @@
+<!doctype html>
+<!-- Bitácora Flow · Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Prohibida su copia, reproducción o modificación sin autorización. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Alita · Cumbre Feliz">
+<meta name="copyright" content="© 2026 Alita. Todos los derechos reservados.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E2E9DB">
+<meta name="color-scheme" content="only light">
+<meta name="description" content="Mira, siente y escribe. Fotos de tus cinco sentidos y una palabra al lado: tu diario de cumbres.">
+<meta property="og:title" content="Bitácora Flow · Cumbre Feliz">
+<meta property="og:description" content="Mira, siente y escribe. Fotos de tus cinco sentidos y una palabra al lado: tu diario de cumbres.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/og-bitacora.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/bitacora.html">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Bitácora Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Overpass:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Overpass+Mono:wght@500;600&display=swap">
+<style>
+/* Bitácora Flow: el juego hermano del Bingo Flow. Misma columna de teléfono; cartón 3×3 de los sentidos con "Mi momento" en el centro;
+   cada casilla pide una foto y una palabra; página privada que se guarda como imagen; historia opcional con solo las líneas de los sentidos. */
+:root{
+  color-scheme:only light;
+  --paper:#EEF2EA; --band:#E2E9DB; --panel:#F9FBF6; --ink:#15251B; --muted:#556659; --line:#C4CFBF; --contour:#BCCAB5;
+  --logo:#1E4A3B; --logo-azul:#4A80D9; --logo-linea:#E06E96; --logo-div:.25;
+  --verde:#1E4A3B; --rosa:#E06E96; --rosa-texto:#C2456F; --rosa-cielo:#FCE3EC; --amarillo:#F2B90F; --azul:#4A80D9;
+  --stamp:#A3C29A; --stamp-soft:#E6EEDF; --scrim:rgba(8,14,10,.78); --on-photo:#FFFFFF;
+  --font-display:"Fredoka","Nunito",system-ui,sans-serif;
+  --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+html,body{ margin:0; }
+body{ background:var(--paper); color:var(--ink); font:400 15px/1.5 var(--font-body); }
+.wrap{ position:relative; z-index:1; max-width:560px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+
+.band{ position:relative; background:var(--band); border-bottom:1px solid var(--line); overflow:hidden; }
+.band::before{ content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0; background:var(--contour);
+  -webkit-mask-image:var(--contours); mask-image:var(--contours); -webkit-mask-size:cover; mask-size:cover;
+  -webkit-mask-position:right center; mask-position:right center; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
+.band.has-contours::before{ opacity:1; }
+.band .wrap{ padding-block:24px 20px; }
+.back{ display:inline-flex; align-items:center; gap:6px; margin:0 0 12px; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-decoration:none; }
+.back:hover{ color:var(--ink); }
+.eyebrow{ margin:0; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.brand{ margin:0 0 14px; }
+.lockup{ display:block; width:min(100%, 430px); height:auto; color:var(--logo); }
+h1{ margin:4px 0 8px; font:600 clamp(30px, 8.6vw, 40px)/1.04 var(--font-display); color:var(--logo); letter-spacing:0; text-wrap:balance; }
+h1 .tag{ display:inline-block; vertical-align:.16em; margin-left:.2em; padding:.2em .55em .14em; font-size:.48em; font-weight:600; letter-spacing:.01em; background:var(--rosa-cielo); color:var(--rosa-texto); border-radius:999px; }
+.lede{ margin:0; color:var(--muted); max-width:44ch; }
+
+main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14px; }
+.nojs{ margin:0; padding:14px 16px; border-radius:10px; background:var(--stamp-soft); border:1.5px solid var(--stamp); font-size:15px; line-height:1.45; }
+.nojs strong{ display:block; margin-bottom:4px; font:600 22px/1.1 var(--font-display); }
+.aviso{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; margin:0; padding:10px 12px; border-radius:8px; background:var(--ink); color:var(--paper); font-size:13.5px; line-height:1.4; }
+.kicker{ margin:4px 0 0; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+
+.eds{ display:flex; gap:6px; overflow-x:auto; padding:2px 2px 4px; margin:0 -2px; scrollbar-width:none; }
+.eds::-webkit-scrollbar{ display:none; }
+.ed{ appearance:none; flex:none; cursor:pointer; font:700 13.5px/1 var(--font-body); padding:10px 12px 8px; border-radius:999px; border:1.5px solid var(--line); background:var(--panel); color:var(--ink); }
+.ed[aria-pressed="true"]{ background:var(--verde); border-color:var(--verde); color:var(--paper); }
+.ed.armed{ background:var(--rosa-texto); border-color:var(--rosa-texto); color:#fff; }
+.lema{ margin:-4px 0 0; font-style:italic; color:var(--muted); font-size:14px; }
+
+.field{ display:flex; flex-direction:column; gap:5px; }
+.field label, .caplabel{ font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.field input, .txt{ font:600 16px/1.3 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:11px 12px 9px; width:100%; }
+.txt{ resize:vertical; font-weight:500; }
+.field input::placeholder, .txt::placeholder{ color:var(--muted); opacity:.8; }
+
+.card{ background:#DDE9D6; border-radius:16px; padding:8px; }
+.card.e-color{ background:#F7EFD6; } .card.e-lluvia{ background:#E3EDF6; } .card.e-cumple{ background:#EEE7F6; }
+.grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px; }
+.tile{ position:relative; min-width:0; display:flex; }
+.tlabel, .tbtn{ position:relative; flex:1; min-width:0; display:flex; flex-direction:column; gap:4px; min-height:142px; padding:8px 7px 7px; cursor:pointer; text-align:left;
+  background:#FFFFFF; border:1.5px solid transparent; border-radius:10px; font:inherit; color:inherit; -webkit-hyphens:auto; hyphens:auto; overflow-wrap:break-word; }
+.tbtn{ appearance:none; padding:0; overflow:hidden; }
+.tile.center .tlabel, .tile.center .tbtn{ background:var(--rosa-cielo); }
+.tile.sel .tlabel, .tile.sel .tbtn{ border-color:var(--ink); }
+.tile.win .tbtn::after{ content:""; position:absolute; inset:0; border:3px solid var(--amarillo); border-radius:9px; z-index:3; pointer-events:none; }
+.thead{ display:flex; align-items:center; gap:5px; min-width:0; }
+.sic{ flex:none; width:24px; height:24px; border-radius:50%; display:grid; place-items:center; }
+.sic svg{ width:15px; height:15px; display:block; }
+.slab{ font:700 clamp(8.5px, 2.4vw, 10.5px)/1.1 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--verde); min-width:0; overflow-wrap:anywhere; }
+.tile.center .slab{ color:var(--rosa-texto); }
+.td{ font-size:clamp(11px, 3vw, 13px); line-height:1.3; color:var(--ink); text-wrap:pretty; }
+.add{ margin-top:auto; padding-top:2px; font:600 10px/1.2 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.add::before{ content:"+ "; }
+.pen{ position:absolute; bottom:5px; right:5px; z-index:2; appearance:none; cursor:pointer; width:26px; height:26px; border-radius:50%; border:1.5px solid var(--line); background:var(--panel); color:var(--ink); display:grid; place-items:center; padding:0; }
+.pen svg{ width:14px; height:14px; }
+.tag-com{ align-self:flex-start; padding:2px 5px 1px; border-radius:3px; background:var(--amarillo); color:var(--verde); font:600 9px/1.2 var(--font-mono); letter-spacing:.04em; text-transform:uppercase; }
+.tbtn img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.tbtn .thead{ position:absolute; top:6px; left:6px; z-index:1; }
+.tbtn .thead .sic{ box-shadow:0 0 0 2px #fff; }
+.cap{ position:absolute; left:0; right:0; bottom:0; z-index:1; padding:18px 7px 6px; background:linear-gradient(to bottom, transparent, var(--scrim)); color:var(--on-photo); font:700 clamp(10px, 2.7vw, 12.5px)/1.2 var(--font-body); }
+.cap i{ display:block; margin-top:2px; font-weight:400; opacity:.95; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.falta-p{ display:inline-block; margin-top:3px; padding:2px 5px 1px; border-radius:3px; background:var(--amarillo); color:var(--verde); font:600 9px/1.2 var(--font-mono); text-transform:uppercase; letter-spacing:.04em; }
+.loading{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font:600 11px/1 var(--font-mono); color:var(--muted); }
+
+.detalle{ display:grid; gap:10px; padding:14px; background:var(--panel); border:1.5px solid var(--ink); border-radius:12px; scroll-margin-top:16px; }
+.dhead{ display:flex; align-items:center; gap:8px; }
+.dhead .sic{ width:32px; height:32px; } .dhead .sic svg{ width:19px; height:19px; }
+.dlab{ font:700 13px/1.1 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--verde); }
+.dclose{ margin-left:auto; appearance:none; cursor:pointer; border:0; background:transparent; color:var(--muted); font:600 11px/1 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; padding:6px; }
+.dimg{ display:block; width:100%; max-height:46vh; object-fit:cover; border-radius:10px; background:var(--band); }
+.dprompt{ margin:0; font:600 19px/1.25 var(--font-display); color:var(--verde); }
+.comodin{ display:grid; gap:6px; padding-top:8px; border-top:1px dashed var(--line); font-size:13.5px; color:var(--muted); }
+.linkbtn{ appearance:none; cursor:pointer; border:0; background:transparent; padding:0; font:700 13.5px/1.3 var(--font-body); color:var(--verde); text-decoration:underline; text-underline-offset:3px; text-align:left; }
+
+.progress{ display:flex; align-items:center; gap:12px; }
+.count{ font:700 30px/1 var(--font-display); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.count small{ font:600 12px/1 var(--font-mono); color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-left:4px; }
+.bar{ flex:1; height:10px; border-radius:5px; background:var(--band); border:1px solid var(--line); overflow:hidden; }
+.bar i{ display:block; height:100%; width:0; background:var(--amarillo); transition:width .3s ease; }
+.hint{ margin:0; font-size:12.5px; color:var(--muted); }
+.banner{ display:flex; align-items:baseline; justify-content:center; flex-wrap:wrap; gap:4px 12px; background:var(--amarillo); color:var(--verde); border-radius:6px; padding:9px 14px 6px; transform:rotate(-1.2deg); }
+.banner .bw{ font:700 30px/1 var(--font-display); }
+.banner .bs{ font:700 13.5px/1.2 var(--font-body); }
+.banner.pop{ animation:pop .45s cubic-bezier(.3,1.6,.5,1); }
+@keyframes pop{ from{ transform:rotate(-6deg) scale(1.25); } to{ transform:rotate(-1.2deg) scale(1); } }
+
+.actions{ display:flex; flex-wrap:wrap; gap:8px; }
+.btn{ appearance:none; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font:700 14px/1 var(--font-body); padding:12px 16px 10px; border-radius:6px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); text-decoration:none; }
+.btn.primary{ background:var(--ink); color:var(--paper); }
+.btn.armed{ background:var(--rosa-texto); border-color:var(--rosa-texto); color:#fff; }
+.btn[disabled]{ opacity:.45; cursor:not-allowed; }
+.vh{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; opacity:0; }
+.tlabel:focus-within{ outline:2.5px solid var(--azul); outline-offset:2px; }
+:focus-visible{ outline:2px solid var(--azul); outline-offset:2px; }
+
+.result, .privada{ display:grid; gap:12px; padding:14px; border-radius:12px; }
+.result{ background:var(--band); }
+.privada{ background:var(--rosa-cielo); }
+.result h2, .privada h2{ margin:0; font:600 24px/1.05 var(--font-display); display:flex; align-items:center; gap:8px; }
+.privada h2 svg{ width:22px; height:22px; flex:none; }
+.preview{ display:block; max-height:70vh; width:auto; max-width:100%; margin:0 auto; border-radius:8px; background:var(--panel); }
+.fondos{ display:flex; gap:6px; overflow-x:auto; padding-bottom:2px; }
+.fondo{ appearance:none; flex:none; cursor:pointer; width:56px; height:56px; padding:0; border-radius:8px; border:2px solid transparent; overflow:hidden; background:var(--panel); font:600 9px/1.1 var(--font-mono); color:var(--muted); text-transform:uppercase; }
+.fondo img{ width:100%; height:100%; object-fit:cover; display:block; }
+.fondo[aria-pressed="true"]{ border-color:var(--ink); }
+.msg{ width:100%; font:500 14px/1.4 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:10px 12px; resize:none; }
+.escala{ display:flex; gap:6px; }
+.escala label{ position:relative; }
+.escala input{ position:absolute; opacity:0; width:1px; height:1px; }
+.escala span{ display:grid; place-items:center; width:40px; height:40px; border-radius:50%; border:1.5px solid var(--line); background:#fff; font:700 15px/1 var(--font-body); cursor:pointer; }
+.escala input:checked + span{ background:var(--verde); border-color:var(--verde); color:#fff; }
+.escala.baje input:checked + span{ background:var(--rosa-texto); border-color:var(--rosa-texto); }
+.escala input:focus-visible + span{ outline:2px solid var(--azul); outline-offset:2px; }
+.dl{ display:grid; gap:8px; padding:14px; background:var(--panel); border:1.5px solid var(--line); border-radius:12px; }
+.dl h2{ margin:0; font:600 22px/1.1 var(--font-display); }
+.dl ul{ margin:0; padding:0; list-style:none; display:grid; gap:6px; }
+.dl a{ color:var(--verde); font-weight:700; }
+.dl small{ color:var(--muted); }
+
+.notes{ display:grid; gap:22px; margin-top:8px; }
+.notes h2{ margin:0 0 8px; font:600 23px/1.1 var(--font-display); text-wrap:balance; }
+.notes ol,.notes ul{ margin:0; padding-left:20px; display:grid; gap:7px; max-width:62ch; }
+.foot{ margin:6px 0 0; padding-top:12px; border-top:1px solid var(--line); font:500 11.5px/1.45 var(--font-mono); color:var(--muted); }
+.autoria{ margin:6px 0 0; font:500 11.5px/1.5 var(--font-mono); color:var(--muted); }
+.autoria strong{ color:var(--ink); font-weight:600; }
+@media (prefers-reduced-motion: reduce){ .bar i{ transition:none; } .banner.pop{ animation:none; } }
+</style>
+</head>
+<body>
+<header class="band" lang="es">
+  <div class="wrap">
+    <a class="back" href="./">← Todos los juegos</a>
+    <div class="brand"><svg class="lockup" viewBox="6 16 498 132" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Cumbre Feliz · Proyecto"><defs><linearGradient id="cfl-g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8325F"/><stop offset="0.45" stop-color="#E06E96"/><stop offset="1" stop-color="#F7B7CB"/></linearGradient><path id="cfl-p" d="M0,-5 C-9,-13 -13,-33 -7,-43 C-3,-48 3,-48 7,-43 C13,-33 9,-13 0,-5 Z" fill="url(#cfl-g)"/></defs><g transform="translate(-0.71,8.65) scale(0.85)"><circle cx="141" cy="35" r="11" fill="#F2B90F"/><path d="M141,19.5 L141,15 M148.75,21.58 L151,17.68 M133.25,21.58 L131,17.68 M154.42,27.25 L158.32,25 M127.58,27.25 L123.68,25" stroke="#F2B90F" stroke-width="3.3"/><path d="M98,80 L106,80 C109,80 111,71 116,67.6 C119,65.4 122.5,64 126,64 C130,64 134,66 136.6,68.4 C138.6,70.3 139.6,72.6 140.6,72.6 C141.8,72.6 142.6,67 145.6,61.6 C149,55.6 154,50 161,50 C168,50 173,54 177,58.6 C181,63.4 185,70 189,78.4" stroke="var(--logo-azul)" stroke-width="3.2"/><path d="M74.8,90.7 A34,34 0 1 0 74.8,141.3 M94,152 L94,90 L108,90 C116,90 120,74 126,74 C132,74 134,84 140,84 C148,84 154,60 162,60 C170,60 176,78 184,90 M94,120 L118,120" stroke="currentColor" stroke-width="11"/><path d="M126,68.5 C126,64.5 125.8,61.2 125.5,58.3" stroke="#5E8E6A" stroke-width="1.3"/><g transform="translate(125.5,52) scale(0.13)"><use href="#cfl-p"/><use href="#cfl-p" transform="rotate(51.43)"/><use href="#cfl-p" transform="rotate(102.86)"/><use href="#cfl-p" transform="rotate(154.29)"/><use href="#cfl-p" transform="rotate(205.71)"/><use href="#cfl-p" transform="rotate(257.14)"/><use href="#cfl-p" transform="rotate(308.57)"/><circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></g></g><path d="M182,44 L182,118" stroke="currentColor" stroke-width="1.2" opacity="var(--logo-div)"/><path d="M202,109.8 L299,109.8 M401,109.8 L497,109.8" stroke="var(--logo-linea)" stroke-width="1.2"/><path d="M310.47 111.19V110.18H312.02Q312.82 110.18 313.21 109.86Q313.61 109.54 313.61 108.81Q313.61 108.16 313.24 107.83Q312.87 107.5 312.1 107.5H310.47V106.5H312.13Q312.77 106.5 313.28 106.65Q313.8 106.8 314.16 107.09Q314.52 107.38 314.7 107.82Q314.89 108.27 314.89 108.85Q314.89 109.61 314.54 110.13Q314.2 110.65 313.52 110.92Q312.85 111.19 311.85 111.19ZM309.63 113.1V106.5H310.9V113.1ZM320.2 113.1V106.5H322.76Q323.28 106.5 323.71 106.58Q324.15 106.67 324.48 106.83Q324.82 106.99 325.05 107.22Q325.28 107.46 325.4 107.76Q325.52 108.07 325.52 108.44Q325.52 108.79 325.41 109.07Q325.3 109.36 325.08 109.57Q324.87 109.78 324.55 109.91Q324.23 110.05 323.8 110.11V110.24Q324.26 110.3 324.55 110.47Q324.84 110.64 325.02 110.94Q325.2 111.24 325.33 111.7L325.74 113.1H324.35L324.03 111.82Q323.94 111.41 323.75 111.17Q323.57 110.94 323.29 110.84Q323.01 110.74 322.61 110.74H321.47V113.1ZM321.47 109.77H322.67Q323.42 109.77 323.81 109.49Q324.21 109.21 324.21 108.63Q324.21 108.05 323.83 107.77Q323.46 107.49 322.69 107.49H321.47ZM333.92 113.23Q333.2 113.23 332.63 113Q332.07 112.77 331.67 112.33Q331.28 111.9 331.07 111.27Q330.87 110.64 330.87 109.83Q330.87 108.66 331.27 107.89Q331.67 107.13 332.37 106.75Q333.07 106.37 333.95 106.37Q334.64 106.37 335.2 106.59Q335.76 106.82 336.16 107.25Q336.56 107.69 336.78 108.33Q337 108.98 337 109.81Q337 110.64 336.78 111.28Q336.57 111.91 336.17 112.34Q335.77 112.78 335.2 113Q334.63 113.23 333.92 113.23ZM333.95 112.21Q334.51 112.21 334.9 111.94Q335.29 111.66 335.5 111.14Q335.7 110.62 335.7 109.87Q335.7 109.1 335.49 108.55Q335.28 108 334.88 107.72Q334.49 107.43 333.92 107.43Q333.37 107.43 332.98 107.7Q332.58 107.98 332.37 108.51Q332.16 109.05 332.16 109.82Q332.16 110.4 332.28 110.84Q332.4 111.29 332.62 111.59Q332.85 111.89 333.18 112.05Q333.52 112.21 333.95 112.21ZM343.89 113.1V111.02L341.5 106.5H343L344.5 109.85H344.56L346.05 106.5H347.55L345.16 111.01V113.1ZM352.61 113.1V106.5H353.88V113.1ZM353.43 113.1V112.06H357.56V113.1ZM353.43 110.23V109.27H357.06V110.23ZM353.43 107.54V106.5H357.54V107.54ZM365.73 113.23Q364.98 113.23 364.39 113.01Q363.8 112.8 363.38 112.38Q362.97 111.95 362.75 111.32Q362.54 110.7 362.54 109.88Q362.54 109.04 362.76 108.39Q362.98 107.74 363.39 107.28Q363.81 106.83 364.38 106.6Q364.95 106.37 365.65 106.37Q366.19 106.37 366.64 106.51Q367.1 106.65 367.44 106.92Q367.78 107.19 367.97 107.58Q368.16 107.97 368.17 108.45L366.99 108.77Q366.99 108.31 366.8 108.01Q366.6 107.72 366.29 107.57Q365.97 107.42 365.61 107.42Q365.29 107.42 364.98 107.55Q364.66 107.68 364.41 107.96Q364.16 108.24 364.01 108.69Q363.86 109.15 363.86 109.81Q363.86 110.65 364.11 111.17Q364.35 111.69 364.79 111.94Q365.22 112.18 365.77 112.18Q366.33 112.18 366.66 111.95Q366.99 111.73 367.14 111.36Q367.29 110.99 367.31 110.55L368.42 110.74Q368.41 111.26 368.26 111.71Q368.11 112.17 367.79 112.51Q367.47 112.85 366.96 113.04Q366.45 113.23 365.73 113.23ZM375.1 113.1V106.5H376.37V113.1ZM373.13 107.57V106.5H378.34V107.57ZM386.13 113.23Q385.41 113.23 384.85 113Q384.28 112.77 383.88 112.33Q383.49 111.9 383.29 111.27Q383.08 110.64 383.08 109.83Q383.08 108.66 383.48 107.89Q383.88 107.13 384.58 106.75Q385.28 106.37 386.16 106.37Q386.85 106.37 387.41 106.59Q387.97 106.82 388.37 107.25Q388.77 107.69 388.99 108.33Q389.21 108.98 389.21 109.81Q389.21 110.64 389 111.28Q388.78 111.91 388.38 112.34Q387.98 112.78 387.41 113Q386.84 113.23 386.13 113.23ZM386.16 112.21Q386.72 112.21 387.11 111.94Q387.5 111.66 387.71 111.14Q387.91 110.62 387.91 109.87Q387.91 109.1 387.7 108.55Q387.49 108 387.1 107.72Q386.7 107.43 386.13 107.43Q385.58 107.43 385.19 107.7Q384.79 107.98 384.58 108.51Q384.37 109.05 384.37 109.82Q384.37 110.4 384.49 110.84Q384.61 111.29 384.84 111.59Q385.06 111.89 385.39 112.05Q385.73 112.21 386.16 112.21Z" fill="currentColor" stroke="none"/><g transform="translate(197,42.1) scale(0.495)"><path d="M59.3,34.32 A28,35.25 0 1 0 59.3,84.18 M75.5,55.5 L75.5,77.5 A17,17 0 0 0 109.5,77.5 M109.5,55.5 L109.5,94.5 M130,94.5 L130,74 C130,66 140,52 143.5,52 C147,52 157,66 157,74 L157,94.5 M157,74 C157,64 171,40 175,40 C179,40 191,62 191,72 L191,94.5 M211.5,22 L211.5,94.5 M271.5,57 L271.5,94.5 M271.5,73 C274,61 284,55 293,56.5 C299,57.5 301,62.5 296.5,64.5 M317.5,75 L356.5,75 A19.5,19.5 0 1 0 350.8,88.8 M405,94.5 L405,24 L433,24 M405,57 L427,57 M448,75 L487,75 A19.5,19.5 0 1 0 481.3,88.8 M510.5,22 L510.5,84 C510.5,92 514.5,95.5 521.5,94.5 C528.5,93.5 534.5,86 538,76 M538,60 L538,94.5 M558.5,55.5 L593.5,55.5 L558.5,94.5 L586.5,94.5 C596.5,94.5 601.5,99 603.5,107" stroke="currentColor" stroke-width="11"/><circle cx="231" cy="75" r="19.5" stroke="currentColor" stroke-width="11"/><g transform="translate(538,40) scale(0.22)"><use href="#cfl-p"/><use href="#cfl-p" transform="rotate(51.43)"/><use href="#cfl-p" transform="rotate(102.86)"/><use href="#cfl-p" transform="rotate(154.29)"/><use href="#cfl-p" transform="rotate(205.71)"/><use href="#cfl-p" transform="rotate(257.14)"/><use href="#cfl-p" transform="rotate(308.57)"/><circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></g></g></svg></div>
+    <p class="eyebrow">Mira · Siente · Escribe</p>
+    <h1>Bitácora Flow <span class="tag">Nuevo</span></h1>
+    <p class="lede">El juego hermano del Bingo Flow. Tómale foto a lo que viste, oíste, oliste, tocaste y sentiste, y escribe una palabra al lado. Tu bitácora es tuya.</p>
+  </div>
+</header>
+
+<main class="wrap" lang="es">
+  <p class="aviso" id="aviso" role="status" hidden></p>
+  <noscript>
+    <style>main.wrap > :not(noscript):not(.notes):not(.dl):not(.autoria){ display:none !important; }</style>
+    <div class="nojs"><strong>Para jugar, abre el enlace</strong>Estás viendo el archivo en vista previa. Abre el enlace del juego en Safari o Chrome. Abajo puedes bajar el cartón para imprimir.</div>
+  </noscript>
+
+  <p class="kicker">Elige tu edición</p>
+  <div class="eds" id="eds" role="group" aria-label="Edición del cartón"></div>
+  <p class="lema" id="lema"></p>
+
+  <div class="field">
+    <label for="lugar">¿Dónde caminas hoy?</label>
+    <input type="text" id="lugar" maxlength="40" autocomplete="off" placeholder="Ej.: Sabas Nieves, Caracas">
+  </div>
+
+  <section class="card" id="carton" aria-label="Tu cartón de los sentidos">
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="detalle" id="detalle" hidden aria-label="Tu casilla">
+    <div class="dhead"><span class="sic" id="dic"></span><span class="dlab" id="dlab"></span><button type="button" class="dclose" id="dclose">Cerrar</button></div>
+    <img class="dimg" id="dimg" alt="">
+    <p class="dprompt" id="dprompt"></p>
+    <label class="caplabel" for="palabra" id="dpreg"></label>
+    <textarea class="txt" id="palabra" rows="2" maxlength="120" placeholder="Una palabra o una línea"></textarea>
+    <div class="actions">
+      <label class="btn" id="dfoto-lbl" for="dfoto"><span id="dfoto-txt">Cambiar foto</span><input type="file" class="vh" id="dfoto" accept="image/*"></label>
+      <button type="button" class="btn" id="dquitar">Quitar foto</button>
+    </div>
+    <div class="comodin" id="comodin"></div>
+  </section>
+
+  <div class="progress" aria-live="polite">
+    <span class="count" id="count">0/9<small>completas</small></span>
+    <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  </div>
+  <p class="hint">Una casilla está completa cuando tiene foto y palabra.</p>
+  <div class="banner" id="banner" role="status" hidden><span class="bw" id="bw"></span><span class="bs" id="bs"></span></div>
+
+  <div class="actions">
+    <button type="button" class="btn primary" id="armar" disabled>Armar mi historia</button>
+    <button type="button" class="btn" id="nuevo">Cartón nuevo</button>
+  </div>
+
+  <section class="result" id="result" hidden>
+    <h2>Tu historia, si quieres compartirla</h2>
+    <p class="hint">Solo salen tus líneas de los sentidos: vi, escuché, olí, toqué y saboreé. Lo demás se queda en tu teléfono.</p>
+    <span class="caplabel">Foto de fondo</span>
+    <div class="fondos" id="fondos"></div>
+    <img class="preview" id="story-img" alt="Tu historia de Bitácora Flow">
+    <div class="actions">
+      <button type="button" class="btn primary" id="compartir" hidden>Compartir imagen</button>
+      <button type="button" class="btn" id="guardar">Guardar imagen</button>
+      <a class="btn" id="wa" href="https://wa.me/" target="_blank" rel="noopener">Abrir WhatsApp</a>
+      <button type="button" class="btn" id="copiar">Copiar texto</button>
+    </div>
+    <p class="hint">Si no puedes guardarla con el botón, mantén presionada la imagen y elige guardar.</p>
+    <label class="caplabel" for="msg">Texto para tu publicación</label>
+    <textarea class="msg" id="msg" rows="3" readonly></textarea>
+  </section>
+
+  <section class="privada" id="privada" aria-labelledby="priv-t">
+    <h2 id="priv-t"><svg viewBox="0 0 24 24" fill="none" stroke="#C2456F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5,11 V8 A4.5,4.5 0 0 1 16.5,8 V11"/><path d="M6,11 H18 A1.5,1.5 0 0 1 19.5,12.5 V19 A1.5,1.5 0 0 1 18,20.5 H6 A1.5,1.5 0 0 1 4.5,19 V12.5 A1.5,1.5 0 0 1 6,11 Z"/></svg>Mi página de bitácora</h2>
+    <p class="hint" style="color:var(--ink)"><strong>Tu bitácora es tuya.</strong> Esta página se guarda solo en este teléfono y nadie más la ve. Guárdala como imagen para armar tu diario de cumbres.</p>
+    <div class="field"><label for="km">Km de hoy</label><input type="text" id="km" maxlength="10" inputmode="decimal" placeholder="Ej.: 5"></div>
+    <div class="field"><span class="caplabel" id="llegue-t">Cómo llegué (1 a 5)</span><div class="escala" id="llegue" role="radiogroup" aria-labelledby="llegue-t"></div></div>
+    <div class="field"><span class="caplabel" id="baje-t">Cómo bajé (1 a 5)</span><div class="escala baje" id="baje" role="radiogroup" aria-labelledby="baje-t"></div></div>
+    <div class="field"><label for="palabra-dia">Una palabra para hoy</label><input type="text" id="palabra-dia" maxlength="30" autocomplete="off"></div>
+    <div class="field"><label for="llevo">Me llevo de la cumbre…</label><textarea class="txt" id="llevo" rows="3" maxlength="240"></textarea></div>
+    <div class="actions"><button type="button" class="btn primary" id="armar-pag">Guardar mi página como imagen</button></div>
+    <img class="preview" id="pag-img" alt="Tu página de bitácora" hidden>
+    <div class="actions" id="pag-acc" hidden>
+      <button type="button" class="btn primary" id="pag-share" hidden>Guardar en mi teléfono</button>
+      <button type="button" class="btn" id="pag-save">Descargar</button>
+    </div>
+  </section>
+
+  <section class="dl" aria-labelledby="dl-t">
+    <h2 id="dl-t">Para imprimir o usar sin internet</h2>
+    <ul>
+      <li><a href="bitacora/Bitacora-Flow-imprimible.pdf" download>Bitácora Flow para imprimir (PDF)</a> <small>· 7 hojas tamaño carta: cómo se juega, 5 cartones y la página</small></li>
+      <li><a href="bitacora/08-sticker-para-historias.png" download>Sticker para historias (PNG)</a> <small>· pégalo sobre tu foto en Instagram</small></li>
+      <li><a href="bitacora/02-carton-clasico.png" download>Cartón clásico</a> · <a href="bitacora/03-carton-del-color.png" download>Del color</a> · <a href="bitacora/04-carton-despues-de-la-lluvia.png" download>Después de la lluvia</a> · <a href="bitacora/05-carton-de-las-aves.png" download>De las aves</a> · <a href="bitacora/06-carton-de-cumpleanos.png" download>De cumpleaños</a> <small>(imágenes)</small></li>
+      <li><a href="bitacora/07-pagina-de-bitacora.png" download>Página de bitácora en blanco</a> · <a href="bitacora/01-como-se-juega.png" download>Cómo se juega</a></li>
+    </ul>
+  </section>
+
+  <div class="notes">
+    <section>
+      <h2>Cómo jugar</h2>
+      <ol>
+        <li>Elige tu edición y camina despacio, con tus cinco sentidos despiertos.</li>
+        <li>Toca una casilla para tomar la foto o elegirla de tu galería.</li>
+        <li>Al lado, escribe una palabra o una línea: lo que viste, oíste, oliste, tocaste o sentiste.</li>
+        <li><strong>Línea:</strong> 3 casillas seguidas con foto y palabra, en horizontal, vertical o diagonal. <strong>Cartón lleno:</strong> las 9, tu bitácora del día completa.</li>
+        <li><strong>Comodín:</strong> puedes cambiar 1 casilla por una que tú inventes. Toca el lápiz de la casilla.</li>
+        <li>En casa, llena tu página y guárdala como imagen. Si quieres, comparte tu historia con #BitacoraFlow.</li>
+      </ol>
+    </section>
+    <section>
+      <h2>Reglas de Cumbre Feliz</h2>
+      <ul>
+        <li><strong>Tu bitácora es tuya.</strong> Lo que escribes es solo para ti; compartir es opcional.</li>
+        <li><strong>La foto del centro la eliges tú:</strong> algo o alguien valioso, tu selfie o tu lugar favorito.</li>
+        <li>Para cada foto, detente. Mira tres segundos más antes de disparar.</li>
+        <li>Gente en la foto, solo con su permiso. Las plumas, las flores y las piedras se quedan en su lugar.</li>
+        <li>Después de la lluvia, sal solo cuando ya escampó y el camino esté seguro.</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="foot">Tus fotos y tus palabras se quedan en tu teléfono, en este navegador. Nadie más las ve hasta que tú compartes tu historia.</p>
+  <p class="autoria">Bitácora Flow es un juego creado por <strong>Alita</strong> para Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Prohibida su copia, reproducción o modificación sin autorización.</p>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var LS = "bitacora-flow-1";
+  var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  var DISPLAY = '"Fredoka", "Nunito", system-ui, sans-serif', BODY = '"Overpass", system-ui, sans-serif', MONO = '"Overpass Mono", ui-monospace, monospace';
+
+  /* Íconos de los sentidos (caja 24 × 24): "p" trazo, "c" círculo */
+  var ICONS = {
+    veo: [["p","M2.5,12 C5,7.5 8.5,5.5 12,5.5 C15.5,5.5 19,7.5 21.5,12 C19,16.5 15.5,18.5 12,18.5 C8.5,18.5 5,16.5 2.5,12 Z"],["c",12,12,3.2]],
+    escucho: [["c",4.8,12,1.4],["p","M8.5,8.8 C10.3,10.6 10.3,13.4 8.5,15.2"],["p","M12,6 C15.3,9.3 15.3,14.7 12,18"],["p","M15.5,3.4 C20.4,8.3 20.4,15.7 15.5,20.6"]],
+    huelo: [["p","M7.5,10.6 L9.6,12.6 L12,9.8 L14.4,12.6 L16.5,10.6 L16.5,14.6 C16.5,17.1 14.5,18.9 12,18.9 C9.5,18.9 7.5,17.1 7.5,14.6 Z"],["p","M12,18.9 L12,22"],["p","M8.8,7 C7.9,5.9 9.7,4.9 8.8,3.6"],["p","M12,6.6 C11.1,5.5 12.9,4.5 12,3.2"],["p","M15.2,7 C14.3,5.9 16.1,4.9 15.2,3.6"]],
+    toco: [["p","M7.2,13.5 L7.2,6.8 A1.6,1.6 0 0 1 10.4,6.8 L10.4,11.5"],["p","M10.4,11 L10.4,4.6 A1.6,1.6 0 0 1 13.6,4.6 L13.6,11"],["p","M13.6,11 L13.6,5.8 A1.6,1.6 0 0 1 16.8,5.8 L16.8,11.5"],["p","M16.8,9 A1.6,1.6 0 0 1 20,9 L20,14.5 A7,7 0 0 1 13,21.5 L12,21.5 C9.6,21.5 8.1,20.7 6.8,19.4 L3.6,16.2 A1.5,1.5 0 0 1 5.8,14.1 L7.2,15.5"]],
+    saboreo: [["p","M8.4,11.2 L12,21 L15.6,11.2"],["p","M7.4,11.2 C6.6,7.6 8.9,4.5 12,4.5 C15.1,4.5 17.4,7.6 16.6,11.2 Z"],["p","M9.6,14.2 L14.4,14.2"]],
+    respiro: [["p","M3,9 L13.6,9 C15.6,9 16.9,7.7 16.9,6.1 C16.9,4.6 15.7,3.6 14.3,3.6 C13,3.6 12.1,4.5 12,5.6"],["p","M3,13 L17.6,13 C19.6,13 20.9,14.4 20.9,15.9 C20.9,17.4 19.7,18.4 18.3,18.4 C17,18.4 16.1,17.5 16,16.4"],["p","M3,17 L9.5,17"]],
+    siento: [["p","M12,20 C6,15.5 3.5,12.5 3.5,9 C3.5,6.4 5.5,4.5 7.9,4.5 C9.6,4.5 11.1,5.4 12,6.9 C12.9,5.4 14.4,4.5 16.1,4.5 C18.5,4.5 20.5,6.4 20.5,9 C20.5,12.5 18,15.5 12,20 Z"]],
+    agradezco: [["p","M11,3.5 C11.6,8.4 13,9.8 17.9,10.4 C13,11 11.6,12.4 11,17.3 C10.4,12.4 9,11 4.1,10.4 C9,9.8 10.4,8.4 11,3.5 Z"],["p","M18.5,15.2 L18.5,20.2 M16,17.7 L21,17.7"]],
+    lapiz: [["p","M4.5,19.5 L5.3,15.9 L15.6,5.6 C16.4,4.8 17.6,4.8 18.4,5.6 C19.2,6.4 19.2,7.6 18.4,8.4 L8.1,18.7 Z"],["p","M14,7.2 L16.8,10"]]
+  };
+  var SENSES = [
+    { k:"veo", lab:"Veo", past:"Vi", bg:"#F2B90F", fg:"#1E4A3B" },
+    { k:"escucho", lab:"Escucho", past:"Escuché", bg:"#4A80D9", fg:"#FFFFFF" },
+    { k:"huelo", lab:"Huelo", past:"Olí", bg:"#E06E96", fg:"#FFFFFF" },
+    { k:"toco", lab:"Toco", past:"Toqué", bg:"#6E9C6A", fg:"#FFFFFF" },
+    { k:"centro", lab:"Mi momento", past:"Mi momento" },
+    { k:"saboreo", lab:"Saboreo", past:"Saboreé", bg:"#6B3FA8", fg:"#FFFFFF" },
+    { k:"respiro", lab:"Respiro", past:"Respiré", bg:"#8EC5E8", fg:"#1E4A3B" },
+    { k:"siento", lab:"Siento", past:"Sentí", bg:"#C2456F", fg:"#FFFFFF" },
+    { k:"agradezco", lab:"Agradezco", past:"Agradezco", bg:"#1E4A3B", fg:"#F2B90F" }
+  ];
+  var STORY_SENSES = [0, 1, 2, 3, 5];
+  var ED_ORDER = ["clasica", "color", "lluvia", "aves", "cumple"];
+  var EDITIONS = {
+    clasica: { nombre:"Clásica", lema:"Mira. Siente. Escribe.", c:{
+      veo:["Un detalle que nadie más vio","¿Qué tiene de especial?"],
+      escucho:["Lo que hace el sonido más bonito del camino","¿Cómo suena?"],
+      huelo:["Algo que huela rico: una flor, la tierra mojada","¿A qué te recuerda?"],
+      toco:["Tu mano sobre una textura: corteza, piedra u hoja","¿Cómo se siente?"],
+      centro:["Algo o alguien valioso, una selfie o tu lugar favorito","¿Por qué lo elegiste?"],
+      saboreo:["Lo que tomaste o comiste: agua fresca, fruta, un helado","¿A qué sabe tu cumbre?"],
+      respiro:["El lugar donde respiraste más profundo","¿Qué soltaste al exhalar?"],
+      siento:["Tus pies o tus zapatos en el camino","¿Cómo está tu cuerpo ahora?"],
+      agradezco:["Algo o alguien que agradeces hoy","Gracias por…"] } },
+    color: { nombre:"Del color", lema:"Encuentra la montaña en colores", c:{
+      veo:["Algo amarillo, como un araguaney","¿Dónde lo encontraste?"],
+      escucho:["Un sonido que venga de algo verde: hojas, ramas, viento","¿De qué color sería?"],
+      huelo:["Una flor morada, rosada o roja","¿A qué huele ese color?"],
+      toco:["Algo verde con textura: musgo, helecho u hoja","¿Suave, áspero o húmedo?"],
+      centro:["Tu foto más colorida del día","¿Qué color te llevas hoy?"],
+      saboreo:["Una fruta de color: mango, mandarina o parchita","¿De qué color es tu sabor?"],
+      respiro:["El azul más azul del cielo","¿Qué color tiene tu calma?"],
+      siento:["Tus zapatos o tu ropa junto al paisaje","¿Qué color eres hoy?"],
+      agradezco:["El color que más te alegró el día","Gracias por…"] } },
+    lluvia: { nombre:"Después de la lluvia", lema:"Sal cuando ya escampó y el camino esté seguro", c:{
+      veo:["Una gota colgando de una hoja","¿Qué se refleja en ella?"],
+      escucho:["La quebrada o el agua que corre","¿Cómo suena tras la lluvia?"],
+      huelo:["La tierra mojada","¿A qué te recuerda?"],
+      toco:["Una piedra o una hoja mojada","¿Fría, lisa o resbalosa?"],
+      centro:["Un charco que refleje el cielo, tu selfie o alguien valioso","¿Por qué lo elegiste?"],
+      saboreo:["Algo calientito al bajar: un café o un chocolate","¿Cómo te reconforta?"],
+      respiro:["El aire fresco después del aguacero","¿Qué soltaste al exhalar?"],
+      siento:["Tus zapatos con barro","¿Qué te dice tu cuerpo?"],
+      agradezco:["Algo que floreció con la lluvia","Gracias por…"] } },
+    aves: { nombre:"De las aves", lema:"Camina en silencio y escucha", c:{
+      veo:["Un ave posada o volando","¿De qué colores era?"],
+      escucho:["Un canto que no conocías","¿Cómo lo escribirías?"],
+      huelo:["Las flores donde comen los colibríes","¿Qué aroma tienen?"],
+      toco:["Una pluma caída: tócala, tómale foto y déjala en su lugar","¿Cómo se siente?"],
+      centro:["El ave más bonita que veas, tu selfie o tu lugar favorito","¿Por qué lo elegiste?"],
+      saboreo:["Tu merienda, mirando el paisaje","¿A qué sabe entre cantos?"],
+      respiro:["Un rincón en silencio donde solo se oigan aves","¿Cuántos cantos contaste?"],
+      siento:["Tus pies quietos mientras escuchas","¿Qué sentiste en la quietud?"],
+      agradezco:["Un árbol que les da casa a las aves","Gracias por…"] } },
+    cumple: { nombre:"De cumpleaños", lema:"Celebra tu nuevo año en tu lugar feliz", c:{
+      veo:["Tu lugar feliz en la montaña","¿Por qué es tu lugar feliz?"],
+      escucho:["A quien te cante el cumpleaños","¿Qué sentiste al oírlo?"],
+      huelo:["Una flor para la cumpleañera","¿A qué huele tu nuevo año?"],
+      toco:["La mano de alguien que te acompañó","¿Qué le dirías?"],
+      centro:["Tu selfie de cumpleaños en la cumbre","¿Qué le pides a tu año?"],
+      saboreo:["Tu torta, tu helado o tu brindis en la cima","¿A qué sabe celebrar así?"],
+      respiro:["El lugar donde pides tu deseo","Tu deseo (es solo tuyo)"],
+      siento:["Tus pies en tu primera cumbre de este año","¿Cómo llegas a esta edad?"],
+      agradezco:["Algo del año que termina","Gracias por…"] } }
+  };
+
+  /* ---------- utilidades ---------- */
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (ch) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[ch]; }); }
+  function rid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+  function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function fmtLong(d) { try { return d.toLocaleDateString("es", { day:"numeric", month:"long", year:"numeric" }); } catch (e) { return ymd(d); } }
+  function iconSvg(k, color) {
+    if (!ICONS[k]) return "";
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      ICONS[k].map(function (p) { return p[0] === "p" ? '<path d="' + p[1] + '"/>' : '<circle cx="' + p[1] + '" cy="' + p[2] + '" r="' + p[3] + '"/>'; }).join("") + "</svg>";
+  }
+  var ROSA_SVG = (function () {
+    var petals = ""; for (var i = 0; i < 7; i++) petals += '<path transform="rotate(' + (i * 51.43).toFixed(2) + ')" d="M0,-5 C-9,-13 -13,-33 -7,-43 C-3,-48 3,-48 7,-43 C13,-33 9,-13 0,-5 Z" fill="url(#bf-rg)"/>';
+    return '<svg viewBox="-50 -50 100 100" aria-hidden="true"><defs><linearGradient id="bf-rg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8325F"/><stop offset="0.45" stop-color="#E06E96"/><stop offset="1" stop-color="#F7B7CB"/></linearGradient></defs>' + petals +
+      '<circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></svg>';
+  })();
+  function senseIcon(s) {
+    var S = SENSES[s];
+    if (S.k === "centro") return '<span class="sic" style="background:transparent">' + ROSA_SVG.replace('<svg ', '<svg style="width:100%;height:100%" ') + "</span>";
+    return '<span class="sic" style="background:' + S.bg + '">' + iconSvg(S.k, S.fg) + "</span>";
+  }
+
+  /* ---------- estado ---------- */
+  function blankCard(ed) { return { id:rid(), ed:ed, filled:[false,false,false,false,false,false,false,false,false], words:["","","","","","","","",""], comodin:{ s:-1, text:"" } }; }
+  function blankPage() { return { km:"", llegue:0, baje:0, palabra:"", llevo:"" }; }
+  var state = { lugar:"", card:blankCard("clasica"), pagina:blankPage(), fondo:-1 };
+  var urls = {}, sel = -1, idbOk = true, lastStory = null, lastPage = null, lastWin = null;
+
+  function str(v, n) { return typeof v === "string" ? v.slice(0, n) : ""; }
+  function cleanCard(c) {
+    if (!c || typeof c.id !== "string" || !/^[a-z0-9]{6,40}$/.test(c.id) || !EDITIONS[c.ed] || !Array.isArray(c.filled) || c.filled.length !== 9 || !Array.isArray(c.words) || c.words.length !== 9) return null;
+    var com = c.comodin && typeof c.comodin.s === "number" && c.comodin.s >= -1 && c.comodin.s < 9 && c.comodin.s % 1 === 0 ? { s:c.comodin.s, text:str(c.comodin.text, 60) } : { s:-1, text:"" };
+    return { id:c.id, ed:c.ed, filled:c.filled.map(function (f) { return !!f; }), words:c.words.map(function (w) { return str(w, 120); }), comodin:com };
+  }
+  function loadLocal() {
+    var s = null;
+    try { var raw = localStorage.getItem(LS); if (raw) s = JSON.parse(raw); } catch (e) { s = null; }
+    if (!s) return;
+    state.card = cleanCard(s.card) || state.card;
+    state.lugar = str(s.lugar, 40);
+    var p = s.pagina || {};
+    state.pagina = { km:str(p.km, 10), llegue:[1,2,3,4,5].indexOf(p.llegue) >= 0 ? p.llegue : 0, baje:[1,2,3,4,5].indexOf(p.baje) >= 0 ? p.baje : 0, palabra:str(p.palabra, 30), llevo:str(p.llevo, 240) };
+    state.fondo = typeof s.fondo === "number" && s.fondo >= -1 && s.fondo < 9 ? s.fondo : -1;
+  }
+  function saveLocal() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
+
+  /* ---------- fotos en el teléfono (IndexedDB) ---------- */
+  function openIdb() {
+    return new Promise(function (res) {
+      try {
+        var rq = indexedDB.open("bitacora-flow", 1);
+        rq.onupgradeneeded = function () { rq.result.createObjectStore("fotos"); };
+        rq.onsuccess = function () { res(rq.result); };
+        rq.onerror = function () { res(null); };
+        rq.onblocked = function () { res(null); };
+      } catch (e) { res(null); }
+    });
+  }
+  var idbReady = openIdb();
+  function idbOp(mode, fn) {
+    return idbReady.then(function (db) {
+      if (!db) return null;
+      return new Promise(function (res) {
+        try {
+          var tx = db.transaction("fotos", mode), st = tx.objectStore("fotos"), out = { v:null };
+          fn(st, out);
+          tx.oncomplete = function () { res(out.v === null ? true : out.v); };
+          tx.onerror = tx.onabort = function () { res(null); };
+        } catch (e) { res(null); }
+      });
+    });
+  }
+  function idbPut(k, blob) { return idbOp("readwrite", function (st) { st.put(blob, k); }); }
+  function idbDel(k) { return idbOp("readwrite", function (st) { st.delete(k); }); }
+  function idbGet(k) { return idbOp("readonly", function (st, out) { var rq = st.get(k); rq.onsuccess = function () { out.v = rq.result || false; }; }).then(function (v) { return v instanceof Blob ? v : null; }); }
+
+  /* ---------- lógica ---------- */
+  function ed() { return EDITIONS[state.card.ed]; }
+  function prompt(s) { var c = state.card; return c.comodin.s === s && c.comodin.text.trim() ? c.comodin.text.trim() : ed().c[SENSES[s].k][0]; }
+  function question(s) { return ed().c[SENSES[s].k][1]; }
+  function complete(s) { return state.card.filled[s] && state.card.words[s].trim().length > 0; }
+  function completeArr() { var a = []; for (var s = 0; s < 9; s++) a.push(complete(s)); return a; }
+  function linesOf(arr) { return LINES.filter(function (L) { return L.every(function (s) { return arr[s]; }); }); }
+  function photoCount() { return state.card.filled.filter(Boolean).length; }
+  function hasAny() { var c = state.card; return photoCount() > 0 || c.words.some(function (w) { return w.trim(); }) || !!c.comodin.text.trim(); }
+
+  var avisoEl = $("aviso"), avisoTimer = null;
+  function aviso(msg) { avisoEl.textContent = msg; avisoEl.hidden = false; clearTimeout(avisoTimer); avisoTimer = setTimeout(function () { avisoEl.hidden = true; }, 6500); }
+
+  /* confirmación en dos toques */
+  var armedBtn = null, armTimer = null, armedLabel = "";
+  function disarm() { if (armedBtn) { armedBtn.classList.remove("armed"); armedBtn.textContent = armedLabel; armedBtn = null; } clearTimeout(armTimer); }
+  function confirmTap(btn, needed, label) {
+    if (!needed) { disarm(); return true; }
+    if (armedBtn === btn) { disarm(); return true; }
+    disarm(); armedBtn = btn; armedLabel = btn.textContent;
+    btn.classList.add("armed"); btn.textContent = label; armTimer = setTimeout(disarm, 3500);
+    return false;
+  }
+
+  /* ---------- pintar ---------- */
+  function renderEds() {
+    $("eds").innerHTML = ED_ORDER.map(function (k) {
+      return '<button type="button" class="ed" data-ed="' + k + '" aria-pressed="' + (k === state.card.ed) + '">' + esc(EDITIONS[k].nombre) + "</button>";
+    }).join("");
+    $("lema").textContent = ed().lema;
+    var card = $("carton"); card.className = "card e-" + state.card.ed;
+  }
+  function renderGrid() {
+    var c = state.card, win = {}, ls = linesOf(completeArr());
+    ls.forEach(function (L) { L.forEach(function (s) { win[s] = 1; }); });
+    var html = "";
+    for (var s = 0; s < 9; s++) {
+      var S = SENSES[s], key = c.id + ":" + s, url = urls[key], filled = c.filled[s], word = c.words[s].trim(), isCom = c.comodin.s === s;
+      html += '<div class="tile' + (s === 4 ? " center" : "") + (s === sel ? " sel" : "") + (win[s] ? " win" : "") + '">';
+      if (filled) {
+        html += '<button type="button" class="tbtn" data-s="' + s + '" aria-label="' + esc(S.lab + ": " + prompt(s) + (word ? ". Escribiste: " + word : ". Falta tu palabra")) + '">';
+        if (url) html += '<img src="' + esc(url) + '" alt="">'; else html += '<span class="loading">Cargando foto…</span>';
+        html += '<span class="thead">' + senseIcon(s) + "</span>";
+        html += '<span class="cap">' + esc(S.lab) + (word ? "<i>" + esc(word) + "</i>" : '<br><span class="falta-p">Falta tu palabra</span>') + "</span></button>";
+      } else {
+        html += '<label class="tlabel" for="foto-' + s + '"><input type="file" class="vh" id="foto-' + s + '" accept="image/*" data-s="' + s + '">' +
+          '<span class="thead">' + senseIcon(s) + '<span class="slab">' + esc(S.lab) + "</span></span>" +
+          (isCom ? '<span class="tag-com">Comodín</span>' : "") +
+          '<span class="td">' + esc(prompt(s)) + "</span>" +
+          '<span class="add">' + (word ? "Foto · ya escribiste" : "Foto") + "</span></label>" +
+          '<button type="button" class="pen" data-pen="' + s + '" aria-label="Abrir la casilla ' + esc(S.lab) + ' para escribir o usar tu comodín">' + iconSvg("lapiz", "#15251B") + "</button>";
+      }
+      html += "</div>";
+    }
+    $("grid").innerHTML = html;
+  }
+  function renderDetail() {
+    var d = $("detalle");
+    if (sel < 0) { d.hidden = true; return; }
+    var c = state.card, s = sel, S = SENSES[s], url = urls[c.id + ":" + s];
+    d.hidden = false;
+    $("dic").outerHTML = senseIcon(s).replace('class="sic"', 'class="sic" id="dic"');
+    $("dlab").textContent = S.lab;
+    var img = $("dimg"); if (c.filled[s] && url) { img.src = url; img.hidden = false; } else { img.removeAttribute("src"); img.hidden = true; }
+    $("dprompt").textContent = prompt(s);
+    $("dpreg").textContent = question(s);
+    var ta = $("palabra"); if (document.activeElement !== ta) ta.value = c.words[s];
+    $("dfoto-txt").textContent = c.filled[s] ? "Cambiar foto" : "Agregar foto";
+    $("dquitar").hidden = !c.filled[s];
+    var com = $("comodin"), cs = c.comodin.s;
+    if (cs === -1) com.innerHTML = '<button type="button" class="linkbtn" id="com-usar">Usar mi comodín en esta casilla</button><span>Cambia lo que pide esta casilla por algo que tú inventes. Solo tienes uno por cartón.</span>';
+    else if (cs === s) {
+      if (!$("com-txt")) com.innerHTML = '<label class="caplabel" for="com-txt">Tu comodín: ¿qué quieres buscar?</label><input type="text" class="txt" id="com-txt" maxlength="60" placeholder="Ej.: una flor blanca">' +
+        '<button type="button" class="linkbtn" id="com-quitar">Quitar mi comodín</button>';
+      var ct = $("com-txt"); if (document.activeElement !== ct) ct.value = c.comodin.text;
+    } else com.innerHTML = "<span>Ya usaste tu comodín en la casilla " + esc(SENSES[cs].lab) + ".</span>";
+  }
+  function renderStatus() {
+    var arr = completeArr(), n = arr.filter(Boolean).length, ls = linesOf(arr);
+    $("count").innerHTML = n + "/9<small>completas</small>";
+    $("barfill").style.width = Math.round(n / 9 * 100) + "%";
+    $("armar").disabled = !(photoCount() > 0 || STORY_SENSES.some(function (s) { return state.card.words[s].trim(); }));
+    var nuevo = $("nuevo"); if (nuevo !== armedBtn) nuevo.textContent = "Cartón nuevo";
+    var key = n === 9 ? "lleno" : ls.length ? "l" + ls.length : "", b = $("banner");
+    if (key) {
+      b.hidden = false;
+      if (n === 9) { $("bw").textContent = "¡Cartón lleno!"; $("bs").textContent = "Tu bitácora del día está completa. Llena tu página abajo."; }
+      else { $("bw").textContent = "¡Línea!"; $("bs").textContent = ls.length === 1 ? "3 casillas seguidas con foto y palabra" : ls.length + " líneas con foto y palabra"; }
+      if (lastWin !== null && key !== lastWin) { b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
+    } else b.hidden = true;
+    lastWin = key;
+  }
+  function renderPage() {
+    var p = state.pagina;
+    ["llegue", "baje"].forEach(function (k) {
+      $(k).innerHTML = [1,2,3,4,5].map(function (v) {
+        return '<label><input type="radio" name="' + k + '" value="' + v + '"' + (p[k] === v ? " checked" : "") + ' aria-label="' + v + ' de 5"><span>' + v + "</span></label>";
+      }).join("");
+    });
+    $("km").value = p.km; $("palabra-dia").value = p.palabra; $("llevo").value = p.llevo;
+  }
+  function render() { renderEds(); renderGrid(); renderDetail(); renderStatus(); }
+
+  /* ---------- fotos ---------- */
+  function loadImg(src) { return new Promise(function (res) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { res(null); }; im.src = src; }); }
+  function shrink(file) {
+    var u = URL.createObjectURL(file);
+    return loadImg(u).then(function (im) {
+      URL.revokeObjectURL(u);
+      if (!im || !im.naturalWidth) throw new Error("decode");
+      var max = 1400, w = im.naturalWidth, h = im.naturalHeight, sc = Math.min(1, max / Math.max(w, h));
+      var cw = Math.round(w * sc), ch = Math.round(h * sc), cv = document.createElement("canvas");
+      cv.width = cw; cv.height = ch; cv.getContext("2d").drawImage(im, 0, 0, cw, ch);
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("encode")); }, "image/jpeg", 0.84); });
+    });
+  }
+  function takePhoto(s, file) {
+    var card = state.card, key = card.id + ":" + s;
+    return shrink(file).then(function (blob) {
+      if (state.card !== card) return;
+      if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (e) {} }
+      urls[key] = URL.createObjectURL(blob);
+      card.filled[s] = true; sel = s; lastStory = null; $("result").hidden = true;
+      saveLocal(); render();
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      try { $("detalle").scrollIntoView({ block:"start", behavior:reduce ? "auto" : "smooth" }); } catch (e) {}
+      idbPut(key, blob).then(function (ok) { if (!ok && idbOk) { idbOk = false; aviso("Este navegador no deja guardar las fotos: arma tu historia y guarda tu página antes de cerrar."); } });
+    }).catch(function () { aviso("No pude leer esa foto. Prueba con otra o con una captura de pantalla."); });
+  }
+  $("grid").addEventListener("change", function (e) {
+    var input = e.target; if (!input || input.type !== "file") return;
+    var s = Number(input.getAttribute("data-s")), file = input.files && input.files[0];
+    input.value = ""; if (file) takePhoto(s, file);
+  });
+  $("dfoto").addEventListener("change", function () {
+    var file = this.files && this.files[0]; this.value = "";
+    if (file && sel >= 0) takePhoto(sel, file);
+  });
+  $("grid").addEventListener("click", function (e) {
+    var b = e.target.closest(".tbtn, .pen"); if (!b) return;
+    sel = Number(b.getAttribute("data-s") || b.getAttribute("data-pen"));
+    renderGrid(); renderDetail();
+    try { $("detalle").scrollIntoView({ block:"nearest" }); } catch (err) {}
+  });
+  $("dclose").addEventListener("click", function () { var s = sel; sel = -1; renderGrid(); renderDetail(); var t = document.querySelector('.tbtn[data-s="' + s + '"], .pen[data-pen="' + s + '"]'); if (t) t.focus(); });
+  $("palabra").addEventListener("input", function () {
+    if (sel < 0) return;
+    state.card.words[sel] = this.value.slice(0, 120); lastStory = null;
+    saveLocal(); renderGrid(); renderStatus();
+  });
+  $("dquitar").addEventListener("click", function () {
+    if (sel < 0 || !confirmTap(this, true, "¿Quitar la foto?")) return;
+    var c = state.card, key = c.id + ":" + sel;
+    if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (e) {} delete urls[key]; }
+    c.filled[sel] = false; idbDel(key); lastStory = null; saveLocal(); render();
+  });
+  $("comodin").addEventListener("click", function (e) {
+    var c = state.card;
+    if (e.target.id === "com-usar" && sel >= 0) { c.comodin = { s:sel, text:"" }; saveLocal(); renderDetail(); renderGrid(); var ct = $("com-txt"); if (ct) ct.focus(); }
+    else if (e.target.id === "com-quitar") { c.comodin = { s:-1, text:"" }; saveLocal(); render(); }
+  });
+  $("comodin").addEventListener("input", function (e) {
+    if (e.target.id !== "com-txt") return;
+    state.card.comodin.text = e.target.value.slice(0, 60); saveLocal();
+    $("dprompt").textContent = prompt(sel); renderGrid();
+  });
+
+  function resetCard(edKey) {
+    var c = state.card;
+    for (var s = 0; s < 9; s++) { var key = c.id + ":" + s; if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (e) {} delete urls[key]; } if (c.filled[s]) idbDel(key); }
+    state.card = blankCard(edKey); state.pagina = blankPage(); state.fondo = -1; sel = -1; lastWin = null; lastStory = null; lastPage = null;
+    $("result").hidden = true; $("pag-img").hidden = true; $("pag-acc").hidden = true;
+    saveLocal(); render(); renderPage();
+  }
+  $("eds").addEventListener("click", function (e) {
+    var b = e.target.closest(".ed"); if (!b) return;
+    var k = b.getAttribute("data-ed"); if (k === state.card.ed) return;
+    if (!confirmTap(b, hasAny(), "Se borra tu cartón. Toca otra vez")) return;
+    resetCard(k);
+  });
+  $("nuevo").addEventListener("click", function () {
+    if (!confirmTap(this, hasAny(), "Se borran tus fotos y palabras. Toca otra vez")) return;
+    resetCard(state.card.ed);
+  });
+  $("lugar").addEventListener("input", function () { state.lugar = this.value.slice(0, 40); lastStory = null; saveLocal(); });
+
+  /* ---------- página privada: campos ---------- */
+  $("km").addEventListener("input", function () { state.pagina.km = this.value.slice(0, 10); saveLocal(); });
+  $("palabra-dia").addEventListener("input", function () { state.pagina.palabra = this.value.slice(0, 30); saveLocal(); });
+  $("llevo").addEventListener("input", function () { state.pagina.llevo = this.value.slice(0, 240); saveLocal(); });
+  ["llegue", "baje"].forEach(function (k) { $(k).addEventListener("change", function (e) { state.pagina[k] = Number(e.target.value) || 0; saveLocal(); }); });
+
+  /* ---------- dibujo en canvas ---------- */
+  function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+  function wrapText(g, text, maxW) {
+    var words = String(text).split(/\s+/).filter(Boolean), lines = [], cur = "";
+    words.forEach(function (w) { var t = cur ? cur + " " + w : w; if (g.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; });
+    if (cur) lines.push(cur); return lines;
+  }
+  function clampLines(g, lines, n, maxW) {
+    if (lines.length <= n) return lines;
+    var out = lines.slice(0, n), last = out[n - 1] + "…";
+    while (g.measureText(last).width > maxW && last.length > 2) last = last.slice(0, -2) + "…";
+    out[n - 1] = last; return out;
+  }
+  var P = null;
+  function paths() {
+    if (!P) P = {
+      petal: new Path2D("M0,-5 C-9,-13 -13,-33 -7,-43 C-3,-48 3,-48 7,-43 C13,-33 9,-13 0,-5 Z"),
+      rays: new Path2D("M141,19.5 L141,15 M148.75,21.58 L151,17.68 M133.25,21.58 L131,17.68 M154.42,27.25 L158.32,25 M127.58,27.25 L123.68,25"),
+      blue: new Path2D("M98,80 L106,80 C109,80 111,71 116,67.6 C119,65.4 122.5,64 126,64 C130,64 134,66 136.6,68.4 C138.6,70.3 139.6,72.6 140.6,72.6 C141.8,72.6 142.6,67 145.6,61.6 C149,55.6 154,50 161,50 C168,50 173,54 177,58.6 C181,63.4 185,70 189,78.4"),
+      mark: new Path2D("M74.8,90.7 A34,34 0 1 0 74.8,141.3 M94,152 L94,90 L108,90 C116,90 120,74 126,74 C132,74 134,84 140,84 C148,84 154,60 162,60 C170,60 176,78 184,90 M94,120 L118,120"),
+      stem: new Path2D("M126,68.5 C126,64.5 125.8,61.2 125.5,58.3")
+    };
+    return P;
+  }
+  function drawRose(g, cx, cy, k) {
+    var Q = paths(); g.save(); g.translate(cx, cy); g.scale(k, k);
+    var rg = g.createLinearGradient(0, 46, 0, -46); rg.addColorStop(0, "#B8325F"); rg.addColorStop(0.45, "#E06E96"); rg.addColorStop(1, "#F7B7CB");
+    g.fillStyle = rg; for (var i = 0; i < 7; i++) { g.save(); g.rotate(i * Math.PI * 2 / 7); g.fill(Q.petal); g.restore(); }
+    g.globalAlpha = 0.3; g.fillStyle = "#9E2450"; g.beginPath(); g.arc(0, 0, 11, 0, Math.PI * 2); g.fill(); g.globalAlpha = 1;
+    g.fillStyle = "#E9D98A"; g.beginPath(); g.arc(0, 0, 7.5, 0, Math.PI * 2); g.fill();
+    g.fillStyle = "#8FA94C"; g.beginPath(); g.arc(0, 0, 3.2, 0, Math.PI * 2); g.fill(); g.restore();
+  }
+  /* Isotipo: cuadrado verde redondeado con la CF en crema */
+  function drawIso(g, x, y, size) {
+    var Q = paths(), k = size / 200;
+    g.save(); g.translate(x, y); g.scale(k, k);
+    roundRect(g, 8, 8, 184, 184, 46); g.fillStyle = "#1E4A3B"; g.fill();
+    g.translate(20.75, 33.4); g.scale(0.78, 0.78); g.lineCap = "round"; g.lineJoin = "round";
+    g.fillStyle = "#F2B90F"; g.beginPath(); g.arc(141, 35, 11, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = "#F2B90F"; g.lineWidth = 3.3; g.stroke(Q.rays);
+    g.strokeStyle = "#8EC5E8"; g.lineWidth = 3.2; g.stroke(Q.blue);
+    g.strokeStyle = "#F3F5EF"; g.lineWidth = 11; g.stroke(Q.mark);
+    g.strokeStyle = "#9ED3A8"; g.lineWidth = 1.3; g.stroke(Q.stem);
+    drawRose(g, 125.5, 52, 0.13); g.restore();
+  }
+  function drawSense(g, s, cx, cy, d) {
+    var S = SENSES[s];
+    if (S.k === "centro") { drawRose(g, cx, cy, d / 100); return; }
+    g.save(); g.fillStyle = S.bg; g.beginPath(); g.arc(cx, cy, d / 2, 0, Math.PI * 2); g.fill();
+    var k = d * 0.62 / 24; g.translate(cx - 12 * k, cy - 12 * k); g.scale(k, k);
+    g.strokeStyle = S.fg; g.lineWidth = 1.8; g.lineCap = "round"; g.lineJoin = "round";
+    ICONS[S.k].forEach(function (p) { if (p[0] === "p") g.stroke(new Path2D(p[1])); else { g.beginPath(); g.arc(p[1], p[2], p[3], 0, Math.PI * 2); g.stroke(); } });
+    g.restore();
+  }
+  function cover(g, im, x, y, w, h) {
+    var iw = im.naturalWidth, ih = im.naturalHeight, k = Math.max(w / iw, h / ih), dw = w / k, dh = h / k;
+    g.drawImage(im, (iw - dw) / 2, (ih - dh) / 2, dw, dh, x, y, w, h);
+  }
+  function scenery(g, W, H) {
+    var sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, "#BFE0F2"); sky.addColorStop(0.46, "#E4F1F5"); sky.addColorStop(0.64, "#F8E9D9");
+    g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    var k = W / 340; g.save(); g.scale(k, k);
+    g.fillStyle = "#F2B90F"; g.beginPath(); g.arc(250, 150, 30, 0, Math.PI * 2); g.fill();
+    g.fillStyle = "#9DBF98"; g.fill(new Path2D("M0,330 C40,300 70,262 110,262 C150,262 168,300 200,296 C232,292 252,232 292,232 C316,232 330,248 340,258 L340,604 L0,604 Z"));
+    g.fillStyle = "#6E9C6A"; g.fill(new Path2D("M0,380 C34,360 62,330 98,330 C140,330 160,372 206,368 C246,364 270,318 310,318 C324,318 334,324 340,330 L340,604 L0,604 Z"));
+    g.fillStyle = "#3F6B4F"; g.fill(new Path2D("M0,440 C50,420 90,402 140,410 C190,418 220,446 270,440 C300,436 322,424 340,418 L340,604 L0,604 Z"));
+    g.restore();
+  }
+  function fontsReady() {
+    return (document.fonts && document.fonts.load) ? Promise.all([
+      document.fonts.load("600 64px " + DISPLAY), document.fonts.load("700 30px " + BODY), document.fonts.load("italic 400 30px " + BODY), document.fonts.load("600 24px " + MONO)
+    ]).catch(function () {}) : Promise.resolve();
+  }
+  function fondoIndex() {
+    var c = state.card;
+    if (state.fondo === -2) return -1;
+    if (state.fondo >= 0 && c.filled[state.fondo] && urls[c.id + ":" + state.fondo]) return state.fondo;
+    if (c.filled[4] && urls[c.id + ":4"]) return 4;
+    for (var s = 0; s < 9; s++) if (c.filled[s] && urls[c.id + ":" + s]) return s;
+    return -1;
+  }
+  function toBlob(cv) { return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("canvas")); }, "image/jpeg", 0.9); }); }
+
+  /* Historia 1080 × 1920: tu foto de fondo y la tarjeta con las líneas de los sentidos */
+  function buildStory() {
+    var c = state.card, fi = fondoIndex();
+    return fontsReady().then(function () { return fi >= 0 ? loadImg(urls[c.id + ":" + fi]) : null; }).then(function (im) {
+      var W = 1080, H = 1920, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      var g = cv.getContext("2d");
+      if (im) { cover(g, im, 0, 0, W, H); } else scenery(g, W, H);
+      var top = g.createLinearGradient(0, 0, 0, 360); top.addColorStop(0, "rgba(8,14,10,.45)"); top.addColorStop(1, "rgba(8,14,10,0)");
+      g.fillStyle = top; g.fillRect(0, 0, W, 360);
+      g.font = "700 30px " + MONO; var chip = "BITÁCORA FLOW", cw = g.measureText(chip).width + 56;
+      roundRect(g, 60, 72, cw, 68, 34); g.fillStyle = "#FFFFFF"; g.fill();
+      g.fillStyle = "#1E4A3B"; g.textBaseline = "middle"; g.fillText(chip, 88, 107);
+      var place = (state.lugar || "").trim(), sub = fmtLong(new Date()) + (place ? " · " + place : "") + (c.ed !== "clasica" ? " · " + ed().nombre : "");
+      g.font = "700 32px " + BODY; g.fillStyle = "#FFFFFF"; g.shadowColor = "rgba(0,0,0,.45)"; g.shadowBlur = 10;
+      g.fillText(clampLines(g, wrapText(g, sub, W - 120), 1, W - 120)[0], 62, 188); g.shadowBlur = 0; g.shadowColor = "transparent";
+      g.textBaseline = "alphabetic";
+
+      var CW = 960, PAD = 52, LABEL = "700 38px " + BODY, WORD = "italic 400 38px " + BODY, rows = [];
+      STORY_SENSES.forEach(function (s) {
+        var w = c.words[s].trim(); if (!w) return;
+        g.font = LABEL; var lw = g.measureText(SENSES[s].past + " ").width;
+        g.font = WORD; var lines = clampLines(g, wrapText(g, w, CW - PAD * 2 - 84 - lw), 2, CW - PAD * 2 - 84 - lw);
+        rows.push({ s:s, lw:lw, lines:lines });
+      });
+      var rowsH = rows.length ? rows.reduce(function (a, r) { return a + Math.max(70, r.lines.length * 50 + 20); }, 0) : 80;
+      var CH = PAD + 100 + 18 + rowsH + 70 + PAD - 20, cx = 60, cy = H - 110 - CH;
+      g.save(); g.translate(cx + CW / 2, cy + CH / 2); g.rotate(-0.026); g.translate(-(cx + CW / 2), -(cy + CH / 2));
+      g.shadowColor = "rgba(21,21,21,.28)"; g.shadowBlur = 40; g.shadowOffsetY = 14;
+      roundRect(g, cx, cy, CW, CH, 40); g.fillStyle = "#FFFFFF"; g.fill(); g.shadowColor = "transparent";
+      drawIso(g, cx + PAD - 8, cy + PAD - 8, 104);
+      g.fillStyle = "#1E4A3B"; g.font = "600 64px " + DISPLAY; g.fillText("Hoy en la cumbre…", cx + PAD + 116, cy + PAD + 66);
+      var y = cy + PAD + 118;
+      if (!rows.length) { g.fillStyle = "#C2456F"; g.font = "600 48px " + DISPLAY; g.fillText("Mira. Siente. Escribe.", cx + PAD, y + 54); y += 80; }
+      rows.forEach(function (r) {
+        var h = Math.max(70, r.lines.length * 50 + 20);
+        drawSense(g, r.s, cx + PAD + 30, y + 34, 60);
+        g.font = LABEL; g.fillStyle = "#1E4A3B"; g.fillText(SENSES[r.s].past, cx + PAD + 84, y + 48);
+        g.font = WORD; g.fillStyle = "#C2456F";
+        r.lines.forEach(function (t, i) { g.fillText(t, cx + PAD + 84 + r.lw, y + 48 + i * 50); });
+        y += h;
+      });
+      g.font = "700 28px " + MONO; g.fillStyle = "#3F6B5C"; g.fillText("#BitacoraFlow · @cumbrefeliz", cx + PAD, cy + CH - PAD + 6);
+      g.textAlign = "right"; g.font = "400 26px " + BODY; g.fillText("© Cumbre Feliz", cx + CW - PAD, cy + CH - PAD + 6); g.textAlign = "left";
+      g.restore();
+      return toBlob(cv);
+    });
+  }
+
+  /* Página privada 1080 × 1528, para el diario de cada una */
+  function buildPage() {
+    var c = state.card, p = state.pagina, fi = fondoIndex() >= 0 ? fondoIndex() : -1;
+    if (c.filled[4] && urls[c.id + ":4"]) fi = 4;
+    return fontsReady().then(function () { return fi >= 0 ? loadImg(urls[c.id + ":" + fi]) : null; }).then(function (im) {
+      var W = 1080, H = 1528, M = 72, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      var g = cv.getContext("2d"); g.fillStyle = "#FFFFFF"; g.fillRect(0, 0, W, H);
+      drawIso(g, M - 8, M - 10, 112);
+      g.fillStyle = "#1E4A3B"; g.font = "600 66px " + DISPLAY; g.fillText("Mi bitácora", M + 118, M + 56);
+      g.fillStyle = "#C2456F"; g.font = "600 24px " + MONO; g.fillText(("BITÁCORA FLOW · " + ed().nombre).toUpperCase(), M + 120, M + 92);
+      var place = (state.lugar || "").trim(), info = fmtLong(new Date()) + (place ? " · " + place : "") + (p.km.trim() ? " · " + p.km.trim() + " km" : "");
+      g.fillStyle = "#15251B"; g.font = "600 30px " + BODY; g.fillText(clampLines(g, wrapText(g, info, W - 2 * M), 1, W - 2 * M)[0], M, 200);
+      var py = 232, ph = 380;
+      g.save(); roundRect(g, M, py, W - 2 * M, ph, 24); g.clip();
+      if (im) cover(g, im, M, py, W - 2 * M, ph); else { g.fillStyle = "#F6F9F4"; g.fillRect(M, py, W - 2 * M, ph); }
+      g.restore();
+      if (!im) { g.save(); g.setLineDash([12, 10]); g.strokeStyle = "#A9C1A5"; g.lineWidth = 3; roundRect(g, M + 1.5, py + 1.5, W - 2 * M - 3, ph - 3, 23); g.stroke(); g.restore(); }
+      var y = py + ph + 40, maxRows = 0;
+      for (var s = 0; s < 9 && y < 1150; s++) {
+        var w = c.words[s].trim(); if (!w) continue; maxRows++;
+        drawSense(g, s, M + 22, y + 22, 44);
+        g.font = "700 30px " + BODY; g.fillStyle = "#1E4A3B"; var lab = SENSES[s].past + " ", lw = g.measureText(lab).width; g.fillText(lab, M + 62, y + 33);
+        g.font = "italic 400 30px " + BODY; g.fillStyle = "#C2456F"; g.fillText(clampLines(g, wrapText(g, w, W - 2 * M - 62 - lw), 1, W - 2 * M - 62 - lw)[0], M + 62 + lw, y + 33);
+        y += 58;
+      }
+      if (!maxRows) { g.font = "italic 400 30px " + BODY; g.fillStyle = "#556659"; g.fillText("Escribe tus palabras en el cartón y vuelve a guardar tu página.", M, y + 30); y += 58; }
+      y = Math.max(y + 24, 1120);
+      function dots(label, v, color, x) {
+        g.font = "700 28px " + BODY; g.fillStyle = "#15251B"; g.fillText(label, x, y);
+        for (var i = 1; i <= 5; i++) { var cx = x + 20 + (i - 1) * 50, cy = y + 38; g.beginPath(); g.arc(cx, cy, 18, 0, Math.PI * 2); if (i <= v) { g.fillStyle = color; g.fill(); } else { g.strokeStyle = color; g.lineWidth = 3; g.stroke(); } }
+      }
+      dots("Cómo llegué", p.llegue, "#7FA07B", M); dots("Cómo bajé", p.baje, "#C2456F", W / 2 + 10);
+      y += 106;
+      g.font = "700 28px " + BODY; g.fillStyle = "#15251B"; g.fillText("Una palabra para hoy:", M, y);
+      var pw = g.measureText("Una palabra para hoy: ").width; g.font = "600 34px " + DISPLAY; g.fillStyle = "#C2456F"; g.fillText(p.palabra.trim() || "—", M + pw, y);
+      y += 52; g.font = "700 28px " + BODY; g.fillStyle = "#15251B"; g.fillText("Me llevo de la cumbre…", M, y);
+      g.font = "italic 400 28px " + BODY; g.fillStyle = "#1E4A3B";
+      clampLines(g, wrapText(g, p.llevo.trim() || " ", W - 2 * M), 3, W - 2 * M).forEach(function (t, i) { g.fillText(t, M, y + 42 + i * 38); });
+      g.font = "700 22px " + BODY; g.fillStyle = "#C2456F"; g.fillText("Tu bitácora es tuya. Compartir es opcional.", M, H - 70);
+      g.textAlign = "right"; g.fillStyle = "#3F6B5C"; g.fillText("Llegas dudando. Bajas brillando.", W - M, H - 70); g.textAlign = "left";
+      g.font = "400 19px " + BODY; g.fillText("© 2026 Alita · Cumbre Feliz. Todos los derechos reservados. Prohibida su reproducción sin autorización.", M, H - 36);
+      return toBlob(cv);
+    });
+  }
+
+  /* ---------- historia: armar, compartir, guardar ---------- */
+  var canShareFiles = false;
+  try { canShareFiles = !!(navigator.share && navigator.canShare && navigator.canShare({ files: [new File([new Blob(["x"], { type: "image/jpeg" })], "x.jpg", { type: "image/jpeg" })] })); } catch (e) {}
+  function download(blob, name) {
+    var u = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href = u; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 4000);
+  }
+  function message() {
+    var place = (state.lugar || "").trim();
+    return "Hoy en mi Bitácora Flow de Cumbre Feliz miré, escuché y sentí el camino a mi ritmo" + (place ? ", en " + place : "") + ". Mira, siente, escribe. #BitacoraFlow #CumbreFeliz";
+  }
+  function renderFondos() {
+    var c = state.card, fi = fondoIndex(), html = "";
+    for (var s = 0; s < 9; s++) {
+      var u = urls[c.id + ":" + s]; if (!c.filled[s] || !u) continue;
+      html += '<button type="button" class="fondo" data-f="' + s + '" aria-pressed="' + (fi === s) + '" aria-label="Fondo: foto de ' + esc(SENSES[s].lab) + '"><img src="' + esc(u) + '" alt=""></button>';
+    }
+    html += '<button type="button" class="fondo" data-f="-2" aria-pressed="' + (fi === -1) + '">Dibujo</button>';
+    $("fondos").innerHTML = html;
+  }
+  function makeStory() {
+    return buildStory().then(function (blob) {
+      if (lastStory) { try { URL.revokeObjectURL(lastStory.url); } catch (e) {} }
+      lastStory = { blob:blob, url:URL.createObjectURL(blob), date:new Date() };
+      $("story-img").src = lastStory.url;
+      var text = message(); $("msg").value = text; $("wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
+      $("compartir").hidden = !canShareFiles; renderFondos(); $("result").hidden = false;
+    });
+  }
+  $("armar").addEventListener("click", function () {
+    var btn = this; btn.disabled = true; btn.textContent = "Armando…";
+    makeStory().then(function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      try { $("result").scrollIntoView({ block:"start", behavior:reduce ? "auto" : "smooth" }); } catch (e) {}
+    }).catch(function () { aviso("No se pudo armar tu historia. Revisa que tus fotos hayan cargado y vuelve a intentar."); })
+      .then(function () { btn.textContent = "Armar mi historia"; renderStatus(); });
+  });
+  $("fondos").addEventListener("click", function (e) {
+    var b = e.target.closest(".fondo"); if (!b) return;
+    state.fondo = Number(b.getAttribute("data-f")); saveLocal();
+    makeStory().catch(function () { aviso("No se pudo cambiar el fondo. Vuelve a intentar."); });
+  });
+  $("compartir").addEventListener("click", function () {
+    if (!lastStory) return;
+    var file = new File([lastStory.blob], "cumbre-feliz-bitacora-historia-" + ymd(lastStory.date) + ".jpg", { type:"image/jpeg" });
+    navigator.share({ files:[file] }).catch(function (e) { if (e && e.name === "AbortError") return; aviso("No se pudo abrir el menú para compartir. Toca Guardar imagen."); });
+  });
+  $("guardar").addEventListener("click", function () {
+    if (!lastStory) return;
+    try { download(lastStory.blob, "cumbre-feliz-bitacora-historia-" + ymd(lastStory.date) + ".jpg"); aviso("Imagen guardada. Súbela a tu historia si quieres."); }
+    catch (e) { aviso("No se pudo guardar con el botón. Mantén presionada la imagen y elige guardar."); }
+  });
+  $("copiar").addEventListener("click", function () {
+    var ta = $("msg"), text = ta.value, fallback = function () { ta.focus(); ta.select(); aviso("Texto seleccionado: cópialo y pégalo en tu publicación."); };
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { aviso("Texto copiado."); }, fallback); else fallback(); } catch (e) { fallback(); }
+  });
+
+  /* ---------- página: armar y guardar ---------- */
+  $("armar-pag").addEventListener("click", function () {
+    var btn = this; btn.disabled = true; btn.textContent = "Armando tu página…";
+    buildPage().then(function (blob) {
+      if (lastPage) { try { URL.revokeObjectURL(lastPage.url); } catch (e) {} }
+      lastPage = { blob:blob, url:URL.createObjectURL(blob), date:new Date() };
+      var img = $("pag-img"); img.src = lastPage.url; img.hidden = false;
+      $("pag-acc").hidden = false; $("pag-share").hidden = !canShareFiles;
+      try { img.scrollIntoView({ block:"nearest" }); } catch (e) {}
+    }).catch(function () { aviso("No se pudo armar tu página. Vuelve a intentar."); })
+      .then(function () { btn.disabled = false; btn.textContent = "Guardar mi página como imagen"; });
+  });
+  $("pag-share").addEventListener("click", function () {
+    if (!lastPage) return;
+    var file = new File([lastPage.blob], "mi-bitacora-" + ymd(lastPage.date) + ".jpg", { type:"image/jpeg" });
+    navigator.share({ files:[file] }).catch(function (e) { if (e && e.name === "AbortError") return; aviso("No se pudo abrir el menú. Toca Descargar."); });
+  });
+  $("pag-save").addEventListener("click", function () {
+    if (!lastPage) return;
+    try { download(lastPage.blob, "mi-bitacora-" + ymd(lastPage.date) + ".jpg"); aviso("Tu página quedó guardada en tu teléfono."); }
+    catch (e) { aviso("No se pudo descargar. Mantén presionada la imagen y elige guardar."); }
+  });
+
+  /* ---------- curvas de nivel ---------- */
+  (function contours() {
+    var band = document.querySelector(".band"); if (!band) return;
+    var d = "M320 30C370 30 410 60 405 95C400 135 360 160 315 155C265 150 235 125 240 90C245 55 280 30 320 30Z";
+    var ps = [0.3, 0.55, 0.8, 1.08, 1.4, 1.78, 2.2, 2.7, 3.25].map(function (k, n) {
+      return '<path d="' + d + '" transform="translate(322 92) rotate(' + (n * 3 - 8) + ') scale(' + k + ') translate(-322 -92)" vector-effect="non-scaling-stroke"/>';
+    }).join("");
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMaxYMid slice"><g fill="none" stroke="#000" stroke-width="1.2">' + ps + "</g></svg>";
+    band.style.setProperty("--contours", 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+    band.classList.add("has-contours");
+  })();
+
+  /* ---------- arranque ---------- */
+  loadLocal();
+  $("lugar").value = state.lugar;
+  render(); renderPage();
+  idbReady.then(function () {
+    var c = state.card, jobs = [];
+    c.filled.forEach(function (f, s) {
+      if (!f) return; var key = c.id + ":" + s;
+      jobs.push(idbGet(key).then(function (blob) { if (blob) urls[key] = URL.createObjectURL(blob); else c.filled[s] = false; }));
+    });
+    return Promise.all(jobs);
+  }).then(function () { saveLocal(); render(); });
+})();
+</script>
+</body>
+</html>
