@@ -1,0 +1,988 @@
+<!doctype html>
+<!-- Semillitas · Bingo Flow para mamá e hija · Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Prohibida su copia, reproducción o modificación sin autorización. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Alita · Cumbre Feliz">
+<meta name="copyright" content="© 2026 Alita. Todos los derechos reservados.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E2E9DB">
+<meta name="color-scheme" content="only light">
+<meta name="description" content="El Bingo Flow para mamá e hija: nueve fotos del paseo; la foto del centro es de las dos.">
+<meta property="og:title" content="Semillitas · Cumbre Feliz">
+<meta property="og:description" content="El Bingo Flow para mamá e hija: nueve fotos del paseo; la foto del centro es de las dos.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/og-semillitas.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://cumbrefeliz2026-byte.github.io/cumbrefeliz.github.io/semillitas.html">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Semillitas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@500;600&display=swap">
+<style>
+/* Semillitas, el Bingo Flow para mamá e hija. Layout: columna de teléfono para Cumbre Feliz. Banda con curvas de nivel; nombre; cartón 3×3 con la foto especial fija en el centro (la que canta el bingo); progreso; collage armado en el teléfono; reglas para principiantes. Verde del Ávila + rojo, azul y amarillo de guacamaya. */
+:root{
+  color-scheme:only light;
+  --paper:#EEF2EA;
+  --band:#E2E9DB;
+  --panel:#F9FBF6;
+  --ink:#15251B;
+  --muted:#556659;
+  --line:#C4CFBF;
+  --contour:#BCCAB5;
+  --stamp:#A3C29A;
+  --stamp-soft:#E6EEDF;
+  --stamp-ink:#15251B;
+  --logo:#1E4A3B;
+  --logo-azul:#4A80D9;
+  --logo-linea:#E06E96;
+  --logo-div:.25;
+  --ver:#2E7A4B;
+  --cuerpo:#2A66A4;
+  --mente:#B23946;
+  --comer:#BF651B;
+  --scrim:rgba(8,14,10,.78);
+  --on-photo:#FFFFFF;
+  --font-display:"Fredoka","Nunito",system-ui,sans-serif;
+  --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+body{ background:var(--paper); color:var(--ink); font:400 15px/1.5 var(--font-body); }
+
+.wrap{
+  position:relative; z-index:1; max-width:560px; margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+
+.band{ position:relative; background:var(--band); border-bottom:1px solid var(--line); overflow:hidden; }
+.band::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0;
+  background:var(--contour);
+  -webkit-mask-image:var(--contours); mask-image:var(--contours);
+  -webkit-mask-size:cover; mask-size:cover;
+  -webkit-mask-position:right center; mask-position:right center;
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+}
+.band.has-contours::before{ opacity:1; }
+.band .wrap{ padding-block:24px 20px; }
+.back{ display:inline-flex; align-items:center; gap:6px; margin:0 0 12px; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-decoration:none; }
+.back:hover{ color:var(--ink); }
+.eyebrow{ margin:0; font:600 11.5px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.brand{ margin:0 0 14px; }
+.lockup{ display:block; width:min(100%, 430px); height:auto; color:var(--logo); }
+h1{ margin:4px 0 8px; font:600 clamp(30px, 8.6vw, 40px)/1.04 var(--font-display); color:var(--logo); letter-spacing:0; text-wrap:balance; }
+h1 .tag{ display:inline-block; vertical-align:.16em; margin-left:.2em; padding:.2em .55em .14em; font-size:.48em; font-weight:600; letter-spacing:.01em; background:var(--stamp); color:var(--stamp-ink); border-radius:999px; }
+.lede{ margin:0; color:var(--muted); max-width:44ch; }
+
+main.wrap{ padding-block:16px 44px; display:flex; flex-direction:column; gap:14px; }
+
+.nojs{ margin:0; padding:14px 16px; border-radius:10px; background:var(--stamp-soft); border:1.5px solid var(--stamp); color:var(--ink); font-size:15px; line-height:1.45; }
+.nojs strong{ display:block; margin-bottom:4px; font:600 22px/1.1 var(--font-display); letter-spacing:0; }
+.aviso{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; margin:0; padding:10px 12px; border-radius:8px; background:var(--ink); color:var(--paper); font-size:13.5px; line-height:1.4; }
+
+.field{ display:flex; flex-direction:column; gap:5px; }
+.field label{ font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.field input{ font:600 16px/1.2 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:11px 12px 9px; width:100%; }
+.field input::placeholder{ color:var(--muted); opacity:.8; }
+
+.legend{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12.5px; color:var(--muted); }
+.legend li{ display:flex; align-items:center; gap:6px; }
+.legend b{ color:var(--ink); font-weight:700; }
+
+.mk{ display:inline-block; flex:none; width:9px; height:9px; background:var(--cat, var(--muted)); }
+.mk.ver{ --cat:var(--ver); border-radius:50%; }
+.mk.cuerpo{ --cat:var(--cuerpo); border-radius:1px; }
+.mk.mente{ --cat:var(--mente); width:10px; clip-path:polygon(50% 0, 100% 100%, 0 100%); }
+.mk.comer{ --cat:var(--comer); border-radius:1px; transform:rotate(45deg) scale(.82); }
+
+.card{ background:var(--panel); border:1.5px solid var(--ink); border-radius:12px; padding:8px; }
+.grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px; }
+.tile{ position:relative; min-width:0; display:flex; }
+.tlabel{
+  position:relative; flex:1; display:flex; flex-direction:column; gap:4px;
+  min-height:128px; padding:9px 8px 8px; cursor:pointer;
+  background:var(--paper); border:1.5px dashed var(--line); border-radius:9px;
+  -webkit-hyphens:auto; hyphens:auto; overflow-wrap:break-word;
+}
+.tile .mk{ margin-bottom:2px; }
+.tt{ font:700 clamp(12px, 3.3vw, 15px)/1.18 var(--font-body); text-wrap:balance; }
+.td{ font-size:clamp(10.5px, 2.8vw, 12.5px); line-height:1.35; color:var(--muted); }
+.add{ margin-top:auto; padding-top:4px; font:600 10px/1.2 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink); }
+.add::before{ content:"+ "; }
+.tile.filled .tlabel{ border-style:solid; border-color:transparent; padding:0; background:var(--band); min-height:128px; }
+.tile img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:8px; }
+.tile.filled .mk{ position:absolute; top:7px; left:7px; margin:0; outline:2px solid var(--on-photo); z-index:1; }
+.tile.filled .mk.mente{ outline:none; }
+.cap{
+  position:absolute; left:0; right:0; bottom:0; z-index:1; padding:18px 7px 6px;
+  background:linear-gradient(to bottom, transparent, var(--scrim)); border-radius:0 0 8px 8px;
+  color:var(--on-photo); font:700 clamp(10px, 2.7vw, 12.5px)/1.2 var(--font-body);
+}
+.loading{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font:600 11px/1 var(--font-mono); color:var(--muted); }
+
+/* Centro: la foto especial que canta el bingo */
+.tile.center .tlabel{ border:1.5px solid var(--stamp); background:var(--stamp-soft); }
+.tile.center.filled .tlabel{ border-color:var(--stamp); }
+.canta{ align-self:flex-start; margin-top:auto; padding:3px 5px 2px; border-radius:3px; background:var(--stamp); color:var(--stamp-ink); font:600 9.5px/1.15 var(--font-mono); letter-spacing:.05em; text-transform:uppercase; }
+.tile.center.filled .canta{ position:absolute; left:6px; bottom:6px; z-index:2; margin:0; }
+.tile.center.filled .cap{ padding-bottom:28px; }
+.tile.win::after{ content:""; position:absolute; inset:-2px; border:2px solid var(--stamp); border-radius:10px; z-index:3; pointer-events:none; }
+
+.x{
+  position:absolute; top:6px; right:6px; z-index:4; appearance:none; cursor:pointer;
+  font:600 9.5px/1 var(--font-mono); letter-spacing:.04em; text-transform:uppercase;
+  padding:5px 6px 4px; border-radius:4px; border:0; background:var(--panel); color:var(--ink);
+}
+.x.armed{ background:var(--mente); color:var(--paper); }
+
+.progress{ display:flex; align-items:center; gap:12px; }
+.count{ font:700 30px/1 var(--font-display); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.count small{ font:600 12px/1 var(--font-mono); color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-left:4px; }
+.bar{ flex:1; height:10px; border-radius:5px; background:var(--band); border:1px solid var(--line); overflow:hidden; }
+.bar i{ display:block; height:100%; width:0; background:var(--stamp); transition:width .3s ease; }
+
+.bingo{ display:flex; align-items:baseline; justify-content:center; flex-wrap:wrap; gap:4px 12px; background:var(--stamp); color:var(--stamp-ink); border-radius:6px; padding:9px 14px 6px; transform:rotate(-1.2deg); }
+.bingo .bw{ font:700 32px/1 var(--font-display); text-transform:uppercase; letter-spacing:.04em; }
+.bingo .bs{ font:700 13.5px/1.2 var(--font-body); }
+.bingo.pop{ animation:pop .45s cubic-bezier(.3,1.6,.5,1); }
+@keyframes pop{ from{ transform:rotate(-6deg) scale(1.25); } to{ transform:rotate(-1.2deg) scale(1); } }
+.falta{ margin:0; padding:10px 12px; border-radius:8px; border:1.5px dashed var(--stamp); background:var(--panel); font-size:13.5px; line-height:1.4; }
+.mama{ margin:0; padding:10px 12px; border-radius:8px; border:1.5px solid var(--stamp); background:var(--stamp-soft); font-size:13.5px; line-height:1.45; }
+.mama strong{ font-weight:700; }
+
+.actions{ display:flex; flex-wrap:wrap; gap:8px; }
+.btn{ appearance:none; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font:700 14px/1 var(--font-body); padding:12px 16px 10px; border-radius:6px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); }
+.btn.primary{ background:var(--ink); color:var(--paper); }
+.btn.armed{ background:var(--mente); border-color:var(--mente); color:var(--paper); }
+.btn[disabled]{ opacity:.45; cursor:not-allowed; }
+.vh{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; opacity:0; }
+.tlabel:focus-within{ outline:2.5px solid var(--cuerpo); outline-offset:2px; }
+:focus-visible{ outline:2px solid var(--cuerpo); outline-offset:2px; }
+
+.result{ display:grid; gap:12px; padding:14px; background:var(--band); border-radius:10px; }
+.result h2{ margin:0; font:600 24px/1.05 var(--font-display); letter-spacing:0; }
+.result img{ display:block; width:100%; height:auto; border-radius:6px; background:var(--panel); }
+.hint{ margin:0; font-size:12.5px; color:var(--muted); }
+.msg{ width:100%; font:500 14px/1.4 var(--font-body); color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:10px 12px; resize:none; }
+a.btn{ text-decoration:none; }
+.formats{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:6px; }
+.fmt{ appearance:none; font:inherit; color:var(--ink); background:var(--panel); border:1.5px solid var(--line); border-radius:8px; padding:9px 11px 8px; display:flex; flex-direction:column; gap:2px; text-align:left; cursor:pointer; min-width:0; }
+.fmt .fname{ font:600 22px/1 var(--font-display); letter-spacing:0; }
+.fmt .fsub{ font:500 10.5px/1.3 var(--font-mono); color:var(--muted); }
+.fmt[aria-pressed="true"]{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.fmt[aria-pressed="true"] .fsub{ color:var(--paper); opacity:.78; }
+.result img{ max-height:70vh; width:auto; max-width:100%; margin:0 auto; }
+.caplabel{ font:600 11.5px/1.2 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.steps{ margin:0; padding-left:20px; display:grid; gap:6px; font-size:13.5px; line-height:1.45; }
+
+.notes{ display:grid; gap:22px; margin-top:8px; }
+.notes h2{ margin:0 0 8px; font:600 23px/1.1 var(--font-display); letter-spacing:0; text-wrap:balance; }
+.notes ol,.notes ul{ margin:0; padding-left:20px; display:grid; gap:7px; max-width:62ch; }
+.notes strong{ font-weight:700; }
+.autoria{ margin:6px 0 0; font:500 11.5px/1.5 var(--font-mono); color:var(--muted); }
+.autoria strong{ color:var(--ink); font-weight:600; }
+.foot{ margin:6px 0 0; padding-top:12px; border-top:1px solid var(--line); font:500 11.5px/1.45 var(--font-mono); color:var(--muted); }
+
+@media (prefers-reduced-motion: reduce){ .bar i{ transition:none; } .bingo.pop{ animation:none; } }
+</style>
+
+<header class="band" lang="es">
+  <div class="wrap">
+    <a class="back" href="./">← Todos los juegos</a>
+    <div class="brand"><svg class="lockup" viewBox="6 16 498 132" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Cumbre Feliz · Proyecto"><defs><linearGradient id="cfl-g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8325F"/><stop offset="0.45" stop-color="#E06E96"/><stop offset="1" stop-color="#F7B7CB"/></linearGradient><path id="cfl-p" d="M0,-5 C-9,-13 -13,-33 -7,-43 C-3,-48 3,-48 7,-43 C13,-33 9,-13 0,-5 Z" fill="url(#cfl-g)"/></defs><g transform="translate(-0.71,8.65) scale(0.85)"><circle cx="141" cy="35" r="11" fill="#F2B90F"/><path d="M141,19.5 L141,15 M148.75,21.58 L151,17.68 M133.25,21.58 L131,17.68 M154.42,27.25 L158.32,25 M127.58,27.25 L123.68,25" stroke="#F2B90F" stroke-width="3.3"/><path d="M98,80 L106,80 C109,80 111,71 116,67.6 C119,65.4 122.5,64 126,64 C130,64 134,66 136.6,68.4 C138.6,70.3 139.6,72.6 140.6,72.6 C141.8,72.6 142.6,67 145.6,61.6 C149,55.6 154,50 161,50 C168,50 173,54 177,58.6 C181,63.4 185,70 189,78.4" stroke="var(--logo-azul)" stroke-width="3.2"/><path d="M74.8,90.7 A34,34 0 1 0 74.8,141.3 M94,152 L94,90 L108,90 C116,90 120,74 126,74 C132,74 134,84 140,84 C148,84 154,60 162,60 C170,60 176,78 184,90 M94,120 L118,120" stroke="currentColor" stroke-width="11"/><path d="M126,68.5 C126,64.5 125.8,61.2 125.5,58.3" stroke="#5E8E6A" stroke-width="1.3"/><g transform="translate(125.5,52) scale(0.13)"><use href="#cfl-p"/><use href="#cfl-p" transform="rotate(51.43)"/><use href="#cfl-p" transform="rotate(102.86)"/><use href="#cfl-p" transform="rotate(154.29)"/><use href="#cfl-p" transform="rotate(205.71)"/><use href="#cfl-p" transform="rotate(257.14)"/><use href="#cfl-p" transform="rotate(308.57)"/><circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></g></g><path d="M182,44 L182,118" stroke="currentColor" stroke-width="1.2" opacity="var(--logo-div)"/><path d="M202,109.8 L299,109.8 M401,109.8 L497,109.8" stroke="var(--logo-linea)" stroke-width="1.2"/><path d="M310.47 111.19V110.18H312.02Q312.82 110.18 313.21 109.86Q313.61 109.54 313.61 108.81Q313.61 108.16 313.24 107.83Q312.87 107.5 312.1 107.5H310.47V106.5H312.13Q312.77 106.5 313.28 106.65Q313.8 106.8 314.16 107.09Q314.52 107.38 314.7 107.82Q314.89 108.27 314.89 108.85Q314.89 109.61 314.54 110.13Q314.2 110.65 313.52 110.92Q312.85 111.19 311.85 111.19ZM309.63 113.1V106.5H310.9V113.1ZM320.2 113.1V106.5H322.76Q323.28 106.5 323.71 106.58Q324.15 106.67 324.48 106.83Q324.82 106.99 325.05 107.22Q325.28 107.46 325.4 107.76Q325.52 108.07 325.52 108.44Q325.52 108.79 325.41 109.07Q325.3 109.36 325.08 109.57Q324.87 109.78 324.55 109.91Q324.23 110.05 323.8 110.11V110.24Q324.26 110.3 324.55 110.47Q324.84 110.64 325.02 110.94Q325.2 111.24 325.33 111.7L325.74 113.1H324.35L324.03 111.82Q323.94 111.41 323.75 111.17Q323.57 110.94 323.29 110.84Q323.01 110.74 322.61 110.74H321.47V113.1ZM321.47 109.77H322.67Q323.42 109.77 323.81 109.49Q324.21 109.21 324.21 108.63Q324.21 108.05 323.83 107.77Q323.46 107.49 322.69 107.49H321.47ZM333.92 113.23Q333.2 113.23 332.63 113Q332.07 112.77 331.67 112.33Q331.28 111.9 331.07 111.27Q330.87 110.64 330.87 109.83Q330.87 108.66 331.27 107.89Q331.67 107.13 332.37 106.75Q333.07 106.37 333.95 106.37Q334.64 106.37 335.2 106.59Q335.76 106.82 336.16 107.25Q336.56 107.69 336.78 108.33Q337 108.98 337 109.81Q337 110.64 336.78 111.28Q336.57 111.91 336.17 112.34Q335.77 112.78 335.2 113Q334.63 113.23 333.92 113.23ZM333.95 112.21Q334.51 112.21 334.9 111.94Q335.29 111.66 335.5 111.14Q335.7 110.62 335.7 109.87Q335.7 109.1 335.49 108.55Q335.28 108 334.88 107.72Q334.49 107.43 333.92 107.43Q333.37 107.43 332.98 107.7Q332.58 107.98 332.37 108.51Q332.16 109.05 332.16 109.82Q332.16 110.4 332.28 110.84Q332.4 111.29 332.62 111.59Q332.85 111.89 333.18 112.05Q333.52 112.21 333.95 112.21ZM343.89 113.1V111.02L341.5 106.5H343L344.5 109.85H344.56L346.05 106.5H347.55L345.16 111.01V113.1ZM352.61 113.1V106.5H353.88V113.1ZM353.43 113.1V112.06H357.56V113.1ZM353.43 110.23V109.27H357.06V110.23ZM353.43 107.54V106.5H357.54V107.54ZM365.73 113.23Q364.98 113.23 364.39 113.01Q363.8 112.8 363.38 112.38Q362.97 111.95 362.75 111.32Q362.54 110.7 362.54 109.88Q362.54 109.04 362.76 108.39Q362.98 107.74 363.39 107.28Q363.81 106.83 364.38 106.6Q364.95 106.37 365.65 106.37Q366.19 106.37 366.64 106.51Q367.1 106.65 367.44 106.92Q367.78 107.19 367.97 107.58Q368.16 107.97 368.17 108.45L366.99 108.77Q366.99 108.31 366.8 108.01Q366.6 107.72 366.29 107.57Q365.97 107.42 365.61 107.42Q365.29 107.42 364.98 107.55Q364.66 107.68 364.41 107.96Q364.16 108.24 364.01 108.69Q363.86 109.15 363.86 109.81Q363.86 110.65 364.11 111.17Q364.35 111.69 364.79 111.94Q365.22 112.18 365.77 112.18Q366.33 112.18 366.66 111.95Q366.99 111.73 367.14 111.36Q367.29 110.99 367.31 110.55L368.42 110.74Q368.41 111.26 368.26 111.71Q368.11 112.17 367.79 112.51Q367.47 112.85 366.96 113.04Q366.45 113.23 365.73 113.23ZM375.1 113.1V106.5H376.37V113.1ZM373.13 107.57V106.5H378.34V107.57ZM386.13 113.23Q385.41 113.23 384.85 113Q384.28 112.77 383.88 112.33Q383.49 111.9 383.29 111.27Q383.08 110.64 383.08 109.83Q383.08 108.66 383.48 107.89Q383.88 107.13 384.58 106.75Q385.28 106.37 386.16 106.37Q386.85 106.37 387.41 106.59Q387.97 106.82 388.37 107.25Q388.77 107.69 388.99 108.33Q389.21 108.98 389.21 109.81Q389.21 110.64 389 111.28Q388.78 111.91 388.38 112.34Q387.98 112.78 387.41 113Q386.84 113.23 386.13 113.23ZM386.16 112.21Q386.72 112.21 387.11 111.94Q387.5 111.66 387.71 111.14Q387.91 110.62 387.91 109.87Q387.91 109.1 387.7 108.55Q387.49 108 387.1 107.72Q386.7 107.43 386.13 107.43Q385.58 107.43 385.19 107.7Q384.79 107.98 384.58 108.51Q384.37 109.05 384.37 109.82Q384.37 110.4 384.49 110.84Q384.61 111.29 384.84 111.59Q385.06 111.89 385.39 112.05Q385.73 112.21 386.16 112.21Z" fill="currentColor" stroke="none"/><g transform="translate(197,42.1) scale(0.495)"><path d="M59.3,34.32 A28,35.25 0 1 0 59.3,84.18 M75.5,55.5 L75.5,77.5 A17,17 0 0 0 109.5,77.5 M109.5,55.5 L109.5,94.5 M130,94.5 L130,74 C130,66 140,52 143.5,52 C147,52 157,66 157,74 L157,94.5 M157,74 C157,64 171,40 175,40 C179,40 191,62 191,72 L191,94.5 M211.5,22 L211.5,94.5 M271.5,57 L271.5,94.5 M271.5,73 C274,61 284,55 293,56.5 C299,57.5 301,62.5 296.5,64.5 M317.5,75 L356.5,75 A19.5,19.5 0 1 0 350.8,88.8 M405,94.5 L405,24 L433,24 M405,57 L427,57 M448,75 L487,75 A19.5,19.5 0 1 0 481.3,88.8 M510.5,22 L510.5,84 C510.5,92 514.5,95.5 521.5,94.5 C528.5,93.5 534.5,86 538,76 M538,60 L538,94.5 M558.5,55.5 L593.5,55.5 L558.5,94.5 L586.5,94.5 C596.5,94.5 601.5,99 603.5,107" stroke="currentColor" stroke-width="11"/><circle cx="231" cy="75" r="19.5" stroke="currentColor" stroke-width="11"/><g transform="translate(538,40) scale(0.22)"><use href="#cfl-p"/><use href="#cfl-p" transform="rotate(51.43)"/><use href="#cfl-p" transform="rotate(102.86)"/><use href="#cfl-p" transform="rotate(154.29)"/><use href="#cfl-p" transform="rotate(205.71)"/><use href="#cfl-p" transform="rotate(257.14)"/><use href="#cfl-p" transform="rotate(308.57)"/><circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></g></g></svg></div>
+    <p class="eyebrow">Bingo Flow</p>
+    <h1>Semillitas <span class="tag">Mamá e hija</span></h1>
+    <p class="lede">Un bingo de fotos para jugar juntas mientras caminan. Busquen nueve cosas en el paseo; la foto del centro es de las dos y canta el bingo.</p>
+  </div>
+</header>
+
+<main class="wrap" lang="es">
+  <p class="aviso" id="aviso" role="status" hidden></p>
+  <noscript>
+    <style>main.wrap > :not(noscript):not(.notes):not(.autoria){ display:none !important; }</style>
+    <div class="nojs">
+      <strong>Para jugar, abre el enlace</strong>
+      Estás viendo el archivo en vista previa y así no aparecen las casillas para tus fotos. Pide el enlace del juego y ábrelo en Safari o Chrome.
+    </div>
+  </noscript>
+
+  <div class="field">
+    <label for="nombre">Nombre o apodo de la niña, para el collage</label>
+    <input type="text" id="nombre" maxlength="24" autocomplete="off" placeholder="Ej.: Sofi">
+  </div>
+
+  <ul class="legend" aria-label="Tipos de foto">
+    <li><i class="mk ver" aria-hidden="true"></i><span><b>Observa</b> la naturaleza, el camino</span></li>
+    <li><i class="mk cuerpo" aria-hidden="true"></i><span><b>Siente y muévete</b> texturas, saltos</span></li>
+    <li><i class="mk comer" aria-hidden="true"></i><span><b>Nutre e hidrata</b> agua, frutas, merienda</span></li>
+    <li><i class="mk mente" aria-hidden="true"></i><span><b>Juntas</b> mamá e hija</span></li>
+  </ul>
+
+  <section class="card" id="carton" aria-label="Tu cartón de fotos">
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <div class="progress" aria-live="polite">
+    <span class="count" id="count">0/9<small>fotos</small></span>
+    <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  </div>
+
+  <div class="bingo" id="bingo" role="status" hidden><span class="bw" id="bw">¡Bingo!</span><span class="bs" id="bs"></span></div>
+  <p class="falta" id="falta" hidden>Ya tienen línea. Les falta la foto del centro, Mamá y yo, para cantar bingo.</p>
+
+  <div class="actions">
+    <button type="button" class="btn primary" id="armar" disabled>Armar nuestro collage</button>
+    <button type="button" class="btn" id="nuevo">Cartón nuevo</button>
+  </div>
+
+  <section class="result" id="result" hidden>
+    <h2>Compartan su cartón</h2>
+    <p class="mama"><strong>Mamá decide qué se publica.</strong> Revisen juntas la imagen y, si la suben, mejor al llegar a casa.</p>
+    <div class="formats" aria-label="Formato de la imagen">
+      <button type="button" class="fmt" id="fmt-story" data-fmt="story" aria-pressed="true"><span class="fname">Stories IG</span><span class="fsub">1080 × 1920 · también estados de WhatsApp</span></button>
+      <button type="button" class="fmt" id="fmt-post" data-fmt="post" aria-pressed="false"><span class="fname">Feed IG</span><span class="fsub">1080 × 1350 (4:5) · también para el grupo</span></button>
+    </div>
+    <img id="collage-img" alt="Tu collage de Cumbre Feliz">
+    <div class="actions">
+      <button type="button" class="btn primary" id="compartir" hidden>Compartir imagen</button>
+      <button type="button" class="btn" id="guardar" hidden>Guardar imagen</button>
+      <a class="btn" id="wa" href="https://wa.me/" target="_blank" rel="noopener">Abrir WhatsApp</a>
+      <button type="button" class="btn" id="copiar">Copiar texto</button>
+    </div>
+    <p class="hint">Si no puedes guardarla con el botón, mantén presionada la imagen y elige guardar.</p>
+    <label class="caplabel" for="msg">Texto para tu publicación</label>
+    <textarea class="msg" id="msg" rows="4" readonly></textarea>
+    <ol class="steps">
+      <li><strong>Toca Compartir imagen</strong> y elige Instagram, WhatsApp o Guardar imagen. Si tu teléfono no muestra ese botón, toca Guardar imagen: queda en tu galería o en Descargas.</li>
+      <li><strong>Instagram:</strong> abre la app y toca +. Si bajaste Stories IG elige Historia; si bajaste Feed IG elige Publicación. Escoge la imagen y pega el texto.</li>
+      <li><strong>WhatsApp:</strong> toca Abrir WhatsApp, elige el grupo de Cumbre Feliz y adjunta la imagen desde tu galería.</li>
+    </ol>
+  </section>
+
+  <div class="notes">
+    <section>
+      <h2>Cómo jugar</h2>
+      <ol>
+        <li>Escriban el nombre o el apodo de la niña: sale en el collage junto a «y mamá».</li>
+        <li>Toquen una casilla para tomar la foto o elegirla de la galería. Pueden tomarlas durante el paseo y llenar el cartón al llegar.</li>
+        <li>Una línea de tres fotos, en horizontal, vertical o diagonal, más la foto del centro, es bingo. Con las nueve, ¡meta lograda!</li>
+        <li>Con la meta lograda, toquen <strong>Compartir nuestro cartón</strong> y elijan Stories IG o Feed IG.</li>
+      </ol>
+    </section>
+    <section>
+      <h2>Reglas de Semillitas</h2>
+      <ul>
+        <li><strong>Siempre juntas.</strong> La niña camina con su mamá o con la persona adulta que la acompaña. Nadie se adelanta sola.</li>
+        <li><strong>A su ritmo.</strong> Caminar vale, correr un ratico vale y parar también. Si pueden conversar mientras caminan, van bien.</li>
+        <li><strong>Para cada foto, se detienen.</strong> Nunca saquen el teléfono cruzando la calle.</li>
+        <li><strong>Los animales se miran, no se tocan.</strong> Las flores, las plumas y las piedras se fotografían y se quedan donde están.</li>
+        <li><strong>Agua antes, durante y después.</strong> La foto de la botella no es de adorno.</li>
+        <li><strong>Para mamá: el cuerpo no se comenta.</strong> Se celebra lo que lograron: «subiste hasta aquí», «saltaste la raya».</li>
+        <li><strong>Fotos con permiso.</strong> Gente en la foto, solo si dice que sí. Y mamá decide qué se publica.</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="foot">Las fotos se quedan en este teléfono, en este navegador. Nadie más las ve hasta que compartan su collage.</p>
+  <p class="autoria">Semillitas es un juego creado por <strong>Alita</strong> para Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. Prohibida su copia, reproducción o modificación sin autorización.</p>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var LS = "semillitas-1";
+  var CATS = { ver:"Observa", cuerpo:"Siente y muévete", mente:"Juntas", comer:"Nutre e hidrata" };
+  var PICK = { ver:4, cuerpo:2, mente:1, comer:1 };
+  var CENTER = ["mente","Mamá y yo","Una selfie de las dos, algo o alguien valioso o su lugar favorito."];
+  var POOL = [
+    ["ver","Flor amarilla","Una flor amarilla. ¡La del araguaney cuenta!","flor"],
+    ["ver","Flor rosada","Una flor rosada o morada.","flor"],
+    ["ver","Flor roja","Una flor roja en un jardín, una mata o un árbol.","flor"],
+    ["ver","Flor blanca","Una flor blanca, grande o chiquitica.","flor"],
+    ["ver","Flor chiquitica","Una flor muy pequeña que creció sola en la tierra o en la acera.","flor"],
+    ["ver","Alfombra de flores","Flores caídas en el piso, como una alfombra.","flor"],
+    ["ver","Una mariposa","Una mariposa posada o volando. ¡Sin atraparla!","bicho"],
+    ["ver","Una hormiga","Una hormiga o una fila de hormigas. Mírala de cerca, sin tocarla.","bicho"],
+    ["ver","Un caracol","Un caracol en una hoja, una piedra o una pared.","bicho"],
+    ["ver","Telaraña","Una telaraña. Si tiene gotitas de agua, ¡mejor!","bicho"],
+    ["ver","Una lagartija","Una lagartija o una iguana tomando sol. Desde lejos.","animal"],
+    ["ver","Un pájaro","Cualquier pájaro: posado, volando o comiendo.","animal"],
+    ["ver","Guacamayas","Guacamayas volando o en un árbol. Valen aunque salgan lejos.","animal"],
+    ["ver","Un perro","Un perro paseando. Pregúntale al dueño si le puedes tomar la foto.","animal"],
+    ["ver","Un gato","Un gato en una ventana, un muro o una acera.","animal"],
+    ["ver","Una ardilla","Una ardilla en un árbol o en el suelo.","animal"],
+    ["ver","Patos o peces","Patos, peces o tortugas en una laguna.","animal"],
+    ["ver","Nube con forma","Una nube que parezca algo: un animal, una cara o un corazón.","cielo"],
+    ["ver","Cielo azul","El pedazo de cielo más azul que encuentres.","cielo"],
+    ["ver","La luna de día","La luna en el cielo de la mañana.","cielo"],
+    ["ver","Un avión","Un avión o la raya blanca que deja en el cielo.","cielo"],
+    ["ver","Arcoíris","Un arcoíris, aunque sea chiquito en el chorro de una fuente.","cielo"],
+    ["ver","Un charco","El cielo o un árbol reflejado en un charco.","agua"],
+    ["ver","Agua que corre","Una quebrada, una fuente o un chorrito de agua.","agua"],
+    ["ver","Gotas en una hoja","Gotas de lluvia o de rocío sobre una hoja.","agua"],
+    ["ver","Hoja gigante","Una hoja más grande que tu mano. Pon tu mano al lado.","hoja"],
+    ["ver","Hoja diminuta","La hoja más pequeñita que encuentres.","hoja"],
+    ["ver","Hojas de colores","Hojas verdes, amarillas, rojas o marrones en una sola foto.","hoja"],
+    ["ver","Árbol gigante","El árbol más alto o más gordo del camino.","arbol"],
+    ["ver","Árbol con frutas","Una mata de mango, de guayaba o de cualquier fruta.","arbol"],
+    ["ver","Raíces","Raíces que salen de la tierra como si fueran dedos.","arbol"],
+    ["ver","Cara escondida","Un tronco o una piedra donde parezca que hay una cara.","forma"],
+    ["ver","Forma de corazón","Una piedra, una hoja o una mancha con forma de corazón.","forma"],
+    ["ver","Algo redondo","Algo bien redondo: una semilla, una fruta, una rueda o una flor.","forma"],
+    ["ver","Algo con rayas","Algo con rayas: una hoja, una pared o una reja.","forma"],
+    ["ver","Algo con puntos","Algo con puntitos o manchas: una hoja, una piedra o un bicho.","forma"],
+    ["ver","Tu color favorito","Algo del camino de tu color favorito.","color"],
+    ["ver","Algo azul","Algo azul que no sea el cielo.","color"],
+    ["ver","Algo naranja","Algo naranja: una flor, una fruta o una puerta.","color"],
+    ["ver","Tres verdes","Tres verdes distintos en una sola foto.","color"],
+    ["ver","Una semilla","Una semilla, una vaina o un fruto caído en el suelo.","suelo"],
+    ["ver","Una piedra bonita","La piedra más bonita o más rara del camino. Foto, y se queda ahí.","suelo"],
+    ["ver","Una pluma","Una pluma en el suelo. Foto, y se queda donde está.","suelo"],
+    ["ver","Huellas","Huellas en la tierra: de zapatos, de perro o de pájaro.","suelo"],
+    ["ver","Más alto que mamá","Una mata, un poste o una puerta más alta que tu mamá. Ponla al lado.","tamano"],
+    ["ver","Más chiquito que tu dedo","Algo del camino más pequeño que tu dedo.","tamano"],
+    ["ver","Un columpio","Un columpio, un tobogán o un parque para niños.","lugar"],
+    ["ver","Un puente","Un puente o una pasarela.","lugar"],
+    ["ver","Un mural","Un mural o un dibujo grande pintado en una pared.","lugar"],
+    ["ver","Tu letra","La primera letra de tu nombre en un letrero o una placa.","lugar"],
+    ["ver","Algo que brilla","Algo que brille con el sol: agua, un vidrio o una hoja mojada."],
+    ["ver","La montaña","Una montaña o un cerro, como el Ávila.","vista"],
+    ["ver","Desde arriba","Lo que se ve desde el punto más alto del paseo.","vista"],
+    ["ver","Algo nuevo","Algo que nunca habías visto o en lo que nunca te habías fijado."],
+    ["cuerpo","Tu salto más alto","Salta lo más alto que puedas y que mamá te tome la foto en el aire.","salto"],
+    ["cuerpo","Salto de rana","Agáchate y salta como una rana. ¡Foto en pleno salto!","salto"],
+    ["cuerpo","Salta la raya","Salta por encima de una raya, una sombra o una hoja en el piso.","salto"],
+    ["cuerpo","Como flamenco","Párate en un pie, como un flamenco. ¿Cuánto aguantas?","equilibrio"],
+    ["cuerpo","Brazos de avión","Abre los brazos como un avión y corre un poquito.","equilibrio"],
+    ["cuerpo","Camina en la línea","Camina sobre una raya del piso sin salirte, como en una cuerda floja.","equilibrio"],
+    ["cuerpo","Carrera hasta el árbol","Mamá escoge un árbol cerquita y tú corres hasta él. ¡Foto al llegar!","carrera"],
+    ["cuerpo","Pasos de gigante","Da pasos de gigante. Mamá toma la foto del paso más largo.","carrera"],
+    ["cuerpo","Abraza un árbol","Abraza un árbol. ¿Te alcanzan los brazos?","tocar"],
+    ["cuerpo","Tu mano en un tronco","Tu mano abierta sobre un tronco. Siente su textura.","tocar"],
+    ["cuerpo","Algo suave","Algo suave: un pétalo, una hoja o el musgo.","tocar"],
+    ["cuerpo","Algo rugoso","Algo áspero: la corteza de un árbol o una piedra.","tocar"],
+    ["cuerpo","Algo frío","Algo frío: el agua de tu botella o una piedra en la sombra.","tocar"],
+    ["cuerpo","Algo tibio de sol","Una piedra o un banco calentito por el sol.","tocar"],
+    ["cuerpo","Huele una flor","Una flor o una hoja que huela rico.","sentidos"],
+    ["cuerpo","Lo que suena","¿De dónde viene ese sonido? Pájaros, agua o viento.","sentidos"],
+    ["cuerpo","El viento","Algo que el viento esté moviendo: hojas, ramas o tu pelo.","sentidos"],
+    ["cuerpo","Pies en la grama","Tus pies o tus zapatos sobre grama, tierra u hojas.","pies"],
+    ["cuerpo","Zapatos con tierra","Tus zapatos al final del paseo, con polvo o tierra.","pies"],
+    ["cuerpo","Medias de colores","Tus medias más divertidas.","pies"],
+    ["cuerpo","Estírate como gato","Estírate bien largo, como un gato cuando se despierta.","estirar"],
+    ["cuerpo","Tu sombra bailando","Tu sombra bailando o haciendo una figura divertida.","estirar"],
+    ["cuerpo","Escalones contados","Los escalones que subiste. ¡Cuéntalos!","subida"],
+    ["cuerpo","La subida que lograste","La cuesta más empinada de hoy, vista desde arriba.","subida"],
+    ["cuerpo","Manos al cielo","Tus brazos arriba al llegar al punto más alto.","subida"],
+    ["mente","Sus manos juntas","Las manos de las dos juntas, con el camino de fondo.","foto"],
+    ["mente","Sus zapatos juntos","Los zapatos de las dos, punta con punta.","foto"],
+    ["mente","Sus sombras","La sombra de las dos, de la mano o saltando.","foto"],
+    ["mente","Choquen los cinco","Sus manos chocando los cinco al llegar.","foto"],
+    ["mente","Abrazo en la cumbre","Un abrazo de las dos en el punto más alto."],
+    ["mente","Las dos riendo","Una foto de las dos riéndose a carcajadas."],
+    ["mente","Mamá en tu foto","Una foto que tú le tomas a mamá, como tú quieras."],
+    ["mente","Corazón de hojas","Un corazón armado por las dos con hojas, palitos o piedras.","arte"],
+    ["mente","Carita feliz","Una carita feliz armada con piedras, hojas o semillas en el piso.","arte"],
+    ["mente","Su palabra de hoy","Una palabra que diga cómo se sienten, escrita en un papel o en la tierra."],
+    ["mente","Algo que agradecen","Algo del paseo que les haga dar gracias hoy."],
+    ["mente","Te enseñó mamá","Algo que mamá te enseñó hoy: el nombre de un árbol, un pájaro o una flor.","ensena"],
+    ["mente","Le enseñaste a mamá","Algo que tú le enseñaste a mamá hoy.","ensena"],
+    ["mente","El secreto del camino","Algo que solo ustedes dos vieron hoy."],
+    ["mente","Su lugar favorito","El lugar del paseo que más les gustó a las dos."],
+    ["mente","Su próxima cumbre","El lugar al que quieren llegar juntas la próxima vez."],
+    ["mente","Lo que las hizo reír","Lo que les sacó la risa en el camino."],
+    ["mente","Te recuerda a alguien","Algo del camino que les recuerde a alguien que quieren."],
+    ["comer","Tu botella","Tu botella o tu termo de agua.","agua"],
+    ["comer","Brindis de agua","Las dos chocan sus botellas: ¡salud!","agua"],
+    ["comer","Recarga de agua","Llenando tu botella para seguir.","agua"],
+    ["comer","Una fruta","Tu cambur, mandarina, mango o la fruta que trajiste."],
+    ["comer","Mandarina en espiral","Pela una mandarina en una sola tira, como una espiral."],
+    ["comer","Merienda para compartir","Una merienda que compartes con mamá."],
+    ["comer","Colores en tu merienda","Una merienda con tres colores o más."],
+    ["comer","Tu desayuno","Lo que desayunaste para tener energía."],
+    ["comer","Tu arepa","Tu arepa, tu empanada o tu cachapa de hoy."],
+    ["comer","Agua de coco","Un agua de coco, un jugo natural o una limonada."],
+    ["comer","Hecho en casa","Algo que prepararon juntas en casa para el paseo."],
+    ["comer","Helado para las dos","Un helado o un raspado para compartir al terminar."],
+    ["comer","Picnic","Su merienda servida en un banco o en el piso, como un picnic."]
+  ];
+  var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function rid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+  function newCard(avoid) {
+    var skip = {}; (avoid || []).forEach(function (i) { skip[i] = 1; });
+    var by = { ver:[], cuerpo:[], mente:[], comer:[] };
+    POOL.forEach(function (x, i) { if (x[3] !== "fuera") by[x[0]].push(i); });
+    var picked = [];
+    Object.keys(PICK).forEach(function (k) {
+      var used = {}, got = [];
+      [true, false].forEach(function (fresh) {
+        shuffle(by[k].slice()).forEach(function (i) {
+          if (got.length >= PICK[k] || got.indexOf(i) >= 0 || (fresh && skip[i])) return;
+          var grp = POOL[i][3] || "";
+          if (grp && (used[grp] || 0) >= 2) return;
+          if (grp) used[grp] = (used[grp] || 0) + 1;
+          got.push(i);
+        });
+      });
+      picked = picked.concat(got);
+    });
+    shuffle(picked);
+    return { id:rid(), order:picked, filled:[false,false,false,false,false,false,false,false,false] };
+  }
+  function cleanCard(c) {
+    if (!c || typeof c.id !== "string" || !/^[a-z0-9]{6,40}$/.test(c.id) || !Array.isArray(c.order) || c.order.length !== 8 || !Array.isArray(c.filled) || c.filled.length !== 9) return null;
+    var seen = {};
+    for (var i = 0; i < 8; i++) {
+      var v = c.order[i];
+      if (typeof v !== "number" || v < 0 || v >= POOL.length || v % 1 !== 0 || seen[v]) return null;
+      seen[v] = 1;
+    }
+    return { id:c.id, order:c.order.slice(), filled:c.filled.map(function (f) { return !!f; }) };
+  }
+  function itemAt(card, s) { return s === 4 ? CENTER : POOL[card.order[s < 4 ? s : s - 1]]; }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (ch) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[ch]; });
+  }
+  function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function fmtLong(d) { try { return d.toLocaleDateString("es", { day:"numeric", month:"long", year:"numeric" }); } catch (e) { return ymd(d); } }
+
+  function linesOf(filled) { return LINES.filter(function (L) { return L.every(function (s) { return filled[s]; }); }); }
+  function isBingo(filled) { return filled[4] && linesOf(filled).length > 0; }
+  function filledCount(card) { return card.filled.filter(Boolean).length; }
+
+  /* ---------- estado ---------- */
+  var state = { nombre:"", lugar:"", card:null, fmt:"story" };
+  var urls = {};
+  var idbOk = true, downloads = null, lastCollage = null, lastBingo = null;
+
+  function loadLocal() {
+    var s = null;
+    try { var raw = localStorage.getItem(LS); if (raw) s = JSON.parse(raw); } catch (e) { s = null; }
+    state.card = (s && cleanCard(s.card)) || newCard();
+    if (s && typeof s.nombre === "string") state.nombre = s.nombre.slice(0, 24);
+    if (s && (s.fmt === "story" || s.fmt === "post")) state.fmt = s.fmt;
+    if (s && typeof s.lugar === "string") state.lugar = s.lugar.slice(0, 40);
+  }
+  function saveLocal() {
+    try { localStorage.setItem(LS, JSON.stringify({ nombre:state.nombre, lugar:state.lugar, card:state.card, fmt:state.fmt })); } catch (e) {}
+  }
+
+  /* ---------- fotos en el teléfono (IndexedDB) ---------- */
+  function openIdb() {
+    return new Promise(function (res) {
+      try {
+        var rq = indexedDB.open("semillitas", 1);
+        rq.onupgradeneeded = function () { rq.result.createObjectStore("fotos"); };
+        rq.onsuccess = function () { res(rq.result); };
+        rq.onerror = function () { res(null); };
+        rq.onblocked = function () { res(null); };
+      } catch (e) { res(null); }
+    });
+  }
+  var idbReady = openIdb();
+  function idbOp(mode, fn) {
+    return idbReady.then(function (db) {
+      if (!db) return null;
+      return new Promise(function (res) {
+        try {
+          var tx = db.transaction("fotos", mode), st = tx.objectStore("fotos"), out = { v:null };
+          fn(st, out);
+          tx.oncomplete = function () { res(out.v === null ? true : out.v); };
+          tx.onerror = tx.onabort = function () { res(null); };
+        } catch (e) { res(null); }
+      });
+    });
+  }
+  function idbPut(k, blob) { return idbOp("readwrite", function (st) { st.put(blob, k); }); }
+  function idbDel(k) { return idbOp("readwrite", function (st) { st.delete(k); }); }
+  function idbGet(k) {
+    return idbOp("readonly", function (st, out) {
+      var rq = st.get(k); rq.onsuccess = function () { out.v = rq.result || false; };
+    }).then(function (v) { return v instanceof Blob ? v : null; });
+  }
+
+  /* ---------- DOM ---------- */
+  function $(id) { return document.getElementById(id); }
+  var grid = $("grid"), banner = $("bingo");
+  var avisoEl = $("aviso"), avisoTimer = null;
+  function aviso(msg) {
+    avisoEl.textContent = msg; avisoEl.hidden = false;
+    clearTimeout(avisoTimer); avisoTimer = setTimeout(function () { avisoEl.hidden = true; }, 6500);
+  }
+
+  function render() {
+    var card = state.card, bingo = isBingo(card.filled), win = {};
+    if (bingo) linesOf(card.filled).forEach(function (L) { L.forEach(function (s) { win[s] = 1; }); });
+    var html = "";
+    for (var s = 0; s < 9; s++) {
+      var it = itemAt(card, s), key = card.id + ":" + s, url = urls[key], filled = card.filled[s], center = s === 4;
+      html += '<div class="tile' + (filled ? " filled" : "") + (center ? " center" : "") + (win[s] ? " win" : "") + '">' +
+        '<label class="tlabel" for="foto-' + s + '">' +
+        '<input type="file" class="vh" id="foto-' + s + '" accept="image/*" data-s="' + s + '">';
+      if (url) html += '<img src="' + esc(url) + '" alt="">';
+      if (!center) html += '<i class="mk ' + it[0] + '" aria-hidden="true"></i>';
+      if (filled) {
+        html += '<span class="cap">' + esc(it[1]) + '<span class="vh">. Toca para cambiar la foto.</span></span>';
+        if (!url) html += '<span class="loading">Cargando foto…</span>';
+      } else {
+        html += '<span class="tt">' + esc(it[1]) + '</span><span class="td">' + esc(it[2]) + '</span>';
+        if (!center) html += '<span class="add">Agregar foto</span>';
+      }
+      if (center) html += '<span class="canta">Canta el bingo</span>';
+      html += "</label>";
+      if (filled) html += '<button type="button" class="x" data-s="' + s + '" aria-label="Quitar la foto de ' + esc(it[1]) + '">Quitar</button>';
+      html += "</div>";
+    }
+    grid.innerHTML = html;
+
+    var n = filledCount(card), lines = linesOf(card.filled);
+    $("count").innerHTML = n + "/9<small>fotos</small>";
+    $("barfill").style.width = Math.round(n / 9 * 100) + "%";
+    $("armar").disabled = n === 0;
+    if ($("armar").textContent !== "Armando…") $("armar").textContent = n === 9 ? "Compartir nuestro cartón" : "Armar nuestro collage";
+    var nuevo = $("nuevo"); if (nuevo !== armedBtn) nuevo.textContent = "Cartón nuevo";
+
+    var bkey = n === 9 ? "lleno" : bingo ? "b" + lines.length : "";
+    if (bkey) {
+      banner.hidden = false;
+      if (n === 9) { $("bw").textContent = "¡Meta lograda!"; $("bs").textContent = "Toca Compartir nuestro cartón para subirlo a Instagram o WhatsApp."; }
+      else { $("bw").textContent = "¡Bingo!"; $("bs").textContent = lines.length === 1 ? "Una línea con la foto de las dos" : lines.length + " líneas con la foto de las dos"; }
+      if (lastBingo !== null && bkey !== lastBingo) { banner.classList.remove("pop"); void banner.offsetWidth; banner.classList.add("pop"); }
+    } else banner.hidden = true;
+    lastBingo = bkey;
+    $("falta").hidden = !(lines.length > 0 && !card.filled[4]);
+  }
+
+  /* ---------- reducir foto ---------- */
+  function loadImg(src) {
+    return new Promise(function (res) {
+      var im = new Image();
+      im.onload = function () { res(im); };
+      im.onerror = function () { res(null); };
+      im.src = src;
+    });
+  }
+  function shrink(file) {
+    var u = URL.createObjectURL(file);
+    return loadImg(u).then(function (im) {
+      URL.revokeObjectURL(u);
+      if (!im || !im.naturalWidth) throw new Error("decode");
+      var max = 1000, w = im.naturalWidth, h = im.naturalHeight, sc = Math.min(1, max / Math.max(w, h));
+      var cw = Math.round(w * sc), ch = Math.round(h * sc), cv = document.createElement("canvas");
+      cv.width = cw; cv.height = ch;
+      cv.getContext("2d").drawImage(im, 0, 0, cw, ch);
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("encode")); }, "image/jpeg", 0.82); });
+    });
+  }
+
+  grid.addEventListener("change", function (e) {
+    var input = e.target; if (!input || input.type !== "file") return;
+    var s = Number(input.getAttribute("data-s")), file = input.files && input.files[0];
+    input.value = "";
+    if (!file) return;
+    var card = state.card, key = card.id + ":" + s;
+    shrink(file).then(function (blob) {
+      if (state.card !== card) return;
+      if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} }
+      urls[key] = URL.createObjectURL(blob);
+      card.filled[s] = true;
+      saveLocal(); render();
+      idbPut(key, blob).then(function (ok) {
+        if (!ok && idbOk) { idbOk = false; aviso("Este navegador no deja guardar las fotos: arma tu collage antes de cerrar la página."); }
+      });
+    }).catch(function () {
+      aviso("No pude leer esa foto. Prueba con otra o con una captura de pantalla.");
+    });
+  });
+
+  /* ---------- confirmación en dos toques ---------- */
+  var armedBtn = null, armTimer = null, armedLabel = "";
+  function disarm() {
+    if (armedBtn) { armedBtn.classList.remove("armed"); armedBtn.textContent = armedLabel; armedBtn = null; }
+    clearTimeout(armTimer);
+  }
+  function confirmTap(btn, needed, label) {
+    if (!needed) { disarm(); return true; }
+    if (armedBtn === btn) { disarm(); return true; }
+    disarm(); armedBtn = btn; armedLabel = btn.textContent;
+    btn.classList.add("armed"); btn.textContent = label || "Toca otra vez para confirmar";
+    armTimer = setTimeout(disarm, 3500);
+    return false;
+  }
+
+  grid.addEventListener("click", function (e) {
+    var b = e.target.closest(".x"); if (!b) return;
+    if (!confirmTap(b, true, "¿Quitar?")) return;
+    var s = Number(b.getAttribute("data-s")), card = state.card, key = card.id + ":" + s;
+    if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} delete urls[key]; }
+    card.filled[s] = false;
+    idbDel(key); saveLocal(); render();
+  });
+
+  $("nuevo").addEventListener("click", function () {
+    var card = state.card, n = filledCount(card);
+    if (!confirmTap(this, n > 0, "Se borran tus fotos. Toca otra vez")) return;
+    for (var s = 0; s < 9; s++) {
+      var key = card.id + ":" + s;
+      if (urls[key]) { try { URL.revokeObjectURL(urls[key]); } catch (err) {} delete urls[key]; }
+      if (card.filled[s]) idbDel(key);
+    }
+    state.card = newCard(state.card ? state.card.order : null); lastBingo = null;
+    $("result").hidden = true;
+    saveLocal(); render();
+  });
+
+  var nombre = $("nombre");
+  nombre.addEventListener("input", function () { state.nombre = nombre.value.slice(0, 24); saveLocal(); });
+
+  /* ---------- collage ---------- */
+  function roundRect(g, x, y, w, h, r) {
+    g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+  }
+  function wrapText(g, text, maxW) {
+    var words = String(text).split(" "), lines = [], cur = "";
+    words.forEach(function (w) {
+      var t = cur ? cur + " " + w : w;
+      if (g.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t;
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+  function drawMark(g, cat, x, y, color, outline) {
+    g.save(); g.fillStyle = color;
+    if (outline) { g.strokeStyle = "#FFFFFF"; g.lineWidth = 4; }
+    g.beginPath();
+    if (cat === "ver") g.arc(x + 11, y + 11, 11, 0, Math.PI * 2);
+    else if (cat === "cuerpo") g.rect(x, y, 22, 22);
+    else if (cat === "mente") { g.moveTo(x + 11, y); g.lineTo(x + 23, y + 22); g.lineTo(x - 1, y + 22); g.closePath(); }
+    else { g.moveTo(x + 11, y - 3); g.lineTo(x + 25, y + 11); g.lineTo(x + 11, y + 25); g.lineTo(x - 3, y + 11); g.closePath(); }
+    if (outline) g.stroke();
+    g.fill(); g.restore();
+  }
+  function fitFont(g, text, weight, family, start, min, maxW) {
+    var size = start;
+    do { g.font = weight + " " + size + "px " + family; size -= 4; } while (g.measureText(text).width > maxW && size >= min);
+  }
+
+  /* Logo horizontal de Cumbre Feliz (CF con la montaña, el sol, la rosa y La Azulita, el nombre y PROYECTO), dibujado
+     en vector para el collage. Versión para fondo oscuro. Caja del dibujo: x 6–504, y 16–148. */
+  var LOCKUP = { x: 6, y: 16, w: 498, h: 132 }, LOCKUP_P = null;
+  function lockupPaths() {
+    if (!LOCKUP_P) LOCKUP_P = {
+      petal: new Path2D("M0,-5 C-9,-13 -13,-33 -7,-43 C-3,-48 3,-48 7,-43 C13,-33 9,-13 0,-5 Z"),
+      rays: new Path2D("M141,19.5 L141,15 M148.75,21.58 L151,17.68 M133.25,21.58 L131,17.68 M154.42,27.25 L158.32,25 M127.58,27.25 L123.68,25"),
+      blue: new Path2D("M98,80 L106,80 C109,80 111,71 116,67.6 C119,65.4 122.5,64 126,64 C130,64 134,66 136.6,68.4 C138.6,70.3 139.6,72.6 140.6,72.6 C141.8,72.6 142.6,67 145.6,61.6 C149,55.6 154,50 161,50 C168,50 173,54 177,58.6 C181,63.4 185,70 189,78.4"),
+      mark: new Path2D("M74.8,90.7 A34,34 0 1 0 74.8,141.3 M94,152 L94,90 L108,90 C116,90 120,74 126,74 C132,74 134,84 140,84 C148,84 154,60 162,60 C170,60 176,78 184,90 M94,120 L118,120"),
+      stem: new Path2D("M126,68.5 C126,64.5 125.8,61.2 125.5,58.3"),
+      divider: new Path2D("M182,44 L182,118"),
+      lines: new Path2D("M202,109.8 L299,109.8 M401,109.8 L497,109.8"),
+      proyecto: new Path2D("M310.47 111.19V110.18H312.02Q312.82 110.18 313.21 109.86Q313.61 109.54 313.61 108.81Q313.61 108.16 313.24 107.83Q312.87 107.5 312.1 107.5H310.47V106.5H312.13Q312.77 106.5 313.28 106.65Q313.8 106.8 314.16 107.09Q314.52 107.38 314.7 107.82Q314.89 108.27 314.89 108.85Q314.89 109.61 314.54 110.13Q314.2 110.65 313.52 110.92Q312.85 111.19 311.85 111.19ZM309.63 113.1V106.5H310.9V113.1ZM320.2 113.1V106.5H322.76Q323.28 106.5 323.71 106.58Q324.15 106.67 324.48 106.83Q324.82 106.99 325.05 107.22Q325.28 107.46 325.4 107.76Q325.52 108.07 325.52 108.44Q325.52 108.79 325.41 109.07Q325.3 109.36 325.08 109.57Q324.87 109.78 324.55 109.91Q324.23 110.05 323.8 110.11V110.24Q324.26 110.3 324.55 110.47Q324.84 110.64 325.02 110.94Q325.2 111.24 325.33 111.7L325.74 113.1H324.35L324.03 111.82Q323.94 111.41 323.75 111.17Q323.57 110.94 323.29 110.84Q323.01 110.74 322.61 110.74H321.47V113.1ZM321.47 109.77H322.67Q323.42 109.77 323.81 109.49Q324.21 109.21 324.21 108.63Q324.21 108.05 323.83 107.77Q323.46 107.49 322.69 107.49H321.47ZM333.92 113.23Q333.2 113.23 332.63 113Q332.07 112.77 331.67 112.33Q331.28 111.9 331.07 111.27Q330.87 110.64 330.87 109.83Q330.87 108.66 331.27 107.89Q331.67 107.13 332.37 106.75Q333.07 106.37 333.95 106.37Q334.64 106.37 335.2 106.59Q335.76 106.82 336.16 107.25Q336.56 107.69 336.78 108.33Q337 108.98 337 109.81Q337 110.64 336.78 111.28Q336.57 111.91 336.17 112.34Q335.77 112.78 335.2 113Q334.63 113.23 333.92 113.23ZM333.95 112.21Q334.51 112.21 334.9 111.94Q335.29 111.66 335.5 111.14Q335.7 110.62 335.7 109.87Q335.7 109.1 335.49 108.55Q335.28 108 334.88 107.72Q334.49 107.43 333.92 107.43Q333.37 107.43 332.98 107.7Q332.58 107.98 332.37 108.51Q332.16 109.05 332.16 109.82Q332.16 110.4 332.28 110.84Q332.4 111.29 332.62 111.59Q332.85 111.89 333.18 112.05Q333.52 112.21 333.95 112.21ZM343.89 113.1V111.02L341.5 106.5H343L344.5 109.85H344.56L346.05 106.5H347.55L345.16 111.01V113.1ZM352.61 113.1V106.5H353.88V113.1ZM353.43 113.1V112.06H357.56V113.1ZM353.43 110.23V109.27H357.06V110.23ZM353.43 107.54V106.5H357.54V107.54ZM365.73 113.23Q364.98 113.23 364.39 113.01Q363.8 112.8 363.38 112.38Q362.97 111.95 362.75 111.32Q362.54 110.7 362.54 109.88Q362.54 109.04 362.76 108.39Q362.98 107.74 363.39 107.28Q363.81 106.83 364.38 106.6Q364.95 106.37 365.65 106.37Q366.19 106.37 366.64 106.51Q367.1 106.65 367.44 106.92Q367.78 107.19 367.97 107.58Q368.16 107.97 368.17 108.45L366.99 108.77Q366.99 108.31 366.8 108.01Q366.6 107.72 366.29 107.57Q365.97 107.42 365.61 107.42Q365.29 107.42 364.98 107.55Q364.66 107.68 364.41 107.96Q364.16 108.24 364.01 108.69Q363.86 109.15 363.86 109.81Q363.86 110.65 364.11 111.17Q364.35 111.69 364.79 111.94Q365.22 112.18 365.77 112.18Q366.33 112.18 366.66 111.95Q366.99 111.73 367.14 111.36Q367.29 110.99 367.31 110.55L368.42 110.74Q368.41 111.26 368.26 111.71Q368.11 112.17 367.79 112.51Q367.47 112.85 366.96 113.04Q366.45 113.23 365.73 113.23ZM375.1 113.1V106.5H376.37V113.1ZM373.13 107.57V106.5H378.34V107.57ZM386.13 113.23Q385.41 113.23 384.85 113Q384.28 112.77 383.88 112.33Q383.49 111.9 383.29 111.27Q383.08 110.64 383.08 109.83Q383.08 108.66 383.48 107.89Q383.88 107.13 384.58 106.75Q385.28 106.37 386.16 106.37Q386.85 106.37 387.41 106.59Q387.97 106.82 388.37 107.25Q388.77 107.69 388.99 108.33Q389.21 108.98 389.21 109.81Q389.21 110.64 389 111.28Q388.78 111.91 388.38 112.34Q387.98 112.78 387.41 113Q386.84 113.23 386.13 113.23ZM386.16 112.21Q386.72 112.21 387.11 111.94Q387.5 111.66 387.71 111.14Q387.91 110.62 387.91 109.87Q387.91 109.1 387.7 108.55Q387.49 108 387.1 107.72Q386.7 107.43 386.13 107.43Q385.58 107.43 385.19 107.7Q384.79 107.98 384.58 108.51Q384.37 109.05 384.37 109.82Q384.37 110.4 384.49 110.84Q384.61 111.29 384.84 111.59Q385.06 111.89 385.39 112.05Q385.73 112.21 386.16 112.21Z"),
+      name: new Path2D("M59.3,34.32 A28,35.25 0 1 0 59.3,84.18 M75.5,55.5 L75.5,77.5 A17,17 0 0 0 109.5,77.5 M109.5,55.5 L109.5,94.5 M130,94.5 L130,74 C130,66 140,52 143.5,52 C147,52 157,66 157,74 L157,94.5 M157,74 C157,64 171,40 175,40 C179,40 191,62 191,72 L191,94.5 M211.5,22 L211.5,94.5 M271.5,57 L271.5,94.5 M271.5,73 C274,61 284,55 293,56.5 C299,57.5 301,62.5 296.5,64.5 M317.5,75 L356.5,75 A19.5,19.5 0 1 0 350.8,88.8 M405,94.5 L405,24 L433,24 M405,57 L427,57 M448,75 L487,75 A19.5,19.5 0 1 0 481.3,88.8 M510.5,22 L510.5,84 C510.5,92 514.5,95.5 521.5,94.5 C528.5,93.5 534.5,86 538,76 M538,60 L538,94.5 M558.5,55.5 L593.5,55.5 L558.5,94.5 L586.5,94.5 C596.5,94.5 601.5,99 603.5,107")
+    };
+    return LOCKUP_P;
+  }
+  function drawRose(g, cx, cy, k) {
+    var P = lockupPaths();
+    g.save(); g.translate(cx, cy); g.scale(k, k);
+    var rg = g.createRadialGradient(0, 0, 0, 0, 0, 46);
+    rg.addColorStop(0, "#B8325F"); rg.addColorStop(0.45, "#E06E96"); rg.addColorStop(1, "#F7B7CB");
+    g.fillStyle = rg;
+    for (var i = 0; i < 7; i++) { g.save(); g.rotate(i * Math.PI * 2 / 7); g.fill(P.petal); g.restore(); }
+    g.globalAlpha = 0.3; g.fillStyle = "#9E2450"; g.beginPath(); g.arc(0, 0, 11, 0, Math.PI * 2); g.fill(); g.globalAlpha = 1;
+    g.fillStyle = "#E9D98A"; g.beginPath(); g.arc(0, 0, 7.5, 0, Math.PI * 2); g.fill();
+    g.fillStyle = "#8FA94C"; g.beginPath(); g.arc(0, 0, 3.2, 0, Math.PI * 2); g.fill();
+    g.restore();
+  }
+  /* Dibuja el logo con su esquina superior izquierda en (x, y) y alto h. */
+  function drawLockupArt(g, x, y, h, ink) {
+    var P = lockupPaths(), k = h / LOCKUP.h;
+    g.save(); g.translate(x - LOCKUP.x * k, y - LOCKUP.y * k); g.scale(k, k);
+    g.lineCap = "round"; g.lineJoin = "round";
+    g.save(); g.translate(-0.71, 8.65); g.scale(0.85, 0.85);
+    g.fillStyle = "#F2B90F"; g.beginPath(); g.arc(141, 35, 11, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = "#F2B90F"; g.lineWidth = 3.3; g.stroke(P.rays);
+    g.strokeStyle = "#7FB0EE"; g.lineWidth = 3.2; g.stroke(P.blue);
+    g.strokeStyle = ink; g.lineWidth = 11; g.stroke(P.mark);
+    g.strokeStyle = "#5E8E6A"; g.lineWidth = 1.3; g.stroke(P.stem);
+    drawRose(g, 125.5, 52, 0.13);
+    g.restore();
+    g.globalAlpha = 0.3; g.strokeStyle = ink; g.lineWidth = 1.2; g.stroke(P.divider); g.globalAlpha = 1;
+    g.strokeStyle = "#F7B7CB"; g.lineWidth = 1.2; g.stroke(P.lines);
+    g.fillStyle = ink; g.fill(P.proyecto);
+    g.save(); g.translate(197, 42.1); g.scale(0.495, 0.495);
+    g.strokeStyle = ink; g.lineWidth = 11; g.stroke(P.name);
+    g.beginPath(); g.arc(231, 75, 19.5, 0, Math.PI * 2); g.stroke();
+    drawRose(g, 538, 40, 0.22);
+    g.restore();
+    g.restore();
+  }
+  /* El logo arriba del collage: alto según el tamaño pedido, sin pasarse de maxW; su borde inferior queda en base + 12.
+     Mismos argumentos que la versión anterior; family ya no se usa. */
+  function drawLockup(g, x, base, maxW, start, min, color, center, family) {
+    var h = start * (center ? 2.3 : 1.55), w = h * LOCKUP.w / LOCKUP.h;
+    if (w > maxW) { w = maxW; h = w * LOCKUP.h / LOCKUP.w; }
+    var x0 = center ? x - w / 2 : x;
+    drawLockupArt(g, x0, base + 12 - h, h, color);
+    return w;
+  }
+
+  function buildCollage(fmt) {
+    var card = state.card, story = fmt === "story";
+    var W = 1080, H = story ? 1920 : 1350, C = story ? 312 : 320, G = 12, M = 48, GW = 3 * C + 2 * G;
+    var gx = (W - GW) / 2, gy = story ? 420 : 272;
+    var BG = "#15251B", PAPER = "#EEF2EA", LIGHT = "#B9C7B6", STAMP = "#EFE6D2", SAGE = "#A9C6A1", TILE = "#22352A", TILE_LINE = "#3D5546", SOFT = "#2B3D31";
+    var CAT = { ver:"#2E7A4B", cuerpo:"#2A66A4", mente:"#B23946", comer:"#BF651B" };
+    var DISPLAY = '"Fredoka", "Nunito", system-ui, sans-serif', BODY = '"Overpass", system-ui, sans-serif', MONO = '"Overpass Mono", ui-monospace, monospace';
+    var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
+      document.fonts.load("800 120px " + DISPLAY), document.fonts.load("600 28px " + MONO), document.fonts.load("700 28px " + BODY)
+    ]).catch(function () {}) : Promise.resolve();
+    return fontsReady.then(function () {
+      var jobs = []; for (var s = 0; s < 9; s++) { var u = urls[card.id + ":" + s]; jobs.push(card.filled[s] && u ? loadImg(u) : null); }
+      return Promise.all(jobs);
+    }).then(function (imgs) {
+      var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      var g = cv.getContext("2d");
+      g.fillStyle = BG; g.fillRect(0, 0, W, H);
+
+      // curvas de nivel de fondo
+      g.save(); g.strokeStyle = "rgba(238,242,234,0.07)"; g.lineWidth = 2;
+      for (var r = 1; r <= 9; r++) {
+        g.beginPath();
+        g.ellipse(W - 120, story ? 230 : 120, 70 * r, 46 * r, -0.25 + r * 0.04, 0, Math.PI * 2);
+        g.stroke();
+      }
+      g.restore();
+
+      var got = imgs.map(function (x) { return !!x; }), n = got.filter(Boolean).length, today = new Date();
+      var bingo = isBingo(got), lines = bingo ? linesOf(got) : [];
+      var nm = (state.nombre || "").trim();
+      var who = (nm ? nm + " y mamá" : "Mamá e hija").toUpperCase();
+      var subLine = "BINGO FLOW · SEMILLITAS";
+      g.textBaseline = "alphabetic";
+      var stampLabel = (bingo || n === 9) ? (n === 9 ? "¡META LOGRADA!" : "¡BINGO!") : "";
+      var SFS = story ? 42 : 38; g.font = "800 " + SFS + "px " + DISPLAY;
+      var stampW = stampLabel ? Math.max(SFS * 4, g.measureText(stampLabel).width + SFS) : 0;
+
+      if (story) {
+        g.textAlign = "center";
+        drawLockup(g, W / 2, 330, GW, 96, 64, STAMP, true, DISPLAY);
+        g.textAlign = "center";
+        g.fillStyle = SAGE; fitFont(g, subLine, "600", MONO, 30, 18, GW);
+        g.fillText(subLine, W / 2, 382);
+      } else {
+        g.textAlign = "left";
+        drawLockup(g, gx, 150, GW - (stampW ? stampW + 32 : 0), 80, 52, STAMP, false, DISPLAY);
+        g.fillStyle = SAGE; g.font = "600 26px " + MONO;
+        fitFont(g, subLine, "600", MONO, 26, 16, GW - (stampW ? stampW + 32 : 0));
+        g.fillText(subLine, gx, 196);
+        g.fillStyle = PAPER; fitFont(g, who + " • " + fmtLong(today), "700", BODY, 28, 18, GW);
+        g.fillText(who + " • " + fmtLong(today), gx, 240);
+      }
+
+      for (var s = 0; s < 9; s++) {
+        var it = itemAt(card, s), im = imgs[s], x = gx + (s % 3) * (C + G), y = gy + Math.floor(s / 3) * (C + G), center = s === 4;
+        g.save(); roundRect(g, x, y, C, C, 16); g.clip();
+        if (im) {
+          var iw = im.naturalWidth, ih = im.naturalHeight, k = Math.max(C / iw, C / ih), dw = C / k, dh = C / k;
+          g.drawImage(im, (iw - dw) / 2, (ih - dh) / 2, dw, dh, x, y, C, C);
+          var grd = g.createLinearGradient(0, y + C - 96, 0, y + C);
+          grd.addColorStop(0, "rgba(8,14,10,0)"); grd.addColorStop(1, "rgba(8,14,10,.82)");
+          g.fillStyle = grd; g.fillRect(x, y + C - 96, C, 96);
+          g.fillStyle = "#FFFFFF"; g.font = "700 24px " + BODY; g.textAlign = "left";
+          var tl = wrapText(g, it[1], C - 32).slice(-2);
+          tl.forEach(function (t, i) { g.fillText(t, x + 16, y + C - 18 - (tl.length - 1 - i) * 28); });
+        } else {
+          g.fillStyle = center ? SOFT : TILE; g.fillRect(x, y, C, C);
+          g.fillStyle = center ? STAMP : LIGHT; g.font = (center ? "800 42px " + DISPLAY : "600 26px " + BODY); g.textAlign = "center";
+          var el = wrapText(g, center ? "MAMÁ Y YO" : it[1], C - 48), lh = center ? 44 : 32, y0 = y + C / 2 - (el.length - 1) * lh / 2 + 10;
+          el.forEach(function (t, i) { g.fillText(t, x + C / 2, y0 + i * lh); });
+          g.textAlign = "left";
+        }
+        g.restore();
+        if (center) { g.save(); g.strokeStyle = "rgba(239,230,210,.75)"; g.lineWidth = 4; roundRect(g, x + 2, y + 2, C - 4, C - 4, 14); g.stroke(); g.restore(); }
+        else if (!im) { g.save(); g.setLineDash([10, 8]); g.strokeStyle = TILE_LINE; g.lineWidth = 2.5; roundRect(g, x + 1.5, y + 1.5, C - 3, C - 3, 15); g.stroke(); g.restore(); }
+        if (!center) drawMark(g, it[0], x + 16, y + 16, CAT[it[0]], !!im);
+      }
+
+      if (n < 9 && lines.length) {
+        var win = {};
+        lines.forEach(function (L) { L.forEach(function (s) { win[s] = 1; }); });
+        g.save(); g.strokeStyle = SAGE; g.lineWidth = 5;
+        Object.keys(win).forEach(function (k) {
+          var s = Number(k); if (s === 4) return;
+          var x = gx + (s % 3) * (C + G), y = gy + Math.floor(s / 3) * (C + G);
+          roundRect(g, x + 4, y + 4, C - 8, C - 8, 12); g.stroke();
+        });
+        g.restore();
+      }
+
+      if (stampLabel) {
+        var label = stampLabel;
+        g.save();
+        g.font = "800 " + SFS + "px " + DISPLAY;
+        var sw = stampW, sh = Math.round(SFS * 1.55);
+        var cx = story ? W / 2 : W - gx - sw / 2 - 6, cy = story ? gy + GW + 58 : 118;
+        g.translate(cx, cy); g.rotate(-0.06);
+        g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 18; g.shadowOffsetY = 6;
+        roundRect(g, -sw / 2, -sh / 2, sw, sh, 10); g.fillStyle = STAMP; g.fill();
+        g.shadowColor = "transparent";
+        g.fillStyle = BG; g.textAlign = "center"; g.fillText(label, 0, Math.round(SFS * 0.35));
+        g.restore();
+      }
+
+      if (story) {
+        g.textAlign = "center";
+        g.fillStyle = PAPER; fitFont(g, who, "800", DISPLAY, 84, 44, GW);
+        g.fillText(who, W / 2, 1556);
+        g.fillStyle = LIGHT;
+        var info = fmtLong(today) + " • " + n + "/9 fotos • A nuestro ritmo";
+        fitFont(g, info, "700", BODY, 30, 20, GW); g.fillText(info, W / 2, 1610);
+        g.fillStyle = SAGE; g.font = "600 32px " + MONO;
+        g.fillText("#CumbreFeliz  #Semillitas", W / 2, 1664);
+      } else {
+        g.textAlign = "left"; g.fillStyle = SAGE; g.font = "600 28px " + MONO;
+        g.fillText("#CumbreFeliz #Semillitas", gx, H - 34);
+        g.textAlign = "right"; g.fillStyle = LIGHT; g.font = "700 28px " + BODY;
+        g.fillText(n + "/9 fotos • A nuestro ritmo", W - gx, H - 34);
+        g.textAlign = "left";
+      }
+
+      return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error("canvas")); }, "image/jpeg", 0.9); });
+    });
+  }
+
+  function groupMessage() {
+    return baseMessage();
+  }
+  function baseMessage() {
+    var card = state.card, n = filledCount(card);
+    if (n === 9) return "¡Meta lograda en Semillitas de Cumbre Feliz! Nueve fotos de nuestro paseo de mamá e hija, a nuestro ritmo. #CumbreFeliz #Semillitas";
+    if (isBingo(card.filled)) return "¡Bingo! Cantamos línea con nuestra foto juntas en Semillitas de Cumbre Feliz. Llevamos " + n + "/9 fotos. #CumbreFeliz #Semillitas";
+    return "Llevamos " + n + "/9 fotos de Semillitas, el bingo de mamá e hija de Cumbre Feliz. En el próximo paseo cantamos bingo. #CumbreFeliz #Semillitas";
+  }
+
+  function makeCollage() {
+    return buildCollage(state.fmt).then(function (blob) {
+      if (lastCollage) { try { URL.revokeObjectURL(lastCollage.url); } catch (e) {} }
+      lastCollage = { blob:blob, url:URL.createObjectURL(blob), date:new Date(), fmt:state.fmt };
+      $("collage-img").src = lastCollage.url;
+      var text = groupMessage();
+      $("msg").value = text;
+      $("wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
+      $("guardar").hidden = !downloads; $("compartir").hidden = !canShareFiles;
+      renderFormats();
+      $("result").hidden = false;
+    });
+  }
+  function renderFormats() {
+    Array.prototype.forEach.call(document.querySelectorAll(".fmt"), function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-fmt") === state.fmt ? "true" : "false");
+    });
+  }
+  function armarLabel() { return filledCount(state.card) === 9 ? "Compartir nuestro cartón" : "Armar nuestro collage"; }
+
+  $("armar").addEventListener("click", function () {
+    var btn = this;
+    btn.disabled = true; btn.textContent = "Armando…";
+    makeCollage().then(function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      try { $("result").scrollIntoView({ block:"start", behavior:reduce ? "auto" : "smooth" }); } catch (e) {}
+    }).catch(function () {
+      aviso("No se pudo armar el collage. Revisa que tus fotos hayan cargado y vuelve a intentar.");
+    }).then(function () { btn.textContent = armarLabel(); btn.disabled = filledCount(state.card) === 0; });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".fmt"), function (b) {
+    b.addEventListener("click", function () {
+      var f = b.getAttribute("data-fmt");
+      if (f === state.fmt) return;
+      state.fmt = f; saveLocal(); renderFormats();
+      makeCollage().catch(function () { aviso("No se pudo armar el collage en ese formato. Vuelve a intentar."); });
+    });
+  });
+
+  $("guardar").addEventListener("click", function () {
+    if (!downloads || !lastCollage) return;
+    var btn = this; btn.disabled = true;
+    var suffix = lastCollage.fmt === "story" ? "stories-ig" : "feed-ig";
+    downloads.save({ filename:"cumbre-feliz-semillitas-" + suffix + "-" + ymd(lastCollage.date) + ".jpg", data:lastCollage.blob }).then(function () {
+      aviso("Imagen guardada. Ahora súbela a Instagram o mándala por WhatsApp.");
+    }).catch(function (e) {
+      if (e && e.code === "declined") return;
+      if (e && e.code === "rate_limited") { aviso("Ya hay una descarga abierta. Termina esa y vuelve a intentar."); return; }
+      aviso("No se pudo guardar con el botón. Mantén presionada la imagen y elige guardar.");
+    }).then(function () { btn.disabled = false; });
+  });
+
+  $("copiar").addEventListener("click", function () {
+    var ta = $("msg"), text = ta.value;
+    var fallback = function () { ta.focus(); ta.select(); aviso("Texto seleccionado: cópialo y pégalo en tu publicación."); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { aviso("Texto copiado. Pégalo en Instagram o en el grupo."); }, fallback);
+      } else fallback();
+    } catch (e) { fallback(); }
+  });
+
+  /* ---------- curvas de nivel ---------- */
+  (function contours() {
+    var band = document.querySelector(".band"); if (!band) return;
+    var d = "M320 30C370 30 410 60 405 95C400 135 360 160 315 155C265 150 235 125 240 90C245 55 280 30 320 30Z";
+    var paths = [0.3, 0.55, 0.8, 1.08, 1.4, 1.78, 2.2, 2.7, 3.25].map(function (k, n) {
+      return '<path d="' + d + '" transform="translate(322 92) rotate(' + (n * 3 - 8) + ') scale(' + k + ') translate(-322 -92)" vector-effect="non-scaling-stroke"/>';
+    }).join("");
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMaxYMid slice"><g fill="none" stroke="#000" stroke-width="1.2">' + paths + "</g></svg>";
+    band.style.setProperty("--contours", 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+    band.classList.add("has-contours");
+  })();
+
+  /* ---------- arranque ---------- */
+  loadLocal();
+  nombre.value = state.nombre;
+  render();
+
+  idbReady.then(function () {
+    var card = state.card, jobs = [];
+    card.filled.forEach(function (f, s) {
+      if (!f) return;
+      var key = card.id + ":" + s;
+      jobs.push(idbGet(key).then(function (blob) {
+        if (blob) urls[key] = URL.createObjectURL(blob);
+        else card.filled[s] = false;
+      }));
+    });
+    return Promise.all(jobs);
+  }).then(function () { saveLocal(); render(); });
+
+  /* Versión web (sin Claude): compartir con el menú del teléfono y guardar como descarga normal */
+  var canShareFiles = false;
+  try { canShareFiles = !!(navigator.share && navigator.canShare && navigator.canShare({ files: [new File([new Blob(["x"], { type: "image/jpeg" })], "x.jpg", { type: "image/jpeg" })] })); } catch (e) {}
+  downloads = { save: function (o) { return new Promise(function (res, rej) {
+    try {
+      var u = URL.createObjectURL(o.data), a = document.createElement("a");
+      a.href = u; a.download = o.filename; document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 4000); res();
+    } catch (e) { rej(e); }
+  }); } };
+  $("compartir").addEventListener("click", function () {
+    if (!lastCollage) return;
+    var file = new File([lastCollage.blob], "cumbre-feliz-semillitas-" + (lastCollage.fmt === "story" ? "stories-ig" : "feed-ig") + "-" + ymd(lastCollage.date) + ".jpg", { type: "image/jpeg" });
+    navigator.share({ files: [file] }).catch(function (e) { if (e && e.name === "AbortError") return; aviso("No se pudo abrir el menú para compartir. Toca Guardar imagen."); });
+  });
+})();
+</script>
+</html>
