@@ -1,0 +1,316 @@
+<!doctype html>
+<!-- Mi plan CAF 42K · Cumbre Feliz. © 2026 Alita. Todos los derechos reservados. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#E2E9DB">
+<meta name="color-scheme" content="only light">
+<meta name="author" content="Alita · Cumbre Feliz">
+<title>Mi plan CAF 42K</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: columna de teléfono. Banda con el logo, la meta y la cuenta regresiva; gráfica de las 18 semanas (km por semana, color por fase, hitos); la semana elegida día por día (hoy marcado, se despliega el detalle); hitos; ritmos y tests; reglas. */
+:root{
+  color-scheme:only light;
+  --paper:#EEF2EA; --band:#E2E9DB; --panel:#F9FBF6; --ink:#15251B; --muted:#556659; --line:#C4CFBF;
+  --verde:#1E4A3B; --accent:#2F5B41; --chip:#E6EEDF;
+  --t-des:#B9C4B5; --t-sua:#8FBF8A; --t-mon:#2F5B41; --t-cal:#E06E96; --t-lar:#4A80D9; --t-hit:#F2B90F;
+  --font-display:"Fredoka","Nunito",system-ui,sans-serif;
+  --font-body:"Overpass","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-mono:"Overpass Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+html,body{ margin:0; }
+body{ background:var(--paper); color:var(--ink); font:400 15px/1.5 var(--font-body); }
+.wrap{ max-width:560px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+
+.band{ background:var(--band); }
+.band .wrap{ padding-top:max(22px, env(safe-area-inset-top, 0px)); padding-bottom:18px; }
+.lockup{ display:block; width:min(100%, 380px); height:auto; color:var(--verde); --logo-azul:#4A80D9; --logo-linea:#E06E96; --logo-div:.25; }
+.tagline{ margin:12px 0 0; font:600 11px/1.2 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+h1{ margin:6px 0 4px; font:600 clamp(30px, 8.6vw, 40px)/1.04 var(--font-display); color:var(--verde); }
+.meta{ margin:0; color:var(--muted); font-size:14.5px; }
+.stats{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; margin-top:14px; }
+.stat{ background:var(--panel); border-radius:12px; padding:10px 10px 8px; }
+.stat b{ display:block; font:700 26px/1 var(--font-display); color:var(--verde); font-variant-numeric:tabular-nums; }
+.stat span{ display:block; margin-top:4px; font:600 10px/1.25 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+
+main.wrap{ padding-top:16px; padding-bottom:40px; display:grid; gap:14px; }
+.card{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px; }
+h2{ margin:0; font:600 22px/1.1 var(--font-display); color:var(--verde); }
+.sub{ margin:2px 0 0; font-size:13.5px; color:var(--muted); }
+.lbl{ font:600 10.5px/1.3 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+
+/* gráfica */
+.chart{ display:block; width:100%; height:auto; margin-top:8px; overflow:visible; }
+.chart .bar{ cursor:pointer; }
+.chart .bar:focus{ outline:none; }
+.chart .bar:focus-visible rect.b{ stroke:var(--ink); stroke-width:2; }
+.legend{ display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:6px; font:600 10.5px/1.3 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.legend i{ display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:-1px; }
+
+/* semana */
+.weekhead{ display:grid; grid-template-columns:44px minmax(0,1fr) 44px; gap:8px; align-items:center; }
+.navbtn{ appearance:none; width:44px; height:44px; border-radius:10px; border:1.5px solid var(--line); background:transparent; color:var(--verde); font:600 20px/1 var(--font-display); cursor:pointer; }
+.navbtn:disabled{ opacity:.35; cursor:default; }
+.navbtn:focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; }
+.weektitle{ text-align:center; }
+.weektitle b{ display:block; font:600 21px/1.1 var(--font-display); color:var(--verde); }
+.weektitle span{ display:block; margin-top:2px; font-size:13px; color:var(--muted); }
+.chips{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-top:8px; }
+.chip{ display:inline-block; padding:3px 9px 2px; border-radius:999px; background:var(--chip); font:600 10.5px/1.4 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--accent); }
+.chip.now{ background:var(--verde); color:var(--paper); }
+.note{ margin:10px 0 0; padding:9px 11px; border-radius:10px; background:var(--band); font-size:13.5px; line-height:1.45; }
+.note .fzl{ display:inline-block; margin-top:4px; font:600 10px/1.3 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
+.hitos li{ grid-template-columns:108px minmax(0,1fr) !important; }
+.days{ list-style:none; margin:12px 0 0; padding:0; display:grid; gap:6px; }
+.day{ border-radius:10px; background:#fff; border:1px solid var(--line); border-left:5px solid var(--t); overflow:hidden; }
+.day.past{ opacity:.6; }
+.day.today{ border-color:var(--verde); border-left-color:var(--t); box-shadow:0 0 0 2px var(--verde) inset; }
+.day summary{ list-style:none; cursor:pointer; display:grid; grid-template-columns:46px minmax(0,1fr) auto; gap:8px; align-items:center; padding:9px 10px 8px; }
+.day summary::-webkit-details-marker{ display:none; }
+.day summary:focus-visible{ outline:2.5px solid var(--accent); outline-offset:-2px; }
+.dn{ font:600 10.5px/1.15 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.dn b{ display:block; font:700 17px/1 var(--font-display); letter-spacing:0; color:var(--ink); text-transform:none; }
+.dt{ font:600 15.5px/1.2 var(--font-display); color:var(--ink); }
+.dt .tag{ display:inline-block; margin-left:4px; padding:1px 6px 0; border-radius:999px; background:var(--chip); font:600 9.5px/1.5 var(--font-mono); letter-spacing:.05em; text-transform:uppercase; color:var(--accent); vertical-align:2px; }
+.dt .tag.hoy{ background:var(--verde); color:#fff; }
+.km{ font:700 15px/1 var(--font-display); color:var(--verde); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.km small{ font:600 10px/1 var(--font-mono); color:var(--muted); margin-left:2px; }
+.det{ padding:0 12px 10px 64px; font-size:13.5px; line-height:1.45; color:#2C3B31; }
+.det p{ margin:0 0 4px; }
+.det .mente{ color:#7A3A55; }
+.det .mente b, .det .fz b{ font:600 10px/1.3 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }
+.det .fz{ color:var(--accent); }
+.types{ display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:10px; font:600 10px/1.3 var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.types i{ display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:-1px; }
+
+/* hitos, ritmos, reglas */
+.hitos{ list-style:none; margin:10px 0 0; padding:0; display:grid; gap:2px; }
+.hitos li{ display:grid; grid-template-columns:98px minmax(0,1fr); gap:10px; align-items:baseline; padding:7px 0; border-top:1px solid var(--line); }
+.hitos li:first-child{ border-top:0; }
+.hitos .f{ font:600 11px/1.3 var(--font-mono); letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+.hitos .h{ font:600 15.5px/1.25 var(--font-display); color:var(--ink); }
+.hitos li.done .h{ color:var(--muted); text-decoration:line-through; text-decoration-thickness:1px; }
+.hitos li.next .h::after{ content:"próximo"; margin-left:6px; padding:1px 6px 0; border-radius:999px; background:var(--verde); color:#fff; font:600 9.5px/1.5 var(--font-mono); letter-spacing:.05em; text-transform:uppercase; vertical-align:2px; }
+table.rit{ width:100%; border-collapse:collapse; margin-top:8px; font-size:14px; }
+table.rit td{ padding:7px 0; border-top:1px solid var(--line); vertical-align:baseline; }
+table.rit tr:first-child td{ border-top:0; }
+table.rit td:last-child{ text-align:right; font:700 15px/1.2 var(--font-display); color:var(--verde); white-space:nowrap; padding-left:10px; }
+table.rit small{ display:block; font-size:12px; color:var(--muted); }
+.tests{ display:grid; gap:8px; margin-top:12px; }
+.test{ padding:10px 12px; border-radius:10px; background:var(--band); font-size:13.5px; line-height:1.45; }
+.test b{ font:600 16px/1.2 var(--font-display); color:var(--verde); }
+.test ul{ margin:4px 0 0; padding-left:18px; }
+.reglas{ margin:8px 0 0; padding-left:20px; display:grid; gap:6px; font-size:14px; line-height:1.45; }
+footer{ padding-top:4px; font:500 11.5px/1.5 var(--font-mono); color:var(--muted); text-align:center; }
+footer a{ color:var(--accent); }
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <div><svg class="lockup" viewBox="6 16 498 132" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Cumbre Feliz · Proyecto"><defs><linearGradient id="cfl-g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8325F"/><stop offset="0.45" stop-color="#E06E96"/><stop offset="1" stop-color="#F7B7CB"/></linearGradient><path id="cfl-p" d="M0,-5 C-9,-13 -13,-33 -7,-43 C-3,-48 3,-48 7,-43 C13,-33 9,-13 0,-5 Z" fill="url(#cfl-g)"/></defs><g transform="translate(-0.71,8.65) scale(0.85)"><circle cx="141" cy="35" r="11" fill="#F2B90F"/><path d="M141,19.5 L141,15 M148.75,21.58 L151,17.68 M133.25,21.58 L131,17.68 M154.42,27.25 L158.32,25 M127.58,27.25 L123.68,25" stroke="#F2B90F" stroke-width="3.3"/><path d="M98,80 L106,80 C109,80 111,71 116,67.6 C119,65.4 122.5,64 126,64 C130,64 134,66 136.6,68.4 C138.6,70.3 139.6,72.6 140.6,72.6 C141.8,72.6 142.6,67 145.6,61.6 C149,55.6 154,50 161,50 C168,50 173,54 177,58.6 C181,63.4 185,70 189,78.4" stroke="var(--logo-azul)" stroke-width="3.2"/><path d="M74.8,90.7 A34,34 0 1 0 74.8,141.3 M94,152 L94,90 L108,90 C116,90 120,74 126,74 C132,74 134,84 140,84 C148,84 154,60 162,60 C170,60 176,78 184,90 M94,120 L118,120" stroke="currentColor" stroke-width="11"/><path d="M126,68.5 C126,64.5 125.8,61.2 125.5,58.3" stroke="#5E8E6A" stroke-width="1.3"/><g transform="translate(125.5,52) scale(0.13)"><use href="#cfl-p"/><use href="#cfl-p" transform="rotate(51.43)"/><use href="#cfl-p" transform="rotate(102.86)"/><use href="#cfl-p" transform="rotate(154.29)"/><use href="#cfl-p" transform="rotate(205.71)"/><use href="#cfl-p" transform="rotate(257.14)"/><use href="#cfl-p" transform="rotate(308.57)"/><circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></g></g><path d="M182,44 L182,118" stroke="currentColor" stroke-width="1.2" opacity="var(--logo-div)"/><path d="M202,109.8 L299,109.8 M401,109.8 L497,109.8" stroke="var(--logo-linea)" stroke-width="1.2"/><path d="M310.47 111.19V110.18H312.02Q312.82 110.18 313.21 109.86Q313.61 109.54 313.61 108.81Q313.61 108.16 313.24 107.83Q312.87 107.5 312.1 107.5H310.47V106.5H312.13Q312.77 106.5 313.28 106.65Q313.8 106.8 314.16 107.09Q314.52 107.38 314.7 107.82Q314.89 108.27 314.89 108.85Q314.89 109.61 314.54 110.13Q314.2 110.65 313.52 110.92Q312.85 111.19 311.85 111.19ZM309.63 113.1V106.5H310.9V113.1ZM320.2 113.1V106.5H322.76Q323.28 106.5 323.71 106.58Q324.15 106.67 324.48 106.83Q324.82 106.99 325.05 107.22Q325.28 107.46 325.4 107.76Q325.52 108.07 325.52 108.44Q325.52 108.79 325.41 109.07Q325.3 109.36 325.08 109.57Q324.87 109.78 324.55 109.91Q324.23 110.05 323.8 110.11V110.24Q324.26 110.3 324.55 110.47Q324.84 110.64 325.02 110.94Q325.2 111.24 325.33 111.7L325.74 113.1H324.35L324.03 111.82Q323.94 111.41 323.75 111.17Q323.57 110.94 323.29 110.84Q323.01 110.74 322.61 110.74H321.47V113.1ZM321.47 109.77H322.67Q323.42 109.77 323.81 109.49Q324.21 109.21 324.21 108.63Q324.21 108.05 323.83 107.77Q323.46 107.49 322.69 107.49H321.47ZM333.92 113.23Q333.2 113.23 332.63 113Q332.07 112.77 331.67 112.33Q331.28 111.9 331.07 111.27Q330.87 110.64 330.87 109.83Q330.87 108.66 331.27 107.89Q331.67 107.13 332.37 106.75Q333.07 106.37 333.95 106.37Q334.64 106.37 335.2 106.59Q335.76 106.82 336.16 107.25Q336.56 107.69 336.78 108.33Q337 108.98 337 109.81Q337 110.64 336.78 111.28Q336.57 111.91 336.17 112.34Q335.77 112.78 335.2 113Q334.63 113.23 333.92 113.23ZM333.95 112.21Q334.51 112.21 334.9 111.94Q335.29 111.66 335.5 111.14Q335.7 110.62 335.7 109.87Q335.7 109.1 335.49 108.55Q335.28 108 334.88 107.72Q334.49 107.43 333.92 107.43Q333.37 107.43 332.98 107.7Q332.58 107.98 332.37 108.51Q332.16 109.05 332.16 109.82Q332.16 110.4 332.28 110.84Q332.4 111.29 332.62 111.59Q332.85 111.89 333.18 112.05Q333.52 112.21 333.95 112.21ZM343.89 113.1V111.02L341.5 106.5H343L344.5 109.85H344.56L346.05 106.5H347.55L345.16 111.01V113.1ZM352.61 113.1V106.5H353.88V113.1ZM353.43 113.1V112.06H357.56V113.1ZM353.43 110.23V109.27H357.06V110.23ZM353.43 107.54V106.5H357.54V107.54ZM365.73 113.23Q364.98 113.23 364.39 113.01Q363.8 112.8 363.38 112.38Q362.97 111.95 362.75 111.32Q362.54 110.7 362.54 109.88Q362.54 109.04 362.76 108.39Q362.98 107.74 363.39 107.28Q363.81 106.83 364.38 106.6Q364.95 106.37 365.65 106.37Q366.19 106.37 366.64 106.51Q367.1 106.65 367.44 106.92Q367.78 107.19 367.97 107.58Q368.16 107.97 368.17 108.45L366.99 108.77Q366.99 108.31 366.8 108.01Q366.6 107.72 366.29 107.57Q365.97 107.42 365.61 107.42Q365.29 107.42 364.98 107.55Q364.66 107.68 364.41 107.96Q364.16 108.24 364.01 108.69Q363.86 109.15 363.86 109.81Q363.86 110.65 364.11 111.17Q364.35 111.69 364.79 111.94Q365.22 112.18 365.77 112.18Q366.33 112.18 366.66 111.95Q366.99 111.73 367.14 111.36Q367.29 110.99 367.31 110.55L368.42 110.74Q368.41 111.26 368.26 111.71Q368.11 112.17 367.79 112.51Q367.47 112.85 366.96 113.04Q366.45 113.23 365.73 113.23ZM375.1 113.1V106.5H376.37V113.1ZM373.13 107.57V106.5H378.34V107.57ZM386.13 113.23Q385.41 113.23 384.85 113Q384.28 112.77 383.88 112.33Q383.49 111.9 383.29 111.27Q383.08 110.64 383.08 109.83Q383.08 108.66 383.48 107.89Q383.88 107.13 384.58 106.75Q385.28 106.37 386.16 106.37Q386.85 106.37 387.41 106.59Q387.97 106.82 388.37 107.25Q388.77 107.69 388.99 108.33Q389.21 108.98 389.21 109.81Q389.21 110.64 389 111.28Q388.78 111.91 388.38 112.34Q387.98 112.78 387.41 113Q386.84 113.23 386.13 113.23ZM386.16 112.21Q386.72 112.21 387.11 111.94Q387.5 111.66 387.71 111.14Q387.91 110.62 387.91 109.87Q387.91 109.1 387.7 108.55Q387.49 108 387.1 107.72Q386.7 107.43 386.13 107.43Q385.58 107.43 385.19 107.7Q384.79 107.98 384.58 108.51Q384.37 109.05 384.37 109.82Q384.37 110.4 384.49 110.84Q384.61 111.29 384.84 111.59Q385.06 111.89 385.39 112.05Q385.73 112.21 386.16 112.21Z" fill="currentColor" stroke="none"/><g transform="translate(197,42.1) scale(0.495)"><path d="M59.3,34.32 A28,35.25 0 1 0 59.3,84.18 M75.5,55.5 L75.5,77.5 A17,17 0 0 0 109.5,77.5 M109.5,55.5 L109.5,94.5 M130,94.5 L130,74 C130,66 140,52 143.5,52 C147,52 157,66 157,74 L157,94.5 M157,74 C157,64 171,40 175,40 C179,40 191,62 191,72 L191,94.5 M211.5,22 L211.5,94.5 M271.5,57 L271.5,94.5 M271.5,73 C274,61 284,55 293,56.5 C299,57.5 301,62.5 296.5,64.5 M317.5,75 L356.5,75 A19.5,19.5 0 1 0 350.8,88.8 M405,94.5 L405,24 L433,24 M405,57 L427,57 M448,75 L487,75 A19.5,19.5 0 1 0 481.3,88.8 M510.5,22 L510.5,84 C510.5,92 514.5,95.5 521.5,94.5 C528.5,93.5 534.5,86 538,76 M538,60 L538,94.5 M558.5,55.5 L593.5,55.5 L558.5,94.5 L586.5,94.5 C596.5,94.5 601.5,99 603.5,107" stroke="currentColor" stroke-width="11"/><circle cx="231" cy="75" r="19.5" stroke="currentColor" stroke-width="11"/><g transform="translate(538,40) scale(0.22)"><use href="#cfl-p"/><use href="#cfl-p" transform="rotate(51.43)"/><use href="#cfl-p" transform="rotate(102.86)"/><use href="#cfl-p" transform="rotate(154.29)"/><use href="#cfl-p" transform="rotate(205.71)"/><use href="#cfl-p" transform="rotate(257.14)"/><use href="#cfl-p" transform="rotate(308.57)"/><circle r="11" fill="#9E2450" opacity="0.3"/><circle r="7.5" fill="#E9D98A"/><circle r="3.2" fill="#8FA94C"/></g></g></svg></div>
+    <p class="tagline">42 a los 42 · Maratón CAF</p>
+    <h1>Mi plan CAF 42K</h1>
+    <p class="meta">Domingo 21 de febrero de 2027. Meta: bajar de 4 horas, y 3:45 si los tests la confirman.</p>
+    <div class="stats">
+      <div class="stat"><b id="s-dias">–</b><span id="s-dias-t">días para la carrera</span></div>
+      <div class="stat"><b id="s-sem">–</b><span>semana de 18</span></div>
+      <div class="stat"><b id="s-km">–</b><span>km esta semana</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card" aria-labelledby="t-sem">
+    <div class="weekhead">
+      <button class="navbtn" id="prev" type="button" aria-label="Semana anterior">‹</button>
+      <div class="weektitle"><b id="t-sem">Semana</b><span id="w-fechas"></span></div>
+      <button class="navbtn" id="next" type="button" aria-label="Semana siguiente">›</button>
+    </div>
+    <div class="chips" id="w-chips"></div>
+    <p class="note" id="w-nota" hidden></p>
+    <ul class="days" id="w-dias"></ul>
+    <div class="types" aria-hidden="true">
+      <span><i style="background:var(--t-cal)"></i>Calidad</span>
+      <span><i style="background:var(--t-sua)"></i>Suave</span>
+      <span><i style="background:var(--t-mon)"></i>Subida o cuestas</span>
+      <span><i style="background:var(--t-lar)"></i>Fondo largo</span>
+      <span><i style="background:var(--t-hit)"></i>Test o carrera</span>
+      <span><i style="background:var(--t-des)"></i>Descanso</span>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="t-18">
+    <h2 id="t-18">Las 18 semanas</h2>
+    <p class="sub">Kilómetros por semana. Toca una barra para ver esa semana.</p>
+    <svg class="chart" id="chart" viewBox="0 0 360 200" role="group" aria-label="Kilómetros por semana del plan"></svg>
+    <div class="legend" aria-hidden="true">
+      <span><i style="background:#9ED3A8"></i>Base</span>
+      <span><i style="background:#2F5B41"></i>Construcción</span>
+      <span><i style="background:#4A80D9"></i>Específica</span>
+      <span><i style="background:#E06E96"></i>Pico</span>
+      <span><i style="background:#F2B90F"></i>Taper</span>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="t-hitos">
+    <h2 id="t-hitos">Hitos</h2>
+    <ul class="hitos" id="hitos"></ul>
+  </section>
+
+  <section class="card" aria-labelledby="t-rit">
+    <h2 id="t-rit">Mis ritmos</h2>
+    <p class="sub">Provisionales: se ajustan con los tests de 10K y de 21K.</p>
+    <table class="rit">
+      <tr><td>Z2 conversacional<small>FC por debajo de 140–145; en el Ávila manda el esfuerzo</small></td><td>7:00–7:30</td></tr>
+      <tr><td>Umbral<small>Cómodamente duro, solo frases cortas</small></td><td>6:00–6:10</td></tr>
+      <tr><td>Ritmo de 5K</td><td>5:40–5:50</td></tr>
+      <tr><td>Ritmo maratón para bajar de 4 h</td><td>5:41</td></tr>
+      <tr><td>Ritmo maratón para 3:45</td><td>5:20</td></tr>
+    </table>
+    <div class="tests">
+      <div class="test"><b>Test de 10K · jueves 10 dic</b>
+        <ul><li>53:00 o menos: la 3:45 sigue en juego.</li><li>Entre 53 y 56 min: la meta es bajar de 4 h.</li><li>Más de 56 min: 4:00–4:05, y se revisa con el 21K.</li></ul></div>
+      <div class="test"><b>Test de 21K · domingo 10 ene</b>
+        <ul><li>1:48 o menos: ritmo de carrera 5:20 (3:45).</li><li>Hasta 1:55: ritmo 5:41 (bajo 4 h).</li><li>Más lento: el ritmo se ajusta al tiempo real.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="t-reg">
+    <h2 id="t-reg">Reglas de oro</h2>
+    <ol class="reglas">
+      <li>Z2 de verdad: si no puedes hablar en frases completas, baja el paso.</li>
+      <li>Máximo dos días duros más el fondo por semana. Lo perdido no se recupera.</li>
+      <li>Fascia: hasta 3/10 se corre; si pasa de 3, elíptica o caminata 2–3 días.</li>
+      <li>Fondos siempre con comida; desde enero, la misma comida de la carrera.</li>
+      <li>Cada sábado, un ejercicio mental: la cabeza también se entrena.</li>
+    </ol>
+  </section>
+
+  <footer>Plan v7 · actualizado el 4 nov 2026<br>© 2026 Alita · Cumbre Feliz</footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var W = [{"fase": "Base", "nota": "Arranque del plan.", "fuerza": "", "dias": [["des", "Descanso", 0, ""], ["hit", "Test de 30 min", 8.5, "15 min suave + 3 strides, 30 min al máximo esfuerzo parejo, 10 min suave"], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""]]}, {"fase": "Base", "nota": "Semana de reposo.", "fuerza": "", "dias": [["des", "Descanso", 0, ""], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""], ["des", "Reposo", 0, ""]]}, {"fase": "Base", "nota": "Regreso tras 15 días de reposo: solo trote suave, sin calidad.", "fuerza": "solo el jueves: piernas y core, 2 × 12 liviano.", "dias": [["des", "Descanso", 0, ""], ["des", "Reposo", 0, ""], ["des", "Descanso", 0, ""], ["sua", "Regreso: trote suave", 4, "30 min en Z2, en plano, sin mirar el ritmo"], ["sua", "Trote suave", 4, "30 min"], ["mon", "Subida caminando en el Ávila", 0, "Sabas Nieves, 50–60 min en Z2: paso firme sin correr, bajada caminando", "Sin audífonos, respira por la nariz y repite «hoy solo construyo la base»."], ["lar", "Fondo suave", 9, "60–70 min en Z2, en plano (Parque del Este) o Ávila tranquilo"]]}, {"fase": "Base", "nota": "Base de regreso: todo en Z2 con strides. Si todo va bien, la semana que viene vuelve la calidad.", "fuerza": "A y B: 2 × 10-12, técnica.", "dias": [["des", "Descanso", 0, ""], ["sua", "Z2 + strides", 5.5, "35 min en Z2 + 6 strides de 20 s (recuperación 40 s caminando)"], ["sua", "Z2", 7, "50 min"], ["sua", "Z2 + strides", 5.5, "35 min en Z2 + 6 strides de 20 s"], ["sua", "Trote suave", 4, "30 min"], ["mon", "Cuestas en el Parque del Este", 3.5, "15 min suave + 6 cuestas de 10 s a paso fuerte (no a tope), bajando caminando, + 10 min suave. Solo con fascia en 0–2/10; si no, 45 min caminando rápido", "Una palabra ancla en cada cuesta: «fuerte», «liviana»."], ["lar", "Ávila en Z2", 11, "Con comida antes y cambur en el camino: 11 km"]]}, {"fase": "Base", "nota": "Vuelve la calidad con un solo día duro.", "fuerza": "A y B: 3 × 10, subiendo la carga.", "dias": [["des", "Descanso", 0, ""], ["cal", "Fartlek", 6.5, "10 min suave + 4 strides + 7 × (1 min vivo / 2 min suave) + 8 min suave"], ["sua", "Z2", 8.5, "60 min"], ["sua", "Z2 + strides", 6, "35 min + 8 strides de 20 s"], ["sua", "Trote suave", 4.5, "35 min"], ["mon", "Subida caminando en el Ávila", 0, "Sabas Nieves o Cortafuegos, 60–75 min en Z2, bajada caminando", "Divide la subida en tramos con nombre (hasta la curva, hasta el banco) y piensa solo en el de ahora."], ["lar", "Ávila en Z2", 13, "Con comida y cambur: 13 km"]]}, {"fase": "Construcción", "nota": "Empieza la construcción: dos días de calidad más el fondo.", "fuerza": "A y B: 3 × 6-8 pesado (que te sobren 2 repeticiones).", "dias": [["des", "Descanso", 0, ""], ["cal", "Series", 7, "10 min suave + 6 × 400 m a 5:40–5:50, recuperación 200 m trotando + 8 min suave"], ["sua", "Z2", 8.5, "60 min"], ["cal", "Tempo", 6.5, "10 min suave + 2 × 8 min a umbral (6:00–6:10), 3 min trote + 8 min suave"], ["sua", "Trote + strides", 4, "30 min + 4 strides"], ["mon", "Subida caminando en el Ávila", 0, "60 min en Z2 sin apurar: recuperación activa", "En la cima, 3 min de suspiro fisiológico y nombra 3 cosas que ves, oyes y sientes."], ["lar", "Ávila en Z2", 15, "Con comida y cambur: 15 km"]]}, {"fase": "Construcción", "nota": "Primer 18K del plan.", "fuerza": "A y B: 3 × 6-8 pesado.", "dias": [["des", "Descanso", 0, ""], ["cal", "Series", 8, "10 min suave + 5 × 800 m a 5:40–5:50, recuperación 400 m trotando + 8 min suave"], ["sua", "Z2", 8.5, "60 min"], ["cal", "Tempo", 7.5, "10 min suave + 2 × 10 min a umbral, 3 min trote + 8 min suave"], ["sua", "Trote + strides", 5, "35 min + 4 strides"], ["mon", "Caminata en el Parque del Este", 0, "45 min por las subidas del parque, en Z2", "Elige la frase que vas a usar mañana en el km 15 del 18K."], ["lar", "Ávila: 18 km", 18, "En Z2, con comida. Prueba 30–40 g de carbohidrato por hora"]]}, {"fase": "Construcción", "nota": "Descarga, con el test de 10K el jueves: con él se ajustan ritmos y zonas.", "fuerza": "martes A 2 × 8, carga moderada; jueves sin pesas (test).", "dias": [["des", "Descanso", 0, ""], ["cal", "Fartlek ligero", 6, "10 min suave + 4 strides + 6 × (1 min vivo / 2 min suave) + 8 min suave"], ["sua", "Z2", 6.5, "45 min"], ["hit", "Test de 10K", 13, "Parque del Este: 2 km de calentamiento + 10 km a tope controlado + 1 km suave. Anota tiempo y FC media"], ["sua", "Trote muy suave", 3, "25 min"], ["mon", "Subida caminando en el Ávila", 0, "45–60 min suave en Z2", "Al bajar, nombra 3 cosas que hiciste bien en el test."], ["lar", "Ávila en Z2", 12, "Para disfrutar: 12 km"]]}, {"fase": "Construcción", "nota": "Desde el viernes 18, en La Azulita: pista, montaña y fondos en carretera.", "fuerza": "A y B: 3 × 5-6 pesado, las dos en Caracas antes del viaje.", "dias": [["des", "Descanso", 0, ""], ["cal", "Umbral", 8.5, "10 min suave + 3 × 1,5 km a umbral, 2 min trote + 8 min suave"], ["sua", "Z2", 10, "75 min"], ["cal", "Ritmo maratón", 8, "10 min suave + 2 × 15 min a 5:41, 3 min trote + 8 min suave"], ["des", "Viaje a La Azulita", 0, "Descanso"], ["sua", "Trote en La Azulita", 5.5, "40 min suave + 4 strides", "Corre sin reloj y fíjate en el paisaje de tu pueblo."], ["lar", "La Azulita: 20 km", 20, "Carretera o camino en Z2, con comida. 40–60 g de carbohidrato por hora"]]}, {"fase": "Construcción", "nota": "Navidad y descarga. Lo importante es moverse a diario aunque cambie el orden.", "fuerza": "Dos sesiones cortas con peso corporal o mochila: búlgara, puente, talones con toalla.", "dias": [["des", "Descanso", 0, ""], ["cal", "Pista: umbral", 7, "10 min suave + 5 × 1 km a umbral, recuperación 400 m trotando + 8 min suave"], ["sua", "Z2", 9, "60 min"], ["cal", "Tempo", 6, "10 min suave + 20 min continuos a umbral + 8 min suave"], ["sua", "Trote suave", 4, "30 min"], ["mon", "Caminata en subida", 0, "Por las montañas de La Azulita, 60–90 min en Z2, bajada caminando", "En lo alto, 5–10 min de visualización de la carrera: salida, km 30 y meta."], ["lar", "Fondo: 18 km", 18, "En Z2, por carretera o camino"]]}, {"fase": "Específica", "nota": "Desde aquí se entrena el intestino: en cada fondo comes lo mismo que en la carrera.", "fuerza": "Dos sesiones con mochila: búlgara, step-up, puente, talones con toalla.", "dias": [["des", "Descanso", 0, ""], ["cal", "Pista: umbral", 9, "10 min suave + 3 × 2 km a umbral, 2 min trote + 8 min suave"], ["sua", "Z2", 10.5, "75 min"], ["cal", "Ritmo maratón", 8.5, "10 min suave + 2 × 3 km a ritmo maratón, 3 min trote + 8 min suave"], ["sua", "Trote suave", 5, "35 min (el 1 de enero vale una caminata)"], ["mon", "Caminata en subida", 0, "Suave por La Azulita, 45–60 min en Z2, o descanso", "Visualiza cómo respondes si en el km 30 algo sale distinto al plan."], ["lar", "La Azulita: 22 km", 22, "Z2 por tiempo (unas 3 h). Ensaya 60 g de carbohidrato por hora"]]}, {"fase": "Específica", "nota": "El test de 21K fija la meta y el ritmo de carrera.", "fuerza": "miércoles A 2 × 5-6, ligera; jueves sin pesas.", "dias": [["cal", "Pista: umbral corto", 7.5, "Último día en La Azulita: 10 min suave + 3 × 1,5 km a umbral, 2 min trote + 8 min suave"], ["des", "Viaje a Caracas", 0, "Descanso"], ["sua", "Z2", 9, "60 min, de vuelta en Caracas"], ["sua", "Trote + strides", 6, "35 min + 4 strides (previa del test)"], ["sua", "Trote muy suave", 4, "25 min"], ["des", "Descanso", 0, "", "10 min de visualización del test de mañana: salida, ritmo, comida y llegada."], ["hit", "Test de 21K", 24, "Asfalto plano: 2 km de calentamiento + 21,1 km a tope controlado + 1 km suave, con la comida de carrera"]]}, {"fase": "Específica", "nota": "", "fuerza": "A y B: 2-3 × 5-6 pesado + saltos pogo 2 × 10.", "dias": [["des", "Descanso", 0, ""], ["cal", "Umbral", 8.5, "10 min suave + 3 × 2,5 km a umbral, 2 min trote + 8 min suave"], ["sua", "Z2", 9.5, "70 min"], ["cal", "Ritmo maratón", 8.5, "10 min suave + 6 km continuos a ritmo maratón + 8 min suave"], ["sua", "Trote + strides", 5.5, "40 min + 4 strides"], ["mon", "Caminata en el Parque del Este", 0, "40–45 min en Z2, o descanso si llegas cansada", "10 min de visualización de la carrera."], ["lar", "26 km en asfalto", 26, "18 en Z2 + últimos 8 a ritmo maratón. Ropa, zapatos y comida de carrera"]]}, {"fase": "Específica", "nota": "Descarga antes del ensayo general.", "fuerza": "A y B: 2 × 6, carga moderada.", "dias": [["des", "Descanso", 0, ""], ["cal", "Fartlek", 6, "10 min suave + 4 strides + 6 × (1 min vivo / 2 min suave) + 8 min suave"], ["sua", "Z2", 10, "70 min"], ["cal", "Tempo", 8, "10 min suave + 20 min continuos a umbral + 8 min suave"], ["sua", "Trote suave", 5, "35 min"], ["mon", "Cuestas en el Parque del Este", 3.5, "15 min suave + 6 cuestas de 10 s a paso fuerte, bajando caminando, + 10 min suave", "En la última cuesta, sostén la postura firme 2–3 s más antes de aflojar."], ["lar", "Ávila: 18 km", 18, "En Z2, para disfrutar"]]}, {"fase": "Pico", "nota": "Semana pico. Si la fascia está irritada, el largo baja a 28 km y se conserva el tramo a ritmo.", "fuerza": "A y B: 2 × 5, carga moderada.", "dias": [["des", "Descanso", 0, ""], ["cal", "Umbral", 9, "10 min suave + 3 × 2 km a umbral, 2 min trote + 8 min suave"], ["sua", "Z2", 11, "80 min"], ["sua", "Z2 + strides", 6, "40 min + 6 strides, suave para llegar fresca al domingo"], ["sua", "Trote suave", 4, "30 min"], ["des", "Descanso", 0, "", "Prepara y visualiza el ensayo de mañana: desayuno, geles, ropa y zapatos."], ["hit", "Ensayo general: 32 km", 32, "20–22 en Z2 + últimos 10–12 a ritmo maratón, con todo lo del 21 de febrero"]]}, {"fase": "Taper", "nota": "Empieza el taper: menos volumen, la intensidad en tramos cortos.", "fuerza": "A y B: 2 series ligeras, 25 min.", "dias": [["des", "Descanso", 0, ""], ["cal", "Series", 7.5, "10 min suave + 4 × 1 km a umbral, recuperación 400 m trotando + 8 min suave"], ["sua", "Z2", 9, "60 min"], ["cal", "Ritmo maratón", 7, "10 min suave + 2 × 2 km a ritmo maratón, 2 min trote + 8 min suave"], ["sua", "Trote + strides", 4.5, "30 min + 4 strides"], ["des", "Descanso", 0, "", "Escribe las semanas más duras que ya completaste: la forma ya está construida."], ["lar", "22 km en asfalto", 22, "18 en Z2 + últimos 4 a ritmo maratón"]]}, {"fase": "Taper", "nota": "Taper avanzado: sueño, comida y visualización.", "fuerza": "Solo core, movilidad y fascia, 15 min.", "dias": [["des", "Descanso", 0, ""], ["cal", "Activación", 6.5, "10 min suave + 3 × 1 km a ritmo maratón + 6 strides + 5 min suave"], ["sua", "Z2", 8, "50 min"], ["cal", "Activación", 5.5, "10 min suave + 2 × 1,5 km a ritmo maratón + 6 strides"], ["sua", "Trote muy suave", 4, "30 min"], ["des", "Descanso", 0, "", "10 min de visualización de la carrera completa."], ["lar", "14 km en asfalto", 14, "En Z2, con comida"]]}, {"fase": "Taper", "nota": "Carga de carbohidrato viernes y sábado.", "fuerza": "Sin pesas: movilidad y fascia ligera.", "dias": [["des", "Descanso", 0, ""], ["sua", "Activación suave", 5, "30 min suave + 4 strides de 20 s"], ["sua", "Trote suave", 4.5, "30 min + movilidad"], ["sua", "Trote + strides", 4, "25 min + 4 strides"], ["des", "Descanso total", 0, ""], ["sua", "Trote de soltura", 3, "20 min + 4 strides", "Repasa tu plan de carrera y tu frase para el km 30."], ["hit", "Maratón CAF", 42.2, "Domingo 21 de febrero. Ritmo: el que salga del test de 21K"]]}];
+  var START = new Date(2026, 9, 19), RACE = new Date(2027, 1, 21);
+  var DAYS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+  var MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  var PHASE = { "Base":"#9ED3A8", "Construcción":"#2F5B41", "Específica":"#4A80D9", "Pico":"#E06E96", "Taper":"#F2B90F" };
+  var TCOL = { des:"var(--t-des)", sua:"var(--t-sua)", mon:"var(--t-mon)", cal:"var(--t-cal)", lar:"var(--t-lar)", hit:"var(--t-hit)" };
+  var HITOS = [
+    { f:new Date(2026, 11, 10), t:"jue 10 dic", h:"Test de 10K" },
+    { f:new Date(2026, 11, 18), t:"18 dic – 5 ene", h:"La Azulita: pista y montaña", fin:new Date(2027, 0, 5) },
+    { f:new Date(2027, 0, 10), t:"dom 10 ene", h:"Test de 21K" },
+    { f:new Date(2027, 0, 17), t:"dom 17 ene", h:"26 km con 8 a ritmo maratón" },
+    { f:new Date(2027, 0, 31), t:"dom 31 ene", h:"Ensayo general: 32 km" },
+    { f:new Date(2027, 1, 21), t:"dom 21 feb", h:"Maratón CAF" }
+  ];
+  var MARKS = { 7:"10K", 11:"21K", 12:"26K", 14:"32K", 17:"42K" };
+
+  function $(id) { return document.getElementById(id); }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function sameDay(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+  function nkm(x) { return String(Math.round(x * 10) / 10).replace(".", ","); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]; }); }
+  function total(w) { return w.dias.reduce(function (s, d) { return s + d[2]; }, 0); }
+
+  var now = new Date(); now.setHours(0, 0, 0, 0);
+  var cur = Math.floor((now - START) / 864e5 / 7);
+  cur = Math.max(0, Math.min(W.length - 1, cur));
+  var sel = cur;
+
+  // banda
+  var faltan = Math.round((RACE - now) / 864e5);
+  $("s-dias").textContent = faltan > 0 ? faltan : (faltan === 0 ? "Hoy" : "✓");
+  $("s-dias-t").textContent = faltan > 0 ? (faltan === 1 ? "día para la carrera" : "días para la carrera") : (faltan === 0 ? "es la carrera" : "carrera hecha");
+  $("s-sem").textContent = cur + 1;
+  $("s-km").textContent = nkm(total(W[cur]));
+
+  // gráfica
+  function chart() {
+    var svg = $("chart"), NS = "http://www.w3.org/2000/svg";
+    var x0 = 4, top = 26, base = 150, bw = 15, step = 19.6, max = 62;
+    var h = "";
+    // La Azulita (18 dic – 5 ene): semanas 9 a 12
+    var ax = x0 + 8 * step - 2, aw = 4 * step - (step - bw) + 4;
+    h += '<rect x="' + ax + '" y="' + (top - 8) + '" width="' + aw + '" height="' + (base - top + 8) + '" rx="6" fill="#E7F1FB"/>';
+    h += '<text x="' + (ax + aw / 2) + '" y="' + (top + 2) + '" text-anchor="middle" font-family="Overpass Mono, monospace" font-size="7.5" font-weight="600" fill="#2F5B9E" letter-spacing=".5">LA AZULITA</text>';
+    h += '<line x1="0" x2="360" y1="' + base + '" y2="' + base + '" stroke="#C4CFBF" stroke-width="1"/>';
+    W.forEach(function (w, i) {
+      var km = total(w), bh = Math.max(km / max * (base - top - 14), km > 0 ? 3 : 1.5), x = x0 + i * step, y = base - bh;
+      var past = i < cur, isSel = i === sel;
+      h += '<g class="bar" data-i="' + i + '" tabindex="0" role="button" aria-label="Semana ' + (i + 1) + ', ' + nkm(km) + ' km' + (isSel ? ', elegida' : '') + '">';
+      h += '<rect x="' + (x - 2) + '" y="' + (top - 10) + '" width="' + (bw + 4) + '" height="' + (base - top + 30) + '" fill="transparent"/>';
+      h += '<rect class="b" x="' + x + '" y="' + y + '" width="' + bw + '" height="' + bh + '" rx="3" fill="' + PHASE[w.fase] + '" opacity="' + (past && !isSel ? .45 : 1) + '"' + (isSel ? ' stroke="#15251B" stroke-width="2"' : '') + '/>';
+      if (isSel) h += '<text x="' + (x + bw / 2) + '" y="' + (y - 4) + '" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="10" font-weight="700" fill="#1E4A3B">' + nkm(km) + '</text>';
+      if (MARKS[i] && !isSel) h += '<text x="' + (x + bw / 2) + '" y="' + (y - 4) + '" text-anchor="middle" font-family="Overpass Mono, monospace" font-size="7" font-weight="600" fill="#7A5A00">' + MARKS[i] + '</text>';
+      h += '<text x="' + (x + bw / 2) + '" y="' + (base + 11) + '" text-anchor="middle" font-family="Overpass Mono, monospace" font-size="7.5" font-weight="' + (i === cur ? 700 : 500) + '" fill="' + (i === cur ? '#1E4A3B' : '#7C8B7F') + '">' + (i + 1) + '</text>';
+      if (i === cur) h += '<path d="M' + (x + bw / 2 - 4) + ',' + (base + 22) + ' l4,-5 l4,5 z" fill="#1E4A3B"/><text x="' + (x + bw / 2) + '" y="' + (base + 32) + '" text-anchor="middle" font-family="Overpass Mono, monospace" font-size="7.5" font-weight="700" fill="#1E4A3B">HOY</text>';
+      h += '</g>';
+    });
+    // meses
+    [["oct", 0], ["nov", 2], ["dic", 6], ["ene", 10], ["feb", 15]].forEach(function (m) {
+      var x = x0 + m[1] * step;
+      h += '<text x="' + x + '" y="' + (base + 44) + '" font-family="Overpass Mono, monospace" font-size="7.5" font-weight="600" fill="#556659" letter-spacing=".5">' + m[0].toUpperCase() + '</text>';
+    });
+    svg.innerHTML = h;
+    Array.prototype.forEach.call(svg.querySelectorAll(".bar"), function (g) {
+      function go() { sel = +g.getAttribute("data-i"); render(); }
+      g.addEventListener("click", go);
+      g.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    });
+  }
+
+  // semana
+  function render() {
+    var w = W[sel], ini = addDays(START, sel * 7), fin = addDays(ini, 6);
+    $("t-sem").textContent = "Semana " + (sel + 1);
+    $("w-fechas").textContent = ini.getDate() + " " + MESES[ini.getMonth()] + " – " + fin.getDate() + " " + MESES[fin.getMonth()];
+    $("w-chips").innerHTML = '<span class="chip">' + esc(w.fase) + '</span><span class="chip">' + nkm(total(w)) + ' km</span>' + (sel === cur ? '<span class="chip now">Esta semana</span>' : '');
+    var nota = (w.nota ? esc(w.nota) : "") + (w.fuerza ? (w.nota ? "<br>" : "") + '<b class="fzl">Fuerza en la noche</b> ' + esc(w.fuerza) : "");
+    $("w-nota").hidden = !nota; $("w-nota").innerHTML = nota;
+    var html = "";
+    w.dias.forEach(function (d, j) {
+      var f = addDays(ini, j), hoy = sameDay(f, now), past = f < now && !hoy;
+      var noche = (j === 1 || j === 3) && w.fuerza && d[0] !== "des" && d[0] !== "hit";
+      var det = (d[3] ? '<p>' + esc(d[3]) + '.</p>' : '') +
+                (d[4] ? '<p class="mente"><b>Mente</b> ' + esc(d[4]) + '</p>' : '') +
+                (noche ? '<p class="fz"><b>Fuerza en la noche</b> ' + esc(w.fuerza) + '</p>' : '');
+      html += '<li><details class="day' + (hoy ? ' today' : '') + (past ? ' past' : '') + '" style="--t:' + TCOL[d[0]] + '"' + (hoy && det ? ' open' : '') + '>' +
+        '<summary><span class="dn">' + DAYS[j] + '<b>' + f.getDate() + '</b></span>' +
+        '<span class="dt">' + esc(d[1]) + (hoy ? '<span class="tag hoy">Hoy</span>' : '') + (d[4] ? '<span class="tag">Mente</span>' : '') + (noche ? '<span class="tag">Fuerza</span>' : '') + '</span>' +
+        '<span class="km">' + (d[2] ? nkm(d[2]) + '<small>km</small>' : '') + '</span></summary>' +
+        (det ? '<div class="det">' + det + '</div>' : '') + '</details></li>';
+    });
+    $("w-dias").innerHTML = html;
+    $("prev").disabled = sel === 0; $("next").disabled = sel === W.length - 1;
+    chart();
+  }
+  $("prev").addEventListener("click", function () { if (sel > 0) { sel--; render(); } });
+  $("next").addEventListener("click", function () { if (sel < W.length - 1) { sel++; render(); } });
+
+  // hitos
+  var nextDone = false, hh = "";
+  HITOS.forEach(function (x) {
+    var done = (x.fin || x.f) < now, nx = !done && !nextDone;
+    if (nx) nextDone = true;
+    hh += '<li class="' + (done ? 'done' : (nx ? 'next' : '')) + '"><span class="f">' + x.t + '</span><span class="h">' + x.h + '</span></li>';
+  });
+  $("hitos").innerHTML = hh;
+
+  render();
+})();
+</script>
+</body>
+</html>
